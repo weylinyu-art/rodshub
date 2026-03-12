@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import MobileBottomNav from "@/components/MobileBottomNav";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import JsonLd from "@/components/JsonLd";
 import {
@@ -59,8 +60,11 @@ export default function RootLayout({
         <JsonLd data={[organizationSchema, websiteSchema]} />
         <LanguageProvider>
           <Header />
-          {children}
+          <div className="pb-20 md:pb-0">
+            {children}
+          </div>
           <Footer />
+          <MobileBottomNav />
         </LanguageProvider>
       </body>
     </html>

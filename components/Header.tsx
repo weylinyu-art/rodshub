@@ -31,10 +31,73 @@ export default function Header() {
   const { lang, setLang } = useLanguage();
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top bar: Search + Language */}
-        <div className="hidden sm:flex items-center justify-end gap-3 py-2 border-b border-gray-100">
+    <>
+      {/* Mobile: full-screen menu overlay */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-[60] md:hidden bg-white"
+          style={{ paddingTop: "env(safe-area-inset-top)" }}
+        >
+          <div className="flex flex-col h-full overflow-y-auto">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 shrink-0">
+              <span className="text-lg font-bold text-black">RodsHub</span>
+              <button type="button" onClick={() => setMobileOpen(false)} className="p-2 -m-2" aria-label="Close">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
+            {/* Search - prominent on mobile */}
+            <form action="/search" method="get" className="px-4 py-4 border-b border-gray-100">
+              <div className="flex gap-2">
+                <input type="search" name="q" placeholder={t("searchPlaceholder", lang)} className="flex-1 px-4 py-3 text-base border border-gray-200 rounded-lg" />
+                <button type="submit" className="px-5 py-3 bg-black text-white font-medium rounded-lg">{t("search", lang)}</button>
+              </div>
+            </form>
+            {/* Category cards - 2-col grid, large tap targets */}
+            <div className="px-4 py-4 flex-1">
+              <p className="text-xs font-semibold text-gray-500 uppercase mb-3">{t("categories", lang)}</p>
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                {CATEGORIES.map((c) => (
+                  <Link key={c.slug} href={`/category/${c.slug}`} onClick={() => setMobileOpen(false)} className="block p-4 bg-gray-50 rounded-xl border border-gray-100 active:bg-gray-100 font-medium text-gray-900">
+                    {t(c.key, lang)} {t("rods", lang)}
+                  </Link>
+                ))}
+              </div>
+              <p className="text-xs font-semibold text-gray-500 uppercase mb-3">{t("scenarios", lang)}</p>
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                {SCENARIOS.map((s) => (
+                  <Link key={s.slug} href={`/scenario/${s.slug}`} onClick={() => setMobileOpen(false)} className="block p-4 bg-gray-50 rounded-xl border border-gray-100 active:bg-gray-100 font-medium text-gray-900">
+                    {t(s.key, lang)}
+                  </Link>
+                ))}
+              </div>
+              <div className="space-y-1 pt-2 border-t border-gray-100">
+                <Link href="/trending" onClick={() => setMobileOpen(false)} className="block py-3 font-medium text-gray-900">{t("trending", lang)}</Link>
+                <Link href="/wholesale" onClick={() => setMobileOpen(false)} className="block py-3 font-medium text-gray-900">{t("wholesale", lang)}</Link>
+                <Link href="/insights" onClick={() => setMobileOpen(false)} className="block py-3 font-medium text-gray-900">{t("insights", lang)}</Link>
+              </div>
+            </div>
+            {/* Language + Inquiry at bottom */}
+            <div className="mt-auto px-4 py-4 border-t border-gray-200 space-y-3" style={{ paddingBottom: "max(env(safe-area-inset-bottom), 16px)" }}>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-500">{t("language", lang)}:</span>
+                {LANGUAGES.map((l) => (
+                  <button key={l.code} type="button" onClick={() => { setLang(l.code); }} className={`px-3 py-1.5 text-sm rounded-lg ${lang === l.code ? "bg-black text-white" : "bg-gray-100 text-gray-700"}`}>
+                    {l.code.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+              <Link href="/inquiry" onClick={() => setMobileOpen(false)} className="block w-full py-3.5 bg-black text-white text-center font-semibold rounded-xl">
+                {t("sendInquiry", lang)}
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Top bar: Search + Language - desktop only */}
+          <div className="hidden sm:flex items-center justify-end gap-3 py-2 border-b border-gray-100">
           <form action="/search" method="get" className="flex">
             <input
               type="search"
@@ -200,67 +263,8 @@ export default function Header() {
             </button>
           </div>
         </div>
-
-        {/* Mobile menu */}
-        {mobileOpen && (
-          <div className="lg:hidden border-t border-gray-200 py-4">
-            <div className="flex flex-col gap-1">
-              <Link href="/" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black font-medium">
-                {t("home", lang)}
-              </Link>
-              <form action="/search" method="get" className="px-4 py-2">
-                <input
-                  type="search"
-                  name="q"
-                  placeholder={t("searchPlaceholder", lang)}
-                  className="w-full px-3 py-2 text-sm border border-gray-200 rounded"
-                />
-              </form>
-              <p className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">{t("categories", lang)}</p>
-              <Link href="/rods/category" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black font-medium">
-                {t("all", lang)}
-              </Link>
-              {CATEGORIES.map((c) => (
-                <Link
-                  key={c.slug}
-                  href={`/category/${c.slug}`}
-                  onClick={() => setMobileOpen(false)}
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black"
-                >
-                  {t(c.key, lang)} {t("rods", lang)}
-                </Link>
-              ))}
-              <p className="px-4 py-2 mt-2 text-xs font-semibold text-gray-500 uppercase">{t("sections", lang)}</p>
-              <Link href="/trending" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black">
-                {t("trending", lang)}
-              </Link>
-              <Link href="/wholesale" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black">
-                {t("wholesale", lang)}
-              </Link>
-              <Link href="/insights" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black">
-                {t("insights", lang)}
-              </Link>
-              <Link href="/inquiry" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black">
-                {t("inquiry", lang)}
-              </Link>
-              <p className="px-4 py-2 mt-2 text-xs font-semibold text-gray-500 uppercase">{t("scenarios", lang)}</p>
-              <Link href="/rods/scenario" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black font-medium">
-                {t("all", lang)}
-              </Link>
-              {SCENARIOS.map((s) => (
-                <Link
-                  key={s.slug}
-                  href={`/scenario/${s.slug}`}
-                  onClick={() => setMobileOpen(false)}
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black"
-                >
-                  {t(s.key, lang)}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </header>
+    </>
   );
 }
