@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import QuickInquiryForm from "@/components/QuickInquiryForm";
 import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
 
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 export default function InquiryPage() {
   return (
     <main className="min-h-screen bg-gray-50">
-      <QuickInquiryForm />
+      <Suspense fallback={<div className="min-h-[400px] animate-pulse" />}>
+        <QuickInquiryForm />
+      </Suspense>
     </main>
   );
 }

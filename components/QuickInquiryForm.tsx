@@ -1,22 +1,31 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { inquiryForm } from "@/lib/content";
 
+const INQUIRY_EMAIL = process.env.NEXT_PUBLIC_INQUIRY_EMAIL;
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://rodshub.com";
+
 export default function QuickInquiryForm() {
+  const searchParams = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
   const { lang } = useLanguage();
   const c = inquiryForm[lang] ?? inquiryForm.en;
   const labels = c.labels;
   const placeholders = c.placeholders;
 
+  const showSuccess = submitted || searchParams.get("success") === "1";
+  const useFormsubmit = !!INQUIRY_EMAIL;
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    if (useFormsubmit) return;
     e.preventDefault();
     setSubmitted(true);
   };
 
-  if (submitted) {
+  if (showSuccess) {
     return (
       <section id="inquiry" className="py-16 sm:py-24 bg-slate-50">
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -42,8 +51,17 @@ export default function QuickInquiryForm() {
         <p className="text-coral-600 font-semibold mb-8">{c.replyNote}</p>
         <form
           onSubmit={handleSubmit}
+          action={useFormsubmit ? `https://formsubmit.co/${INQUIRY_EMAIL}` : undefined}
+          method={useFormsubmit ? "post" : undefined}
           className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 shadow-sm"
         >
+          {useFormsubmit && (
+            <>
+              <input type="hidden" name="_next" value={`${SITE_URL}/inquiry?success=1`} />
+              <input type="hidden" name="_subject" value="RodsHub: New Sourcing Inquiry" />
+              <input type="hidden" name="_captcha" value="false" />
+            </>
+          )}
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">

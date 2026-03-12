@@ -115,8 +115,8 @@ export default function Header() {
 
       <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Row 1: Logo + Search + Language + CTA - 齐平 */}
-          <div className="flex items-center justify-between gap-4 py-3 sm:py-3.5">
+          {/* Row 1: Logo + Search + Language + CTA - 增加行间距 */}
+          <div className="flex items-center justify-between gap-4 py-4 sm:py-5">
             <Link href="/" className="flex items-center gap-2 shrink-0">
               <span className="text-2xl font-bold text-black">RodsHub</span>
             </Link>
@@ -199,9 +199,9 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Row 2: Tab 导航 - 下移 */}
-          <nav className="hidden lg:flex items-center gap-1 border-t border-gray-100 py-2.5 -mb-px">
-            <Link href="/" className={`px-4 py-2 font-medium transition ${pathname === "/" ? "text-black" : "text-gray-700 hover:text-black"}`}>
+          {/* Row 2: Tab 导航 - 与 LOGO 左对齐 */}
+          <nav className="hidden lg:flex items-center gap-1 border-t border-gray-100 py-3 -mb-px">
+            <Link href="/" className={`pl-0 pr-4 py-2 font-medium transition ${pathname === "/" ? "text-black" : "text-gray-700 hover:text-black"}`}>
               {t("home", lang)}
             </Link>
             <div
