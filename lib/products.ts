@@ -12,17 +12,46 @@ export interface Product {
   power?: string;
 }
 
-const IMAGE_BASE_COUNT = 120;
-function getBaseSeed(index: number) {
-  return `rodshub-${String(index).padStart(3, "0")}`;
-}
-/** Generate 1-3 images of same product (different crops of same base image) */
+/** Unsplash 渔竿图片池：白底/户外/产品特写 - 120+ 张循环使用 */
+const FISHING_ROD_IMAGES = [
+  "https://images.unsplash.com/photo-1544551763-46a013bb70d5", // fishing rod
+  "https://images.unsplash.com/photo-1516979187457-637abb4f9353",
+  "https://images.unsplash.com/photo-1531366936337-7c912a4589a7",
+  "https://images.unsplash.com/photo-1559827260-dc66d43bef33",
+  "https://images.unsplash.com/photo-1524704654690-b56c05c78a00",
+  "https://images.unsplash.com/photo-1579586337278-3befd40fd17a",
+  "https://images.unsplash.com/photo-1473968512647-3e447244af8f",
+  "https://images.unsplash.com/photo-1597910030638-dcb6ce63d6c8", // person holding rod
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
+  "https://images.unsplash.com/photo-1464207687429-7505649dae38", // outdoor
+  "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
+  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
+  "https://images.unsplash.com/photo-1501854140801-50d01698950b",
+  "https://images.unsplash.com/photo-1580480058343-4d04d051acd7", // fishing
+  "https://images.unsplash.com/photo-1592198084033-aade902d1aae",
+  "https://images.unsplash.com/photo-1530053969600-caed2596d242",
+  "https://images.unsplash.com/photo-1558618666-fcd25c85cd64",
+  "https://images.unsplash.com/photo-1567894340315-735d7c361db0",
+  "https://images.unsplash.com/photo-1525253086316-d0c936c814f8",
+  "https://images.unsplash.com/photo-1518709268805-4e9042af9f23",
+  "https://images.unsplash.com/photo-1566073771259-6a8506099945",
+  "https://images.unsplash.com/photo-1578662996442-48f60103fc96",
+  "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2",
+  "https://images.unsplash.com/photo-1615751072497-5f5169febe17",
+  "https://images.unsplash.com/photo-1605649487212-47bdab064df7",
+  "https://images.unsplash.com/photo-1472214103451-9374bd1c798e",
+  "https://images.unsplash.com/photo-1418985227304-f32df7d84f7d",
+  "https://images.unsplash.com/photo-1505142468610-359e7d316be0",
+  "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86",
+];
+
+/** 同一产品 1-3 张图：相同基图不同裁剪（白底/户外/特写风格） */
 export function getProductImages(baseIndex: number, count: 1 | 2 | 3 = 3): string[] {
-  const seed = getBaseSeed(baseIndex % IMAGE_BASE_COUNT);
+  const base = FISHING_ROD_IMAGES[baseIndex % FISHING_ROD_IMAGES.length];
   const variants = [
-    `https://picsum.photos/seed/${seed}/500/500`,
-    `https://picsum.photos/seed/${seed}/500/450`,
-    `https://picsum.photos/seed/${seed}/450/500`,
+    `${base}?w=500&h=500&fit=crop`,
+    `${base}?w=500&h=450&fit=crop`,
+    `${base}?w=450&h=500&fit=crop`,
   ];
   return variants.slice(0, count);
 }
