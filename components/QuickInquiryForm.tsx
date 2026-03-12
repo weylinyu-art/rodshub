@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { inquiryForm } from "@/lib/content";
 
-const INQUIRY_EMAIL = process.env.NEXT_PUBLIC_INQUIRY_EMAIL;
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://rodshub.com";
 
 export default function QuickInquiryForm() {
@@ -17,10 +17,10 @@ export default function QuickInquiryForm() {
   const placeholders = c.placeholders;
 
   const showSuccess = submitted || searchParams.get("success") === "1";
-  const useFormsubmit = !!INQUIRY_EMAIL;
+  const useWeb3Forms = !!WEB3FORMS_KEY;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    if (useFormsubmit) return;
+    if (useWeb3Forms) return;
     e.preventDefault();
     setSubmitted(true);
   };
@@ -51,21 +51,15 @@ export default function QuickInquiryForm() {
         <p className="text-orange-600 font-semibold mb-8">{c.replyNote}</p>
         <form
           onSubmit={handleSubmit}
-          action={useFormsubmit ? `https://formsubmit.co/${INQUIRY_EMAIL}` : undefined}
-          method={useFormsubmit ? "post" : undefined}
+          action={useWeb3Forms ? "https://api.web3forms.com/submit" : undefined}
+          method={useWeb3Forms ? "POST" : undefined}
           className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 shadow-sm"
         >
-          {useFormsubmit && (
+          {useWeb3Forms && (
             <>
-              <input type="hidden" name="_next" value={`${SITE_URL}/inquiry?success=1`} />
-              <input type="hidden" name="_subject" value="RodsHub: New Sourcing Inquiry" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_template" value="basic" />
-              <input type="hidden" name="_template" value="basic" />
-              <input type="hidden" name="_template" value="basic" />
-              <input type="hidden" name="_template" value="basic" />
-              <input type="hidden" name="_template" value="basic" />
-              <input type="hidden" name="_template" value="box" />
+              <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
+              <input type="hidden" name="subject" value="RodsHub: New Sourcing Inquiry" />
+              <input type="hidden" name="redirect" value={`${SITE_URL}/inquiry?success=1`} />
             </>
           )}
           <div className="grid sm:grid-cols-2 gap-4">
