@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { t, tFormat } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 import {
   getInsightSections,
   getInsightByLang,
@@ -10,7 +11,8 @@ import {
   getArticleTitle,
 } from "@/lib/insights-i18n";
 import { getFirstParagraphText } from "@/lib/insights";
-import { INSIGHT_BLOCKS } from "@/lib/insights";
+
+const ARTICLES_PER_SECTION = 4;
 
 const sectionMeta: Record<string, { accent: string; bg: string; icon: string }> = {
   "rod-guides": { accent: "slate", bg: "bg-slate-50", icon: "🎣" },
@@ -28,22 +30,14 @@ const accentBorder: Record<string, string> = {
   indigo: "border-l-indigo-500",
 };
 
-const accentBadge: Record<string, string> = {
-  slate: "bg-slate-100 text-slate-700",
-  emerald: "bg-emerald-100 text-emerald-700",
-  amber: "bg-amber-100 text-amber-700",
-  violet: "bg-violet-100 text-violet-700",
-  indigo: "bg-indigo-100 text-indigo-700",
-};
-
 export default function InsightsPageContent() {
   const { lang } = useLanguage();
   const sections = getInsightSections(lang);
-  const totalArticles = INSIGHT_BLOCKS.length;
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   return (
     <>
-      {/* Hero */}
+      {/* Hero - 不展示文章篇数 */}
       <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMyMDIwMjAiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRjMC0yIDItNCAyLTRzLTItMi00LTItNCAyLTQgMiAyIDQgMiA0IDQgNCA0IDIgMiA0IDIgNHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30" />
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
@@ -58,10 +52,6 @@ export default function InsightsPageContent() {
               <p className="mt-3 text-gray-300 text-lg max-w-2xl">
                 Practical guides and sourcing insights for fishing rod buyers and tackle businesses.
               </p>
-              <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur text-sm">
-                <span className="font-semibold text-white">{totalArticles}</span>
-                <span className="text-gray-400">{tFormat("articlesCount", lang, { n: totalArticles })}</span>
-              </div>
             </div>
           </div>
           {/* Section jump nav */}
@@ -113,24 +103,22 @@ export default function InsightsPageContent() {
         {sections.map((section) => {
           const meta = sectionMeta[section.id] ?? { accent: "slate", bg: "bg-slate-50", icon: "📄" };
           const borderCls = accentBorder[meta.accent] ?? "border-l-slate-500";
-          const badgeCls = accentBadge[meta.accent] ?? "bg-slate-100 text-slate-700";
+
+          const isExpanded = expandedSection === section.id;
+          const displayedBlocks = isExpanded ? section.blocks : section.blocks.slice(0, ARTICLES_PER_SECTION);
+          const hasMore = section.blocks.length > ARTICLES_PER_SECTION;
 
           return (
             <section key={section.id} id={section.id} className={`scroll-mt-8 rounded-2xl p-6 sm:p-8 ${meta.bg}`}>
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                <div>
-                  <h2 className="inline-flex items-center gap-2 text-xl font-bold text-gray-900">
-                    <span>{meta.icon}</span>
-                    {section.title}
-                  </h2>
-                  <p className="mt-1 text-gray-600">{section.description}</p>
-                </div>
-                <span className={`inline-flex px-3 py-1 rounded-full text-sm font-medium ${badgeCls}`}>
-                  {tFormat("articlesCount", lang, { n: section.blocks.length })}
-                </span>
+              <div className="mb-6">
+                <h2 className="inline-flex items-center gap-2 text-xl font-bold text-gray-900">
+                  <span>{meta.icon}</span>
+                  {section.title}
+                </h2>
+                <p className="mt-1 text-gray-600">{section.description}</p>
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
-                {section.blocks.map((block) => {
+                {displayedBlocks.map((block) => {
                   const blockData = getInsightByLang(block.id, lang);
                   const excerpt = blockData ? getFirstParagraphText(blockData.content) : "";
                   return (
@@ -158,6 +146,16 @@ export default function InsightsPageContent() {
                   );
                 })}
               </div>
+              {hasMore && !isExpanded && (
+                <button
+                  type="button"
+                  onClick={() => setExpandedSection(section.id)}
+                  className="mt-4 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1"
+                >
+                  {t("viewMore", lang)}
+                  <span>→</span>
+                </button>
+              )}
             </section>
           );
         })}

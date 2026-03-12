@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CategoryFilters from "@/components/CategoryFilters";
+import CategoryPageHeader from "@/components/CategoryPageHeader";
 import JsonLd from "@/components/JsonLd";
 import {
   categories,
@@ -55,24 +56,7 @@ export default async function CategoryPage({ params }: PageProps) {
   return (
     <main className="min-h-screen bg-gray-50">
       <JsonLd data={breadcrumbSchema} />
-      {/* Breadcrumb */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <nav className="flex items-center gap-2 text-sm text-gray-500">
-            <Link href="/" className="hover:text-black transition">
-              Home
-            </Link>
-            <span>/</span>
-            <span className="text-gray-900 font-medium">{category.name}</span>
-          </nav>
-          <h1 className="mt-2 text-2xl sm:text-3xl font-bold text-gray-900">
-            {category.name}
-          </h1>
-          <p className="mt-1 text-gray-600">
-            {products.length}+ SKUs · Wholesale prices · MOQ from 30 pcs
-          </p>
-        </div>
-      </div>
+      <CategoryPageHeader slug={slug} productCount={products.length} />
 
       {/* Filters + Product Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

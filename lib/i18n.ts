@@ -92,6 +92,7 @@ export const T: Translations = {
   articlesCount: { en: "{n} articles", es: "{n} artículos", fr: "{n} articles", de: "{n} Artikel", ar: "{n} مقال", ru: "{n} статей", ja: "{n}件の記事", ko: "기사 {n}개", pt: "{n} artigos" },
   popularReads: { en: "Popular reads", es: "Lecturas populares", fr: "Lectures populaires", de: "Beliebte Artikel", ar: "قراءات شائعة", ru: "Популярные статьи", ja: "人気記事", ko: "인기 글", pt: "Leituras populares" },
   readArticle: { en: "Read article", es: "Leer artículo", fr: "Lire l'article", de: "Artikel lesen", ar: "قراءة المقال", ru: "Читать статью", ja: "記事を読む", ko: "기사 읽기", pt: "Ler artigo" },
+  viewMore: { en: "More", es: "Más", fr: "Plus", de: "Mehr", ar: "المزيد", ru: "Ещё", ja: "もっと見る", ko: "더보기", pt: "Mais" },
 };
 
 export function t(key: keyof typeof T, lang: LangCode): string {
