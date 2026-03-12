@@ -21,13 +21,15 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     setStoredLang(code);
     setLangState(code);
     if (typeof document !== "undefined") {
-      document.documentElement.lang = code === "zh" ? "zh-CN" : code;
+      document.documentElement.lang = code;
+      document.documentElement.dir = code === "ar" ? "rtl" : "ltr";
     }
   };
 
   useEffect(() => {
     if (mounted && typeof document !== "undefined") {
-      document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
     }
   }, [lang, mounted]);
 
