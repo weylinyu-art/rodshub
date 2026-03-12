@@ -2,39 +2,41 @@
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+    <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <a href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-blue-600">RodsHub</span>
+            <span className="text-2xl font-bold bg-gradient-to-r from-coral to-coral-dark bg-clip-text text-transparent">
+              RodsHub
+            </span>
           </a>
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#categories" className="text-gray-600 hover:text-blue-600 transition">
+            <a href="#categories" className="text-gray-600 hover:text-coral font-medium transition">
               Categories
             </a>
-            <a href="#trending" className="text-gray-600 hover:text-blue-600 transition">
+            <a href="#trending" className="text-gray-600 hover:text-coral font-medium transition">
               Trending
             </a>
-            <a href="#wholesale" className="text-gray-600 hover:text-blue-600 transition">
+            <a href="#wholesale" className="text-gray-600 hover:text-coral font-medium transition">
               Wholesale
             </a>
-            <a href="#oem" className="text-gray-600 hover:text-blue-600 transition">
+            <a href="#oem" className="text-gray-600 hover:text-coral font-medium transition">
               OEM
             </a>
-            <a href="#inquiry" className="text-gray-600 hover:text-blue-600 transition">
+            <a href="#inquiry" className="text-gray-600 hover:text-coral font-medium transition">
               Inquiry
             </a>
           </nav>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <a
               href="#inquiry"
-              className="hidden sm:inline-flex items-center px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition font-medium"
+              className="hidden sm:inline-flex items-center px-4 py-2.5 border-2 border-coral text-coral rounded-full hover:bg-coral/5 transition font-semibold"
             >
               Send Inquiry
             </a>
             <a
               href="#trending"
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
+              className="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-coral to-coral-dark text-white rounded-full hover:opacity-90 transition font-semibold shadow-lg shadow-coral/25"
             >
               Browse Rods
             </a>

@@ -46,7 +46,7 @@ export default function OEMCustomization() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {steps.map((step, i) => (
             <div key={i} className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mb-4">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-coral-100 to-pink-100 flex items-center justify-center text-coral-600 mb-4 shadow-lg">
                 {step.icon}
               </div>
               <h3 className="font-semibold text-gray-900">{step.title}</h3>
@@ -57,7 +57,7 @@ export default function OEMCustomization() {
         <div className="text-center">
           <a
             href="#inquiry"
-            className="inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition shadow-lg shadow-blue-600/25"
+            className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-coral-500 to-pink-500 text-white font-bold rounded-full hover:from-coral-600 hover:to-pink-600 transition shadow-xl shadow-coral-500/40 hover:shadow-2xl hover:shadow-coral-500/50"
           >
             Start OEM Inquiry
           </a>

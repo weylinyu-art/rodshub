@@ -8,28 +8,28 @@ const styles = [
 
 export default function ShopByFishingStyle() {
   return (
-    <section className="py-16 sm:py-24 bg-slate-50">
+    <section className="py-16 sm:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">Shop by Fishing Style</h2>
+        <h2 className="text-3xl font-black text-gray-900 mb-2">Shop by Fishing Style</h2>
         <p className="text-gray-600 mb-12">Find the perfect rod for your fishing environment</p>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
           {styles.map((style) => (
             <a
               key={style.slug}
               href={`#${style.slug}`}
-              className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white hover:border-blue-500 hover:shadow-xl transition-all duration-200"
+              className="group relative overflow-hidden rounded-2xl bg-white hover:shadow-2xl hover:shadow-amber-200/50 transition-all duration-300 ring-2 ring-gray-100 hover:ring-coral/50"
             >
-              <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+              <div className="aspect-[4/3] overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={style.image}
                   alt={style.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
-                <h3 className="font-semibold text-white">{style.name}</h3>
-                <p className="text-sm text-blue-200">{style.count}</p>
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                <h3 className="font-bold text-white">{style.name}</h3>
+                <p className="text-sm text-amber-300 font-medium">{style.count}</p>
               </div>
             </a>
           ))}

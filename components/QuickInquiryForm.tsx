@@ -33,7 +33,7 @@ export default function QuickInquiryForm() {
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold text-gray-900 mb-2">Quick Inquiry</h2>
         <p className="text-gray-600 mb-2">Tell us what you need.</p>
-        <p className="text-blue-600 font-medium mb-8">We will reply within 24 hours.</p>
+        <p className="text-coral-600 font-semibold mb-8">We will reply within 24 hours.</p>
         <form
           onSubmit={handleSubmit}
           className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 shadow-sm"
@@ -119,7 +119,7 @@ export default function QuickInquiryForm() {
           </div>
           <button
             type="submit"
-            className="mt-8 w-full px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition shadow-md"
+            className="mt-8 w-full px-8 py-4 bg-gradient-to-r from-coral-500 to-pink-500 text-white text-lg font-bold rounded-full hover:from-coral-600 hover:to-pink-600 transition shadow-xl shadow-coral-500/40"
           >
             Send Inquiry
           </button>
