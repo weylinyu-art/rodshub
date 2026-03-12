@@ -48,7 +48,7 @@ export default function InsightsPageContent() {
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold text-white">{t("insights", lang)}</h1>
               <p className="mt-3 text-gray-300 text-lg max-w-2xl">
-                Practical guides and sourcing insights for fishing rod buyers and tackle businesses.
+                {t("insightsSubtitle", lang)}
               </p>
             </div>
           </div>

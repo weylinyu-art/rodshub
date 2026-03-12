@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/i18n";
+import { getProductName } from "@/lib/products-i18n";
 import type { Product } from "@/lib/products";
 
 interface ProductCardProps extends Product {
@@ -23,6 +26,8 @@ export default function ProductCard({
   power,
   variant = "default",
 }: ProductCardProps) {
+  const { lang } = useLanguage();
+  const displayName = getProductName({ id, name }, lang);
   const showSpecs = variant === "trending" && (length || material || power);
   const showInquiryButton = variant === "trending";
   const imgList = (images && images.length > 0 ? images : [image]) as string[];
@@ -43,7 +48,7 @@ export default function ProductCard({
           <img
             key={i}
             src={src}
-            alt={`${name} - ${i + 1}`}
+            alt={`${displayName} - ${i + 1}`}
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:scale-105 ${
               i === activeIndex ? "opacity-100 z-0" : "opacity-0"
             }`}
@@ -67,7 +72,7 @@ export default function ProductCard({
       </div>
       <div className="p-3 flex-1 flex flex-col">
         <h3 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-black transition text-sm">
-          {name}
+          {displayName}
         </h3>
         {showSpecs && (
           <div className="mt-1.5 flex flex-wrap gap-2 text-xs text-gray-500">
@@ -79,11 +84,11 @@ export default function ProductCard({
         <p className="mt-1 font-bold text-gray-900">{price}</p>
         {showInquiryButton ? (
           <span className="mt-2 inline-flex justify-center px-3 py-1.5 bg-black text-white text-xs font-medium rounded hover:bg-gray-800 transition w-full pointer-events-none">
-            Send Inquiry
+            {t("sendInquiry", lang)}
           </span>
         ) : (
           <span className="mt-1.5 text-xs text-gray-600 font-medium opacity-0 group-hover:opacity-100 transition">
-            Inquiry →
+            {t("inquiry", lang)} →
           </span>
         )}
       </div>

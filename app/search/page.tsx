@@ -3,9 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t, tFormat } from "@/lib/i18n";
 import { getAllProducts } from "@/lib/productRegistry";
 
 export default function SearchPage() {
+  const { lang } = useLanguage();
   const [q, setQ] = useState("");
   const [results, setResults] = useState<ReturnType<typeof getAllProducts>>([]);
 
@@ -49,22 +52,22 @@ export default function SearchPage() {
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <nav className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-            <Link href="/" className="hover:text-black transition">Home</Link>
+            <Link href="/" className="hover:text-black transition">{t("home", lang)}</Link>
             <span>/</span>
-            <span className="text-gray-900 font-medium">Search</span>
+            <span className="text-gray-900 font-medium">{t("search", lang)}</span>
           </nav>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-            {q ? `Search: "${q}"` : "Search Rods"}
+            {q ? `${t("search", lang)}: "${q}"` : t("searchRods", lang)}
           </h1>
           <p className="mt-1 text-gray-600">
-            {q ? `${results.length} result${results.length !== 1 ? "s" : ""} found` : "Enter a keyword in the header search box"}
+            {q ? (results.length !== 1 ? tFormat("resultsFoundPlural", lang, { n: results.length }) : tFormat("resultsFound", lang, { n: results.length })) : t("searchHint", lang)}
           </p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {!q ? (
-          <p className="text-gray-500">Use the search box in the header to find fishing rods by name, material, or type.</p>
+          <p className="text-gray-500">{t("searchHint", lang)}</p>
         ) : results.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
             {results.map((rod) => (
@@ -72,7 +75,7 @@ export default function SearchPage() {
             ))}
           </div>
         ) : (
-          <p className="text-gray-500">No products match your search. Try &quot;spinning&quot;, &quot;carbon&quot;, or &quot;travel&quot;.</p>
+          <p className="text-gray-500">{t("noProductsMatch", lang)}</p>
         )}
       </div>
     </main>

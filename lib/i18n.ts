@@ -14,6 +14,7 @@ export const LANGUAGES = [
 export type LangCode = (typeof LANGUAGES)[number]["code"];
 
 const STORAGE_KEY = "rodshub-lang";
+const COOKIE_NAME = "rodshub-lang";
 
 export function getStoredLang(): LangCode {
   if (typeof window === "undefined") return "en";
@@ -27,6 +28,17 @@ export function getStoredLang(): LangCode {
 export function setStoredLang(code: LangCode): void {
   if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEY, code);
+  document.cookie = `${COOKIE_NAME}=${code}; path=/; max-age=31536000; SameSite=Lax`;
+}
+
+export { COOKIE_NAME };
+
+/** Server: read lang from cookie value (e.g. cookies().get(COOKIE_NAME)?.value) */
+export function getLangFromCookieValue(value: string | null | undefined): LangCode {
+  if (!value) return "en";
+  const val = value.trim();
+  if (LANGUAGES.some((l) => l.code === val)) return val as LangCode;
+  return "en";
 }
 
 type Translations = Record<string, Record<LangCode, string>>;
@@ -93,6 +105,41 @@ export const T: Translations = {
   popularReads: { en: "Popular reads", es: "Lecturas populares", fr: "Lectures populaires", de: "Beliebte Artikel", ar: "قراءات شائعة", ru: "Популярные статьи", ja: "人気記事", ko: "인기 글", pt: "Leituras populares" },
   readArticle: { en: "Read article", es: "Leer artículo", fr: "Lire l'article", de: "Artikel lesen", ar: "قراءة المقال", ru: "Читать статью", ja: "記事を読む", ko: "기사 읽기", pt: "Ler artigo" },
   viewMore: { en: "More", es: "Más", fr: "Plus", de: "Mehr", ar: "المزيد", ru: "Ещё", ja: "もっと見る", ko: "더보기", pt: "Mais" },
+  // Product detail & Search
+  description: { en: "Description", es: "Descripción", fr: "Description", de: "Beschreibung", ar: "الوصف", ru: "Описание", ja: "説明", ko: "설명", pt: "Descrição" },
+  specifications: { en: "Specifications", es: "Especificaciones", fr: "Spécifications", de: "Spezifikationen", ar: "المواصفات", ru: "Характеристики", ja: "仕様", ko: "사양", pt: "Especificações" },
+  keyFeatures: { en: "Key Features", es: "Características", fr: "Caractéristiques", de: "Hauptmerkmale", ar: "الميزات الرئيسية", ru: "Ключевые особенности", ja: "主な特徴", ko: "주요 특징", pt: "Características principais" },
+  material: { en: "Material", es: "Material", fr: "Matériau", de: "Material", ar: "المادة", ru: "Материал", ja: "材質", ko: "재질", pt: "Material" },
+  length: { en: "Length", es: "Longitud", fr: "Longueur", de: "Länge", ar: "الطول", ru: "Длина", ja: "長さ", ko: "길이", pt: "Comprimento" },
+  power: { en: "Power", es: "Potencia", fr: "Puissance", de: "Power", ar: "القوة", ru: "Мощность", ja: "パワー", ko: "파워", pt: "Potência" },
+  searchRods: { en: "Search Rods", es: "Buscar cañas", fr: "Rechercher cannes", de: "Ruten suchen", ar: "بحث القضبان", ru: "Поиск удилищ", ja: "ロッドを検索", ko: "로드 검색", pt: "Buscar varas" },
+  searchHint: { en: "Enter a keyword in the header search box", es: "Escriba una palabra en el cuadro de búsqueda", fr: "Entrez un mot-clé dans la barre de recherche", de: "Geben Sie ein Stichwort in die Suchleiste ein", ar: "أدخل كلمة في مربع البحث", ru: "Введите слово в поиск", ja: "ヘッダーの検索ボックスにキーワードを入力", ko: "헤더 검색창에 키워드 입력", pt: "Digite uma palavra na caixa de pesquisa" },
+  resultsFound: { en: "{n} result", es: "{n} resultado", fr: "{n} résultat", de: "{n} Ergebnis", ar: "{n} نتيجة", ru: "{n} результат", ja: "{n}件", ko: "{n}개 결과", pt: "{n} resultado" },
+  resultsFoundPlural: { en: "{n} results", es: "{n} resultados", fr: "{n} résultats", de: "{n} Ergebnisse", ar: "{n} نتائج", ru: "{n} результатов", ja: "{n}件", ko: "{n}개 결과", pt: "{n} resultados" },
+  noProductsMatch: { en: "No products match your search. Try \"spinning\", \"carbon\", or \"travel\".", es: "No hay productos. Pruebe \"spinning\", \"carbon\" o \"travel\".", fr: "Aucun produit. Essayez \"spinning\", \"carbon\" ou \"travel\".", de: "Keine Produkte. Versuchen Sie \"Spinning\", \"Carbon\" oder \"Travel\".", ar: "لا توجد منتجات. جرب \"spinning\" أو \"carbon\" أو \"travel\".", ru: "Нет результатов. Попробуйте «spinning», «carbon» или «travel».", ja: "該当なし。「spinning」「carbon」「travel」をお試しください。", ko: "검색 결과 없음. \"spinning\", \"carbon\", \"travel\"로 검색해 보세요.", pt: "Nenhum produto. Tente \"spinning\", \"carbon\" ou \"travel\"." },
+  insightsSubtitle: { en: "Practical guides and sourcing insights for fishing rod buyers and tackle businesses.", es: "Guías prácticas e información para compradores y negocios de cañas.", fr: "Guides pratiques et insights pour acheteurs et entreprises.", de: "Praktische Leitfäden und Insights für Einkäufer und Unternehmen.", ar: "أدلة عملية ورؤى للشراء للأعمال التجارية.", ru: "Практические руководства и обзоры для покупателей и бизнеса.", ja: "ロッドバイヤーやタックル事業者向けの実践ガイド。", ko: "로드 구매자 및 사업자를 위한 실용 가이드.", pt: "Guias práticos e insights para compradores e negócios." },
+  inquiryNow: { en: "Inquiry Now", es: "Consultar ahora", fr: "Demander maintenant", de: "Jetzt anfragen", ar: "استفسار الآن", ru: "Запросить", ja: "今すぐお問い合わせ", ko: "지금 문의하기", pt: "Consultar agora" },
+  packagingDelivery: { en: "Packaging & Delivery", es: "Embalaje y envío", fr: "Emballage et livraison", de: "Verpackung & Versand", ar: "التعبئة والتوصيل", ru: "Упаковка и доставка", ja: "梱包と配送", ko: "포장 및 배송", pt: "Embalagem e entrega" },
+  logistics: { en: "Logistics", es: "Logística", fr: "Logistique", de: "Logistik", ar: "اللوجستيات", ru: "Логистика", ja: "物流", ko: "물류", pt: "Logística" },
+  logisticsDesc: { en: "Supporting air freight and sea shipping, with delivery within 6–9 business days at the fastest.", es: "Transporte aéreo y marítimo, entrega en 6–9 días laborables.", fr: "Transport aérien et maritime, livraison en 6–9 jours ouvrés.", de: "Luft- und Seefracht, Lieferung in 6–9 Werktagen.", ar: "الشحن الجوي والبحري، التوصيل خلال 6–9 أيام عمل.", ru: "Авиа и морские перевозки, доставка за 6–9 рабочих дней.", ja: "航空・海上輸送、最短6〜9営業日で配送。", ko: "항공 및 해상 운송, 최대 6–9 영업일 내 배송.", pt: "Transporte aéreo e marítimo, entrega em 6–9 dias úteis." },
+  service24h: { en: "24-Hour Service", es: "Servicio 24 horas", fr: "Service 24 h", de: "24-Stunden-Service", ar: "خدمة 24 ساعة", ru: "Служба 24 часа", ja: "24時間対応", ko: "24시간 서비스", pt: "Serviço 24h" },
+  service24hDesc: { en: "If you have any problems, please contact customer service. We reply within 24 hours.", es: "Problemas: contacte servicio al cliente. Respondemos en 24 horas.", fr: "Problèmes: contactez le service client. Réponse sous 24 h.", de: "Bei Fragen kontaktieren Sie den Kundendienst. Antwort innerhalb 24 Stunden.", ar: "للأسئلة تواصل خدمة العملاء. الرد خلال 24 ساعة.", ru: "Вопросы: свяжитесь с нами. Ответим в течение 24 часов.", ja: "ご不明点はお問い合わせください。24時間以内に返信します。", ko: "문의사항은 고객센터로 연락 주세요. 24시간 내 답변.", pt: "Dúvidas: entre em contato. Respondemos em 24 horas." },
+  qualityGuaranteed: { en: "High Quality Guaranteed", es: "Alta calidad garantizada", fr: "Qualité garantie", de: "Höchste Qualität garantiert", ar: "جودة عالية مضمونة", ru: "Гарантия высшего качества", ja: "高品質保証", ko: "고품질 보증", pt: "Alta qualidade garantida" },
+  qualityGuaranteedDesc: { en: "All products manufactured by RodsHub meet the highest quality standards. Please read the specifications before ordering.", es: "Todos los productos cumplen los más altos estándares. Lea las especificaciones.", fr: "Tous nos produits répondent aux normes les plus strictes. Consultez les spécifications.", de: "Alle Produkte erfüllen höchste Qualitätsstandards. Bitte Spezifikationen lesen.", ar: "جميع المنتجات تلبي أعلى المعايير. راجع المواصفات قبل الطلب.", ru: "Вся продукция соответствует высшим стандартам. Ознакомьтесь со спецификациями.", ja: "全製品が最高基準を満たします。注文前に仕様をご確認ください。", ko: "모든 제품이 최고 품질 기준을 충족합니다. 주문 전 사양을 확인하세요.", pt: "Todos os produtos atendem aos mais altos padrões. Leia as especificações." },
+  packagingDesc: { en: "Each rod is carefully packaged in individual protective sleeves and sturdy tubes to prevent damage during transit. Bulk orders are palletized and wrapped for sea freight compatibility.", es: "Cada caña se embala en fundas protectoras y tubos resistentes. Pedidos grandes paletizados para transporte marítimo.", fr: "Chaque canne est emballée dans des manchons et tubes robustes. Gros volumes palettisés pour fret maritime.", de: "Jede Rute wird einzeln in Schutzfolien und stabile Röhren verpackt. Großbestellungen palettiert.", ar: "كل قضيب مغلف بغلاف واقي وأنابيب متينة. الطلبات الكبيرة منصّة للنقل البحري.", ru: "Каждая удочка упакована в защитную пленку и трубки. Крупные заказы палетируются.", ja: "各ロッドは個別保護スリーブと丈夫なチューブで梱包。大口はパレット対応。", ko: "각 로드는 개별 보호 슬리브와 튜브로 포장. 대량 주문은 파레트 화.", pt: "Cada vara em embalagem individual e tubos resistentes. Pedidos grandes paletizados." },
+  action: { en: "Action", es: "Acción", fr: "Action", de: "Aktion", ar: "الحركة", ru: "Строй", ja: "アクション", ko: "액션", pt: "Ação" },
+  lineWeight: { en: "Line Weight", es: "Peso línea", fr: "Poids ligne", de: "Schnurgewicht", ar: "وزن الخيط", ru: "Вес лески", ja: "ラインウェイト", ko: "라인 중량", pt: "Peso linha" },
+  lureWeight: { en: "Lure Weight", es: "Peso señuelo", fr: "Poids leurre", de: "Ködergewicht", ar: "وزن الطعم", ru: "Вес приманки", ja: "ルアーウェイト", ko: "루어 중량", pt: "Peso isca" },
+  handle: { en: "Handle", es: "Empuñadura", fr: "Poignée", de: "Griff", ar: "المقبض", ru: "Ручка", ja: "グリップ", ko: "핸들", pt: "Cabo" },
+  rodSections: { en: "Sections", es: "Secciones", fr: "Sections", de: "Sektionen", ar: "القطاعات", ru: "Секции", ja: "セク션", ko: "섹션", pt: "Seções" },
+  trendingRodsNav: { en: "Trending Rods", es: "Cañas en tendencia", fr: "Cannes tendance", de: "Trend-Ruten", ar: "القضبان الرائجة", ru: "Популярные удилища", ja: "トレンドロッド", ko: "트렌드 로드", pt: "Varas em tendência" },
+  trendingRodsDesc: { en: "Top picks from our B2B marketplace · Best sellers & hot deals", es: "Mejores del marketplace B2B · Más vendidos", fr: "Meilleures sélections · Best sellers", de: "Top-Angebote · Bestseller", ar: "أفضل المنتجات · الأكثر مبيعاً", ru: "Лучшие предложения · Бестселлеры", ja: "B2Bマーケットの人気商品", ko: "B2B 마켓 인기 상품", pt: "Melhores do marketplace B2B" },
+  viewWholesalePicks: { en: "View Wholesale Picks →", es: "Ver mayorista →", fr: "Voir gros →", de: "Großhandel anzeigen →", ar: "عرض الجملة →", ru: "Смотреть оптом →", ja: "卸売を見る →", ko: "도매 보기 →", pt: "Ver atacado →" },
+  bulkSavings: { en: "Bulk Savings", es: "Ahorro mayorista", fr: "Économies en gros", de: "Mengenrabatt", ar: "توفير الجملة", ru: "Оптовые скидки", ja: "大口割引", ko: "대량 할인", pt: "Economia no atacado" },
+  wholesalePicksTitle: { en: "Wholesale Picks", es: "Selección mayorista", fr: "Choix gros", de: "Großhandelsauswahl", ar: "اختيارات الجملة", ru: "Оптовый выбор", ja: "卸売セレクト", ko: "도매 추천", pt: "Escolhas atacado" },
+  wholesalePicksDesc: { en: "Best-value rods for bulk orders & competitive pricing · MOQ from 30 pcs", es: "Mejor relación calidad-precio · MOQ desde 30 uds", fr: "Meilleur rapport qualité-prix · MOQ dès 30 pcs", de: "Bestes Preis-Leistungs-Verhältnis · MOQ ab 30", ar: "أفضل قيمة · حد أدنى 30 قطعة", ru: "Лучшая цена · MOQ от 30 шт", ja: "コストパフォーマンス最強 · MOQ 30本から", ko: "최고 가성비 · MOQ 30개부터", pt: "Melhor custo-benefício · MOQ 30 un" },
+  needCustomMoq: { en: "Need custom MOQ or branding? We support OEM.", es: "¿MOQ o marca personalizada? Soporte OEM.", fr: "MOQ ou marque personnalisée ? Nous supportons l'OEM.", de: "Individuelle MOQ oder Branding? OEM-Support.", ar: "حاجة لـ MOQ أو علامة مخصصة؟ ندعم OEM.", ru: "Индивидуальный MOQ или брендинг? OEM-поддержка.", ja: "カスタムMOQやブランディング？OEM対応。", ko: "맞춤 MOQ 또는 브랜딩? OEM 지원.", pt: "MOQ ou marca personalizada? Suporte OEM." },
+  youMayAlsoLike: { en: "You May Also Like", es: "También le puede gustar", fr: "Vous aimerez aussi", de: "Das könnte Sie auch interessieren", ar: "قد يعجبك أيضاً", ru: "Вам также понравится", ja: "おすすめ商品", ko: "관련 상품", pt: "Você também pode gostar" },
 };
 
 export function t(key: keyof typeof T, lang: LangCode): string {
