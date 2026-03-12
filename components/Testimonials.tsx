@@ -27,7 +27,7 @@ export default function Testimonials() {
             <div className="relative aspect-[4/3] md:aspect-auto min-h-[200px] bg-gray-200">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://images.unsplash.com/photo-1580480058343-4d04d051acd7?w=600&h=400&fit=crop"
+                src="https://images.pexels.com/photos/18040479/pexels-photo-18040479.jpeg?auto=compress&w=600&h=400&fit=crop"
                 alt="Fishing"
                 className="absolute inset-0 w-full h-full object-cover"
               />

@@ -29,7 +29,7 @@ export default function Hero() {
         <div className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=1920&h=1080&fit=crop"
+            src="https://images.unsplash.com/photo-1525134055640-f42ef8a7032d?w=1920&h=1080&fit=crop"
             alt="Fishing rods and gear"
             className="w-full h-full object-cover"
           />
@@ -38,12 +38,12 @@ export default function Hero() {
         {/* Market shelf - rod display */}
         <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-3 sm:gap-6 px-4 pb-6 sm:pb-12 lg:pb-16">
           {[
-            "https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=200&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=200&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1559827260-dc66d43bef33?w=200&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1524704654690-b56c05c78a00?w=200&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=200&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=200&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1525134055640-f42ef8a7032d?w=200&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=200&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1624218656926-da680b8127c9?w=200&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1689618601755-ef7ce1230bea?w=200&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1537872384762-e785271d14f8?w=200&h=400&fit=crop",
+            "https://images.pexels.com/photos/14339529/pexels-photo-14339529.jpeg?auto=compress&w=200&h=400&fit=crop",
           ].map((src, i) => (
             <div
               key={i}

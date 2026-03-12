@@ -32,7 +32,7 @@ export default function WhyRodsHub() {
               <div className="flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=200&h=200&fit=crop"
+                  src="https://images.unsplash.com/photo-1624218656926-da680b8127c9?w=200&h=200&fit=crop"
                   alt=""
                   className="w-full h-full object-cover"
                 />
@@ -48,7 +48,7 @@ export default function WhyRodsHub() {
               <div className="flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://images.unsplash.com/photo-1559827260-dc66d43bef33?w=200&h=200&fit=crop"
+                  src="https://images.unsplash.com/photo-1537872384762-e785271d14f8?w=200&h=200&fit=crop"
                   alt=""
                   className="w-full h-full object-cover"
                 />

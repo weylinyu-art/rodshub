@@ -4,17 +4,17 @@ const STATS = [
   {
     title: "200+ SKUs",
     subtitle: "Across 6 Categories",
-    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1525134055640-f42ef8a7032d?w=600&h=400&fit=crop",
   },
   {
     title: "6 Rod Categories",
     subtitle: "Spinning · Casting · Surf · Ice · Travel",
-    image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=600&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1624218656926-da680b8127c9?w=600&h=400&fit=crop",
   },
   {
     title: "24h Response",
     subtitle: "Inquiry Reply Guarantee",
-    image: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=600&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=600&h=400&fit=crop",
   },
 ];
 

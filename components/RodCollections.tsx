@@ -1,8 +1,8 @@
 const collections = [
-  { name: "Carbon Series", desc: "High-performance carbon fiber rods", image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=400&fit=crop", slug: "carbon" },
-  { name: "Travel Rods", desc: "Compact, portable designs", image: "https://images.unsplash.com/photo-1524704654690-b56c05c78a00?w=600&h=400&fit=crop", slug: "travel" },
-  { name: "Heavy Duty Rods", desc: "Built for big catches", image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=600&h=400&fit=crop", slug: "heavy-duty" },
-  { name: "Ultralight Rods", desc: "Sensitivity meets finesse", image: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=600&h=400&fit=crop", slug: "ultralight" },
+  { name: "Carbon Series", desc: "High-performance carbon fiber rods", image: "https://images.unsplash.com/photo-1624218656926-da680b8127c9?w=600&h=400&fit=crop", slug: "carbon" },
+  { name: "Travel Rods", desc: "Compact, portable designs", image: "https://images.pexels.com/photos/14339529/pexels-photo-14339529.jpeg?auto=compress&w=600&h=400&fit=crop", slug: "travel" },
+  { name: "Heavy Duty Rods", desc: "Built for big catches", image: "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=600&h=400&fit=crop", slug: "heavy-duty" },
+  { name: "Ultralight Rods", desc: "Sensitivity meets finesse", image: "https://images.unsplash.com/photo-1525134055640-f42ef8a7032d?w=600&h=400&fit=crop", slug: "ultralight" },
 ];
 
 export default function RodCollections() {

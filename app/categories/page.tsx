@@ -3,12 +3,12 @@ import { categories } from "@/lib/categoryProducts";
 import { getProductsByCategory } from "@/lib/categoryProducts";
 
 const CATEGORY_IMAGES: Record<string, string> = {
-  spinning: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop",
-  casting: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=400&h=300&fit=crop",
-  telescopic: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=400&h=300&fit=crop",
-  surf: "https://images.unsplash.com/photo-1559827260-dc66d43bef33?w=400&h=300&fit=crop",
-  ice: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=400&h=300&fit=crop",
-  travel: "https://images.unsplash.com/photo-1524704654690-b56c05c78a00?w=400&h=300&fit=crop",
+  spinning: "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=400&h=300&fit=crop",
+  casting: "https://images.unsplash.com/photo-1624218656926-da680b8127c9?w=400&h=300&fit=crop",
+  telescopic: "https://images.unsplash.com/photo-1525134055640-f42ef8a7032d?w=400&h=300&fit=crop",
+  surf: "https://images.unsplash.com/photo-1689618601755-ef7ce1230bea?w=400&h=300&fit=crop",
+  ice: "https://images.unsplash.com/photo-1537872384762-e785271d14f8?w=400&h=300&fit=crop",
+  travel: "https://images.pexels.com/photos/14339529/pexels-photo-14339529.jpeg?auto=compress&w=400&h=300&fit=crop",
 };
 
 export default function CategoriesPage() {
