@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import { INSIGHT_SECTIONS } from "@/lib/insights";
@@ -50,7 +51,9 @@ export default async function InsightSectionPage({ params }: PageProps) {
   return (
     <main className="min-h-screen bg-gray-50">
       <JsonLd data={[breadcrumbSchema]} />
-      <InsightSectionListContent sectionId={sectionId} />
+      <Suspense fallback={<div className="min-h-screen bg-gray-50 animate-pulse" />}>
+        <InsightSectionListContent sectionId={sectionId} />
+      </Suspense>
     </main>
   );
 }
