@@ -40,7 +40,7 @@ export default function Header() {
               onMouseLeave={() => setOpenNav(null)}
             >
               <Link
-                href="/categories"
+                href="/rods/category"
                 className="px-4 py-2 text-gray-700 hover:text-black font-medium transition inline-block"
               >
                 Categories
@@ -48,6 +48,12 @@ export default function Header() {
               {openNav === "categories" && (
                 <div className="absolute top-full left-0 pt-1">
                   <div className="w-48 bg-white border border-gray-200 shadow-lg py-2">
+                    <Link
+                      href="/rods/category"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-black font-medium"
+                    >
+                      All
+                    </Link>
                     {CATEGORIES.map((c) => (
                       <Link
                         key={c.slug}
@@ -66,16 +72,21 @@ export default function Header() {
               onMouseEnter={() => setOpenNav("scenarios")}
               onMouseLeave={() => setOpenNav(null)}
             >
-              <button
-                type="button"
-                onClick={() => setOpenNav((v) => (v === "scenarios" ? null : "scenarios"))}
-                className="px-4 py-2 text-gray-700 hover:text-black font-medium transition"
+              <Link
+                href="/rods/scenario"
+                className="px-4 py-2 text-gray-700 hover:text-black font-medium transition inline-block"
               >
                 Scenarios
-              </button>
+              </Link>
               {openNav === "scenarios" && (
                 <div className="absolute top-full left-0 pt-1">
                   <div className="w-40 bg-white border border-gray-200 shadow-lg py-2">
+                    <Link
+                      href="/rods/scenario"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-black font-medium"
+                    >
+                      All
+                    </Link>
                     {SCENARIOS.map((s) => (
                       <Link
                         key={s.slug}
@@ -138,6 +149,9 @@ export default function Header() {
           <div className="lg:hidden border-t border-gray-200 py-4">
             <div className="flex flex-col gap-1">
               <p className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">Categories</p>
+              <Link href="/rods/category" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black font-medium">
+                All
+              </Link>
               {CATEGORIES.map((c) => (
                 <Link
                   key={c.slug}
@@ -162,6 +176,9 @@ export default function Header() {
                 Inquiry
               </Link>
               <p className="px-4 py-2 mt-2 text-xs font-semibold text-gray-500 uppercase">Scenarios</p>
+              <Link href="/rods/scenario" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black font-medium">
+                All
+              </Link>
               {SCENARIOS.map((s) => (
                 <Link
                   key={s.slug}
