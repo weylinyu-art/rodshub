@@ -79,12 +79,31 @@ export default function Header() {
             {/* Language + Inquiry at bottom */}
             <div className="mt-auto px-4 py-4 border-t border-gray-200 space-y-3" style={{ paddingBottom: "max(env(safe-area-inset-bottom), 16px)" }}>
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500">{t("language", lang)}:</span>
-                {LANGUAGES.map((l) => (
-                  <button key={l.code} type="button" onClick={() => { setLang(l.code); }} className={`px-3 py-1.5 text-sm rounded-lg ${lang === l.code ? "bg-black text-white" : "bg-gray-100 text-gray-700"}`}>
-                    {l.code.toUpperCase()}
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setOpenNav((v) => (v === "lang" ? null : "lang"))}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 text-sm rounded-lg border border-gray-200 bg-gray-50 text-gray-700"
+                    aria-label={`${t("language", lang)}: ${LANGUAGES.find((l) => l.code === lang)?.name ?? lang}`}
+                  >
+                    {(LANGUAGES.find((l) => l.code === lang)?.code ?? lang).toUpperCase()}
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                   </button>
-                ))}
+                  {openNav === "lang" && (
+                    <div className="absolute left-0 top-full mt-1 w-40 bg-white border border-gray-200 shadow-lg rounded-lg py-2 max-h-56 overflow-y-auto">
+                      {LANGUAGES.map((l) => (
+                        <button
+                          key={l.code}
+                          type="button"
+                          onClick={() => { setLang(l.code); setOpenNav(null); }}
+                          className={`block w-full text-left px-4 py-2 text-sm hover:bg-gray-50 ${lang === l.code ? "font-medium text-black bg-gray-50" : "text-gray-700"}`}
+                        >
+                          {l.name}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
               <Link href="/inquiry" onClick={() => setMobileOpen(false)} className="block w-full py-3.5 bg-black text-white text-center font-semibold rounded-xl">
                 {t("sendInquiry", lang)}
@@ -126,11 +145,11 @@ export default function Header() {
               >
                 <button
                   type="button"
-                  className="flex items-center gap-1.5 px-3 py-2 text-sm text-gray-600 hover:text-black rounded-lg border border-gray-200 hover:border-gray-300 bg-gray-50/50"
-                  aria-label="Language"
+                  className="flex items-center gap-1.5 px-2.5 py-2 text-sm text-gray-600 hover:text-black rounded-lg border border-gray-200 hover:border-gray-300 bg-gray-50/50"
+                  aria-label={`${t("language", lang)}: ${LANGUAGES.find((l) => l.code === lang)?.name ?? lang}`}
                 >
-                  <span>{LANGUAGES.find((l) => l.code === lang)?.name ?? lang}</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                  <span>{(LANGUAGES.find((l) => l.code === lang)?.code ?? lang).toUpperCase()}</span>
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                 </button>
                 {openNav === "lang" && (
                   <div className="absolute right-0 top-full pt-1">
