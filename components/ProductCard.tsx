@@ -11,6 +11,7 @@ interface ProductCardProps extends Product {
 const inquiryHref = "/#inquiry";
 
 export default function ProductCard({
+  id,
   name,
   price,
   moq,
@@ -26,10 +27,11 @@ export default function ProductCard({
   const showInquiryButton = variant === "trending";
   const imgList = (images && images.length > 0 ? images : [image]) as string[];
   const [activeIndex, setActiveIndex] = useState(0);
+  const href = id ? `/product/${id}` : inquiryHref;
 
   return (
     <Link
-      href={inquiryHref}
+      href={href}
       className="group flex flex-col bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-gray-400 hover:shadow-lg transition-all duration-200"
     >
       <div
