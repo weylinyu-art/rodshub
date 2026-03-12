@@ -10,6 +10,10 @@ const config: Config = {
       colors: {
         primary: "#000000",
         "primary-muted": "#171717",
+        coral: {
+          500: "#f97316",
+          600: "#ea580c",
+        },
       },
       fontFamily: {
         sans: ["system-ui", "-apple-system", "sans-serif"],

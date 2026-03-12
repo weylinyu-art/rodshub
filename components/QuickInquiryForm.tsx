@@ -48,7 +48,7 @@ export default function QuickInquiryForm() {
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold text-gray-900 mb-2">{c.title}</h2>
         <p className="text-gray-600 mb-2">{c.subtitle}</p>
-        <p className="text-coral-600 font-semibold mb-8">{c.replyNote}</p>
+        <p className="text-orange-600 font-semibold mb-8">{c.replyNote}</p>
         <form
           onSubmit={handleSubmit}
           action={useFormsubmit ? `https://formsubmit.co/${INQUIRY_EMAIL}` : undefined}
@@ -60,6 +60,12 @@ export default function QuickInquiryForm() {
               <input type="hidden" name="_next" value={`${SITE_URL}/inquiry?success=1`} />
               <input type="hidden" name="_subject" value="RodsHub: New Sourcing Inquiry" />
               <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="basic" />
+              <input type="hidden" name="_template" value="basic" />
+              <input type="hidden" name="_template" value="basic" />
+              <input type="hidden" name="_template" value="basic" />
+              <input type="hidden" name="_template" value="basic" />
+              <input type="hidden" name="_template" value="box" />
             </>
           )}
           <div className="grid sm:grid-cols-2 gap-4">
@@ -104,7 +110,7 @@ export default function QuickInquiryForm() {
           </div>
           <button
             type="submit"
-            className="mt-8 w-full px-8 py-4 bg-gradient-to-r from-coral-500 to-pink-500 text-white text-lg font-bold rounded-full hover:from-coral-600 hover:to-pink-600 transition shadow-xl shadow-coral-500/40"
+            className="mt-8 w-full min-h-[48px] px-8 py-4 bg-gray-900 hover:bg-black text-white text-lg font-bold rounded-lg transition shadow-md border-2 border-gray-900"
           >
             {c.submitBtn}
           </button>
