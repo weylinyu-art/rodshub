@@ -27,3 +27,18 @@ export function getAllProductIds(): string[] {
 export function getAllProducts(): (Product & { id: string })[] {
   return allProducts;
 }
+
+/** 根据同分类/同场景推荐关联产品，排除当前产品 */
+export function getRelatedProducts(currentId: string, limit = 8): (Product & { id: string })[] {
+  const current = getProductById(currentId);
+  if (!current) return [];
+  const style = (current.fishingStyle ?? "").toLowerCase();
+  const sameStyle = allProducts.filter(
+    (p) => p.id !== currentId && p.id && (p.fishingStyle ?? "").toLowerCase() === style
+  );
+  const others = allProducts.filter(
+    (p) => p.id !== currentId && p.id && !sameStyle.some((s) => s.id === p.id)
+  );
+  const related = [...sameStyle, ...others].slice(0, limit);
+  return related as (Product & { id: string })[];
+}

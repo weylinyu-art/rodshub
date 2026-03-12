@@ -77,7 +77,6 @@ export default function ProductCard({
           </div>
         )}
         <p className="mt-1 font-bold text-gray-900">{price}</p>
-        {moq && <p className="mt-0.5 text-xs text-gray-500">MOQ: {moq}</p>}
         {showInquiryButton ? (
           <span className="mt-2 inline-flex justify-center px-3 py-1.5 bg-black text-white text-xs font-medium rounded hover:bg-gray-800 transition w-full pointer-events-none">
             Send Inquiry

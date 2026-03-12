@@ -42,27 +42,29 @@ const CARDS = [
 
 export default function ValueCards() {
   return (
-    <section className="py-10 sm:py-14 bg-white border-b border-gray-100">
+    <section className="py-12 sm:py-16 bg-gray-50/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p className="text-center text-gray-500 text-sm font-medium mb-8">
-          The Global Marketplace for Fishing Rod Sourcing
-        </p>
-        <p className="text-center text-gray-600 mb-10">
-          Offering You the Best Prices & Unparalleled Service
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="text-center mb-10">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
+            Your Trusted Rod Sourcing Partner
+          </h2>
+          <p className="mt-2 text-gray-600 max-w-2xl mx-auto">
+            Best prices, global logistics, and personalized support for B2B buyers
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
           {CARDS.map((card, i) => (
             <div
               key={i}
-              className="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 bg-gray-50/50 hover:border-gray-300 hover:bg-gray-50 transition"
+              className="flex flex-col items-center text-center p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200 transition-all duration-200"
             >
-              <div className="w-14 h-14 rounded-xl bg-black text-white flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-xl bg-gray-900 text-white flex items-center justify-center mb-4">
                 {card.icon}
               </div>
-              <h3 className="font-semibold text-gray-900">{card.title}</h3>
-              <p className="mt-2 text-sm text-gray-600">{card.desc}</p>
+              <h3 className="font-semibold text-gray-900 text-sm sm:text-base">{card.title}</h3>
+              <p className="mt-2 text-sm text-gray-600 leading-relaxed">{card.desc}</p>
               {i === 1 && (
-                <Link href="/oem" className="mt-4 text-sm font-semibold text-black hover:underline">
+                <Link href="/oem" className="mt-4 text-sm font-semibold text-gray-900 hover:text-black transition">
                   Learn more →
                 </Link>
               )}
