@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { ARTICLES } from "@/lib/insights";
+import { INSIGHT_BLOCKS } from "@/lib/insights";
+
+export const metadata: Metadata = {
+  title: "Fishing Insights | RodsHub",
+  description: "Fishing rod types, materials, power & action, supplier selection, manufacturing, and line/lure guides.",
+};
 
 export default function InsightsPage() {
   return (
@@ -13,36 +19,35 @@ export default function InsightsPage() {
           </nav>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Fishing Insights</h1>
           <p className="mt-1 text-gray-600">
-            Industry knowledge for smarter sourcing
+            Industry knowledge for smarter rod sourcing — rod types, materials, power & action, supplier selection, manufacturing, and more.
           </p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {ARTICLES.map((article) => (
-            <article
-              key={article.slug}
-              className="group block bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-gray-300 hover:shadow-lg transition-all"
-            >
-              <div className="aspect-[5/3] overflow-hidden bg-gray-100">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={article.image}
-                  alt={article.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="p-4">
-                <h2 className="font-semibold text-gray-900 group-hover:text-black transition line-clamp-2">
-                  {article.title}
-                </h2>
-                <p className="mt-1 text-sm text-gray-500 line-clamp-2">{article.excerpt}</p>
-                <span className="mt-2 inline-block text-sm font-medium text-gray-900">Read more →</span>
-              </div>
-            </article>
-          ))}
-        </div>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        {INSIGHT_BLOCKS.map((block) => (
+          <article
+            key={block.id}
+            id={block.id}
+            className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8"
+          >
+            <h2 className="text-lg font-bold text-gray-900 mb-4">{block.title}</h2>
+            <div className="space-y-4 text-gray-600 leading-relaxed">
+              {block.content.map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 pb-16 text-center">
+        <Link
+          href="/inquiry"
+          className="inline-flex items-center justify-center px-8 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition"
+        >
+          Ask us about sourcing
+        </Link>
       </div>
     </main>
   );

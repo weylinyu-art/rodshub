@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { LANGUAGES, t } from "@/lib/i18n";
 
 const CATEGORIES = [
   { name: "Spinning", slug: "spinning" },
@@ -21,19 +24,73 @@ const SCENARIOS = [
 ];
 
 export default function Header() {
-  const [openNav, setOpenNav] = useState<"categories" | "scenarios" | null>(null);
+  const [openNav, setOpenNav] = useState<"categories" | "scenarios" | "lang" | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchQ, setSearchQ] = useState("");
+  const pathname = usePathname();
+  const { lang, setLang } = useLanguage();
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        {/* Top bar: Search + Language */}
+        <div className="hidden sm:flex items-center justify-end gap-3 py-2 border-b border-gray-100">
+          <form action="/search" method="get" className="flex">
+            <input
+              type="search"
+              name="q"
+              value={searchQ}
+              onChange={(e) => setSearchQ(e.target.value)}
+              placeholder={t("searchPlaceholder", lang)}
+              className="w-40 lg:w-52 px-3 py-1.5 text-sm border border-gray-200 rounded-l focus:outline-none focus:border-gray-400"
+              aria-label="Search"
+            />
+            <button type="submit" className="px-3 py-1.5 bg-gray-900 text-white text-sm rounded-r hover:bg-gray-800">
+              {t("search", lang)}
+            </button>
+          </form>
+          <div
+            className="relative"
+            onMouseEnter={() => setOpenNav((v) => (v === "lang" ? v : "lang"))}
+            onMouseLeave={() => setOpenNav((v) => (v === "lang" ? null : v))}
+          >
+            <button
+              type="button"
+              className="flex items-center gap-1 px-2 py-1 text-sm text-gray-600 hover:text-black"
+              aria-label="Language"
+            >
+              <span>{LANGUAGES.find((l) => l.code === lang)?.name ?? lang}</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+            </button>
+            {openNav === "lang" && (
+              <div className="absolute right-0 top-full pt-1">
+                <div className="w-36 bg-white border border-gray-200 shadow-lg py-2">
+                  {LANGUAGES.map((l) => (
+                    <button
+                      key={l.code}
+                      type="button"
+                      onClick={() => { setLang(l.code); setOpenNav(null); }}
+                      className={`block w-full text-left px-4 py-2 text-sm hover:bg-gray-50 ${lang === l.code ? "font-medium text-black bg-gray-50" : "text-gray-700"}`}
+                    >
+                      {l.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between h-14">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-2xl font-bold text-black">RodsHub</span>
           </Link>
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-1">
+            <Link href="/" className={`px-4 py-2 font-medium transition ${pathname === "/" ? "text-black" : "text-gray-700 hover:text-black"}`}>
+              {t("home", lang)}
+            </Link>
             <div
               className="relative"
               onMouseEnter={() => setOpenNav("categories")}
@@ -148,6 +205,17 @@ export default function Header() {
         {mobileOpen && (
           <div className="lg:hidden border-t border-gray-200 py-4">
             <div className="flex flex-col gap-1">
+              <Link href="/" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black font-medium">
+                {t("home", lang)}
+              </Link>
+              <form action="/search" method="get" className="px-4 py-2">
+                <input
+                  type="search"
+                  name="q"
+                  placeholder={t("searchPlaceholder", lang)}
+                  className="w-full px-3 py-2 text-sm border border-gray-200 rounded"
+                />
+              </form>
               <p className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">Categories</p>
               <Link href="/rods/category" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black font-medium">
                 All
