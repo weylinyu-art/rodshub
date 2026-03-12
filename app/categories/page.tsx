@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { categories } from "@/lib/categoryProducts";
-import { getProductsByCategory } from "@/lib/categoryProducts";
+import { categories, getProductsByCategory } from "@/lib/categoryProducts";
+import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  title: "All Categories | Fishing Rods | RodsHub",
+  description: "Browse spinning, casting, telescopic, surf, ice fishing, travel rods. 200+ SKUs. Wholesale prices.",
+  openGraph: buildOpenGraph("All Categories | RodsHub", "Spinning, casting, telescopic, surf, ice, travel rods.", "/categories"),
+  alternates: { canonical: absoluteUrl("/categories") },
+};
 
 const CATEGORY_IMAGES: Record<string, string> = {
   spinning: "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=400&h=300&fit=crop",

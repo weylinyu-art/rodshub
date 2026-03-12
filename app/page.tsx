@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Hero from "@/components/Hero";
 import ValueCards from "@/components/ValueCards";
@@ -11,6 +12,31 @@ import WhyRodsHub from "@/components/WhyRodsHub";
 import Testimonials from "@/components/Testimonials";
 import { trendingRods, newArrivals, wholesalePicks } from "@/lib/products";
 import { ARTICLES } from "@/lib/insights";
+import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  title: "RodsHub | B2B Fishing Rod Wholesale & OEM Marketplace",
+  description:
+    "Source fishing rods at wholesale: spinning, casting, telescopic, surf, ice & travel. 200+ SKUs, MOQ from 30 pcs, 24h reply. OEM custom branding available.",
+  keywords: [
+    "fishing rod wholesale",
+    "B2B fishing rods",
+    "spinning rod supplier",
+    "casting rod manufacturer",
+    "OEM fishing rod",
+    "rodshub",
+  ],
+  openGraph: buildOpenGraph(
+    "RodsHub | B2B Fishing Rod Wholesale & OEM Marketplace",
+    "Source fishing rods at wholesale. 200+ SKUs, MOQ from 30 pcs. OEM custom branding.",
+    "/"
+  ),
+  twitter: buildTwitter(
+    "RodsHub | B2B Fishing Rod Wholesale Marketplace",
+    "Source fishing rods at wholesale. 200+ SKUs, OEM available."
+  ),
+  alternates: { canonical: absoluteUrl("/") },
+};
 
 /** 首页：入口导向，信任模块，各模块跳转独立页面 */
 export default function Home() {

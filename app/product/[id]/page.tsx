@@ -1,9 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProductById, getAllProductIds, getRelatedProducts } from "@/lib/productRegistry";
 import { getProductDetail } from "@/lib/productDetail";
 import ProductImageGallery from "@/components/ProductImageGallery";
 import ProductDetailRecommend from "@/components/ProductDetailRecommend";
+import JsonLd from "@/components/JsonLd";
+import { SITE_URL, absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -11,6 +14,26 @@ interface PageProps {
 
 export async function generateStaticParams() {
   return getAllProductIds().map((id) => ({ id }));
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const product = getProductById(id);
+  if (!product) return { title: "Product Not Found" };
+
+  const title = `${product.name} | B2B Wholesale`;
+  const desc = `${product.name} - ${product.price}${product.moq ? `, MOQ ${product.moq}` : ""}. ${product.material || ""} ${product.length || ""} ${product.power || ""}. RodsHub B2B fishing rod sourcing.`;
+  const path = `/product/${id}`;
+  const image = (product.images?.[0] || product.image) as string;
+
+  return {
+    title,
+    description: desc.slice(0, 160),
+    keywords: [product.name, product.fishingStyle, "wholesale", "B2B", "fishing rod"].filter((x): x is string => !!x),
+    openGraph: buildOpenGraph(title, desc, path, image),
+    twitter: buildTwitter(title, desc, image),
+    alternates: { canonical: absoluteUrl(path) },
+  };
 }
 
 export default async function ProductPage({ params }: PageProps) {
@@ -22,8 +45,35 @@ export default async function ProductPage({ params }: PageProps) {
   const imgList = (product.images && product.images.length > 0 ? product.images : [product.image]) as string[];
   const related = getRelatedProducts(id, 8);
 
+  const productSchema = {
+    "@context": "https://schema.org" as const,
+    "@type": "Product" as const,
+    name: product.name,
+    description: detail.description.slice(0, 500),
+    image: imgList[0],
+    offers: {
+      "@type": "Offer" as const,
+      price: product.price,
+      availability: "https://schema.org/InStock" as const,
+    },
+    brand: { "@type": "Brand" as const, name: "RodsHub" },
+    sku: product.id,
+    ...(product.material && { material: product.material }),
+    ...(product.length && { size: product.length }),
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org" as const,
+    "@type": "BreadcrumbList" as const,
+    itemListElement: [
+      { "@type": "ListItem" as const, position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem" as const, position: 2, name: product.name, item: absoluteUrl(`/product/${id}`) },
+    ],
+  };
+
   return (
     <main className="min-h-screen bg-gray-50">
+      <JsonLd data={[productSchema, breadcrumbSchema]} />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6">

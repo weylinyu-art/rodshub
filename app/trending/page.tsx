@@ -1,6 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import { trendingRods } from "@/lib/products";
+import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  title: "Trending Fishing Rods | RodsHub",
+  description: "Top trending fishing rods. Best sellers and hot deals. B2B wholesale from RodsHub.",
+  openGraph: buildOpenGraph("Trending Fishing Rods | RodsHub", "Best sellers and hot deals for wholesalers.", "/trending"),
+  alternates: { canonical: absoluteUrl("/trending") },
+};
 
 export default function TrendingPage() {
   return (

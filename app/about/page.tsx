@@ -1,4 +1,19 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  title: "About RodsHub | B2B Fishing Rod Marketplace",
+  description:
+    "RodsHub connects fishing rod wholesalers and retailers with quality manufacturers. Spinning, casting, telescopic, surf, ice & travel rods. Wholesale, OEM, export-ready.",
+  openGraph: buildOpenGraph(
+    "About RodsHub | B2B Fishing Rod Marketplace",
+    "Global B2B marketplace for fishing rod sourcing. Wholesale, OEM, export.",
+    "/about"
+  ),
+  twitter: buildTwitter("About RodsHub | B2B Fishing Rod Marketplace", "Global B2B marketplace for fishing rod sourcing."),
+  alternates: { canonical: absoluteUrl("/about") },
+};
 
 export default function AboutPage() {
   return (

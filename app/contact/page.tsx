@@ -1,4 +1,19 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  title: "Contact Us | RodsHub",
+  description:
+    "Contact RodsHub: email, WhatsApp. 24-hour reply. B2B fishing rod sourcing, wholesale, OEM inquiries.",
+  openGraph: buildOpenGraph(
+    "Contact RodsHub | B2B Fishing Rod Sourcing",
+    "Email, WhatsApp. 24-hour reply. B2B fishing rod sourcing.",
+    "/contact"
+  ),
+  twitter: buildTwitter("Contact RodsHub", "24-hour reply. B2B fishing rod sourcing."),
+  alternates: { canonical: absoluteUrl("/contact") },
+};
 
 const EMAIL = "hello@rodshub.com";
 const WHATSAPP = "+8613800138000";

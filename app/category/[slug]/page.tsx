@@ -1,10 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CategoryFilters from "@/components/CategoryFilters";
+import JsonLd from "@/components/JsonLd";
 import {
   categories,
   getProductsByCategory,
 } from "@/lib/categoryProducts";
+import { absoluteUrl, buildOpenGraph, buildTwitter, SITE_URL } from "@/lib/seo";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -14,6 +17,25 @@ export async function generateStaticParams() {
   return categories.map((cat) => ({ slug: cat.slug }));
 }
 
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const category = categories.find((c) => c.slug === slug);
+  if (!category) return { title: "Category Not Found" };
+
+  const title = `${category.name} Wholesale | RodsHub`;
+  const desc = `Source ${category.name.toLowerCase()} at wholesale prices. 30+ SKUs, MOQ from 30 pcs. RodsHub B2B fishing rod marketplace.`;
+  const path = `/category/${slug}`;
+
+  return {
+    title,
+    description: desc,
+    keywords: [category.name, "wholesale", "B2B", "fishing rod", slug],
+    openGraph: buildOpenGraph(title, desc, path),
+    twitter: buildTwitter(title, desc),
+    alternates: { canonical: absoluteUrl(path) },
+  };
+}
+
 export default async function CategoryPage({ params }: PageProps) {
   const { slug } = await params;
   const category = categories.find((c) => c.slug === slug);
@@ -21,8 +43,18 @@ export default async function CategoryPage({ params }: PageProps) {
 
   const products = getProductsByCategory(slug);
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org" as const,
+    "@type": "BreadcrumbList" as const,
+    itemListElement: [
+      { "@type": "ListItem" as const, position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem" as const, position: 2, name: category.name, item: absoluteUrl(`/category/${slug}`) },
+    ],
+  };
+
   return (
     <main className="min-h-screen bg-gray-50">
+      <JsonLd data={breadcrumbSchema} />
       {/* Breadcrumb */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

@@ -3,12 +3,49 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import JsonLd from "@/components/JsonLd";
+import {
+  SITE_URL,
+  defaultTitle,
+  defaultDescription,
+  defaultKeywords,
+  openGraph,
+  twitterCard,
+  organizationSchema,
+  websiteSchema,
+} from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "RodsHub | The Global Marketplace for Fishing Rod Sourcing",
-  description:
-    "One Hub. Endless Rods. B2B fishing rod marketplace for wholesalers and retailers.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: defaultTitle,
+    template: "%s | RodsHub",
+  },
+  description: defaultDescription,
+  keywords: defaultKeywords,
   icons: { icon: "/favicon.svg" },
+  openGraph: {
+    ...openGraph,
+    type: "website",
+    locale: "en_US",
+    siteName: "RodsHub",
+  },
+  twitter: {
+    ...twitterCard,
+    card: "summary_large_image",
+  },
+  alternates: {
+    canonical: `${SITE_URL}/`,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  verification: {
+    // Add Google Search Console / Bing verification when available
+    // google: "xxx",
+    // yandex: "xxx",
+  },
 };
 
 export default function RootLayout({
@@ -19,6 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <JsonLd data={[organizationSchema, websiteSchema]} />
         <LanguageProvider>
           <Header />
           {children}

@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { absoluteUrl } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy | RodsHub",
+  description: "RodsHub privacy policy. How we collect, use, and protect your data.",
+  alternates: { canonical: absoluteUrl("/privacy") },
+  robots: { index: true, follow: true },
+};
 
 export default function PrivacyPage() {
   return (

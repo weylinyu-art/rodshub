@@ -1,4 +1,24 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import JsonLd from "@/components/JsonLd";
+import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  title: "FAQ - Sourcing Fishing Rods | RodsHub",
+  description:
+    "Frequently asked questions about RodsHub: MOQ, OEM, lead times, shipping, payment. B2B fishing rod sourcing answered.",
+  keywords: ["fishing rod FAQ", "MOQ", "OEM", "lead time", "shipping", "B2B"],
+  openGraph: buildOpenGraph(
+    "FAQ - Sourcing Fishing Rods | RodsHub",
+    "Frequently asked questions about RodsHub: MOQ, OEM, lead times, shipping, payment.",
+    "/faq"
+  ),
+  twitter: buildTwitter(
+    "FAQ - Sourcing Fishing Rods | RodsHub",
+    "Frequently asked questions about RodsHub: MOQ, OEM, lead times, shipping, payment."
+  ),
+  alternates: { canonical: absoluteUrl("/faq") },
+};
 
 const FAQ_ITEMS = [
   { q: "What is the minimum order quantity (MOQ)?", a: "MOQ varies by product, typically from 30 to 500 pcs depending on the rod type. Bulk and wholesale orders receive better pricing." },
@@ -10,8 +30,22 @@ const FAQ_ITEMS = [
 ];
 
 export default function FAQPage() {
+  const faqSchema = {
+    "@context": "https://schema.org" as const,
+    "@type": "FAQPage" as const,
+    mainEntity: FAQ_ITEMS.map((item) => ({
+      "@type": "Question" as const,
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer" as const,
+        text: item.a,
+      },
+    })),
+  };
+
   return (
     <main className="min-h-screen bg-gray-50">
+      <JsonLd data={faqSchema} />
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <nav className="flex items-center gap-2 text-sm text-gray-500 mb-2">

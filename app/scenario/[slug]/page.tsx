@@ -1,8 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ProductCard from "@/components/ProductCard";
 import CategoryFilters from "@/components/CategoryFilters";
+import JsonLd from "@/components/JsonLd";
 import { SCENARIOS, getProductsByScenario } from "@/lib/scenarios";
+import { absoluteUrl, buildOpenGraph, buildTwitter, SITE_URL } from "@/lib/seo";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -12,6 +14,25 @@ export async function generateStaticParams() {
   return SCENARIOS.map((s) => ({ slug: s.slug }));
 }
 
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const scenario = SCENARIOS.find((s) => s.slug === slug);
+  if (!scenario) return { title: "Scenario Not Found" };
+
+  const title = `${scenario.name} Fishing Rods | RodsHub`;
+  const desc = `Best ${scenario.name.toLowerCase()} fishing rods for wholesalers. RodsHub B2B marketplace - spinning, casting, surf & more.`;
+  const path = `/scenario/${slug}`;
+
+  return {
+    title,
+    description: desc,
+    keywords: [scenario.name, "fishing rods", "wholesale", "B2B", slug],
+    openGraph: buildOpenGraph(title, desc, path),
+    twitter: buildTwitter(title, desc),
+    alternates: { canonical: absoluteUrl(path) },
+  };
+}
+
 export default async function ScenarioPage({ params }: PageProps) {
   const { slug } = await params;
   const scenario = SCENARIOS.find((s) => s.slug === slug);
@@ -19,8 +40,18 @@ export default async function ScenarioPage({ params }: PageProps) {
 
   const products = getProductsByScenario(slug);
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org" as const,
+    "@type": "BreadcrumbList" as const,
+    itemListElement: [
+      { "@type": "ListItem" as const, position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem" as const, position: 2, name: `${scenario.name} Rods`, item: absoluteUrl(`/scenario/${slug}`) },
+    ],
+  };
+
   return (
     <main className="min-h-screen bg-gray-50">
+      <JsonLd data={breadcrumbSchema} />
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <nav className="flex items-center gap-2 text-sm text-gray-500">

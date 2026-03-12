@@ -1,5 +1,21 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import OEMInquiryForm from "@/components/OEMInquiryForm";
+import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  title: "OEM Fishing Rod Customization | RodsHub",
+  description:
+    "Create your own fishing rod brand. OEM customization: logo, packaging, custom specs. 4-step process, samples in 7–14 days.",
+  keywords: ["OEM fishing rod", "custom rod branding", "fishing rod manufacturing", "private label rods"],
+  openGraph: buildOpenGraph(
+    "OEM Fishing Rod Customization | RodsHub",
+    "Create your own fishing rod brand. Logo, packaging, custom specs. Samples in 7–14 days.",
+    "/oem"
+  ),
+  twitter: buildTwitter("OEM Fishing Rod Customization | RodsHub", "Create your own fishing rod brand."),
+  alternates: { canonical: absoluteUrl("/oem") },
+};
 
 const steps = [
   { title: "Submit Your Brief", desc: "Share your specs, target market & quantity" },
