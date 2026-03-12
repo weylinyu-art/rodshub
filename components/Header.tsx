@@ -118,7 +118,7 @@ export default function Header() {
               </button>
             </form>
 
-            <div className="hidden sm:flex items-center gap-3 shrink-0">
+            <div className="hidden sm:flex items-center gap-4 shrink-0">
               <div
                 className="relative"
                 onMouseEnter={() => setOpenNav((v) => (v === "lang" ? v : "lang"))}
@@ -126,7 +126,7 @@ export default function Header() {
               >
                 <button
                   type="button"
-                  className="flex items-center gap-1 px-2 py-1.5 text-sm text-gray-600 hover:text-black rounded"
+                  className="flex items-center gap-1.5 px-3 py-2 text-sm text-gray-600 hover:text-black rounded-lg border border-gray-200 hover:border-gray-300 bg-gray-50/50"
                   aria-label="Language"
                 >
                   <span>{LANGUAGES.find((l) => l.code === lang)?.name ?? lang}</span>
@@ -149,6 +149,7 @@ export default function Header() {
                   </div>
                 )}
               </div>
+              <span className="h-5 w-px bg-gray-200" aria-hidden />
               <Link
                 href="/inquiry"
                 className="inline-flex items-center px-4 py-2 border border-black text-black text-sm font-medium hover:bg-gray-50 rounded-lg transition"
