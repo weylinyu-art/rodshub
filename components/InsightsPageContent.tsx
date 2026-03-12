@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
@@ -33,7 +32,6 @@ const accentBorder: Record<string, string> = {
 export default function InsightsPageContent() {
   const { lang } = useLanguage();
   const sections = getInsightSections(lang);
-  const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   return (
     <>
@@ -103,9 +101,7 @@ export default function InsightsPageContent() {
         {sections.map((section) => {
           const meta = sectionMeta[section.id] ?? { accent: "slate", bg: "bg-slate-50", icon: "📄" };
           const borderCls = accentBorder[meta.accent] ?? "border-l-slate-500";
-
-          const isExpanded = expandedSection === section.id;
-          const displayedBlocks = isExpanded ? section.blocks : section.blocks.slice(0, ARTICLES_PER_SECTION);
+          const displayedBlocks = section.blocks.slice(0, ARTICLES_PER_SECTION);
           const hasMore = section.blocks.length > ARTICLES_PER_SECTION;
 
           return (
@@ -146,15 +142,14 @@ export default function InsightsPageContent() {
                   );
                 })}
               </div>
-              {hasMore && !isExpanded && (
-                <button
-                  type="button"
-                  onClick={() => setExpandedSection(section.id)}
-                  className="mt-4 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1"
+              {hasMore && (
+                <Link
+                  href={`/insights/section/${section.id}`}
+                  className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-gray-900"
                 >
                   {t("viewMore", lang)}
                   <span>→</span>
-                </button>
+                </Link>
               )}
             </section>
           );
