@@ -96,61 +96,91 @@ export default function Header() {
 
       <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Top bar: Search + Language - desktop only */}
-          <div className="hidden sm:flex items-center justify-end gap-3 py-2 border-b border-gray-100">
-          <form action="/search" method="get" className="flex">
-            <input
-              type="search"
-              name="q"
-              value={searchQ}
-              onChange={(e) => setSearchQ(e.target.value)}
-              placeholder={t("searchPlaceholder", lang)}
-              className="w-40 lg:w-52 px-3 py-1.5 text-sm border border-gray-200 rounded-l focus:outline-none focus:border-gray-400"
-              aria-label="Search"
-            />
-            <button type="submit" className="px-3 py-1.5 bg-gray-900 text-white text-sm rounded-r hover:bg-gray-800">
-              {t("search", lang)}
-            </button>
-          </form>
-          <div
-            className="relative"
-            onMouseEnter={() => setOpenNav((v) => (v === "lang" ? v : "lang"))}
-            onMouseLeave={() => setOpenNav((v) => (v === "lang" ? null : v))}
-          >
+          {/* Row 1: Logo + Search + Language + CTA - 齐平 */}
+          <div className="flex items-center justify-between gap-4 py-3 sm:py-3.5">
+            <Link href="/" className="flex items-center gap-2 shrink-0">
+              <span className="text-2xl font-bold text-black">RodsHub</span>
+            </Link>
+
+            {/* Search - 与 logo 齐平，desktop 显示 */}
+            <form action="/search" method="get" className="hidden sm:flex flex-1 max-w-md mx-4 lg:mx-6">
+              <input
+                type="search"
+                name="q"
+                value={searchQ}
+                onChange={(e) => setSearchQ(e.target.value)}
+                placeholder={t("searchPlaceholder", lang)}
+                className="flex-1 min-w-0 px-3 py-2 text-sm border border-gray-200 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+                aria-label="Search"
+              />
+              <button type="submit" className="px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-r-lg hover:bg-gray-800 shrink-0">
+                {t("search", lang)}
+              </button>
+            </form>
+
+            <div className="hidden sm:flex items-center gap-3 shrink-0">
+              <div
+                className="relative"
+                onMouseEnter={() => setOpenNav((v) => (v === "lang" ? v : "lang"))}
+                onMouseLeave={() => setOpenNav((v) => (v === "lang" ? null : v))}
+              >
+                <button
+                  type="button"
+                  className="flex items-center gap-1 px-2 py-1.5 text-sm text-gray-600 hover:text-black rounded"
+                  aria-label="Language"
+                >
+                  <span>{LANGUAGES.find((l) => l.code === lang)?.name ?? lang}</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                {openNav === "lang" && (
+                  <div className="absolute right-0 top-full pt-1">
+                    <div className="w-36 bg-white border border-gray-200 shadow-lg rounded-lg py-2">
+                      {LANGUAGES.map((l) => (
+                        <button
+                          key={l.code}
+                          type="button"
+                          onClick={() => { setLang(l.code); setOpenNav(null); }}
+                          className={`block w-full text-left px-4 py-2 text-sm hover:bg-gray-50 ${lang === l.code ? "font-medium text-black bg-gray-50" : "text-gray-700"}`}
+                        >
+                          {l.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <Link
+                href="/inquiry"
+                className="inline-flex items-center px-4 py-2 border border-black text-black text-sm font-medium hover:bg-gray-50 rounded-lg transition"
+              >
+                {t("sendInquiry", lang)}
+              </Link>
+              <Link
+                href="/trending"
+                className="inline-flex items-center px-4 py-2 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition"
+              >
+                {t("browseRods", lang)}
+              </Link>
+            </div>
+
             <button
               type="button"
-              className="flex items-center gap-1 px-2 py-1 text-sm text-gray-600 hover:text-black"
-              aria-label="Language"
+              onClick={() => setMobileOpen((v) => !v)}
+              className="lg:hidden p-2 -m-2 text-gray-700 hover:text-black"
+              aria-label="Menu"
             >
-              <span>{LANGUAGES.find((l) => l.code === lang)?.name ?? lang}</span>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {mobileOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
             </button>
-            {openNav === "lang" && (
-              <div className="absolute right-0 top-full pt-1">
-                <div className="w-36 bg-white border border-gray-200 shadow-lg py-2">
-                  {LANGUAGES.map((l) => (
-                    <button
-                      key={l.code}
-                      type="button"
-                      onClick={() => { setLang(l.code); setOpenNav(null); }}
-                      className={`block w-full text-left px-4 py-2 text-sm hover:bg-gray-50 ${lang === l.code ? "font-medium text-black bg-gray-50" : "text-gray-700"}`}
-                    >
-                      {l.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
-        </div>
 
-        <div className="flex items-center justify-between h-14">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-black">RodsHub</span>
-          </Link>
-
-          {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-1">
+          {/* Row 2: Tab 导航 - 下移 */}
+          <nav className="hidden lg:flex items-center gap-1 border-t border-gray-100 py-2.5 -mb-px">
             <Link href="/" className={`px-4 py-2 font-medium transition ${pathname === "/" ? "text-black" : "text-gray-700 hover:text-black"}`}>
               {t("home", lang)}
             </Link>
