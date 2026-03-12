@@ -29,8 +29,8 @@ export default function Hero() {
         <div className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&h=1080&fit=crop"
-            alt="Fishing rods"
+            src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=1920&h=1080&fit=crop"
+            alt="Fishing rods and gear"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80" />
@@ -66,13 +66,13 @@ export default function Hero() {
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
           <a
-            href="#trending"
+            href="/trending"
             className="inline-flex items-center justify-center px-6 py-3 bg-white text-black text-base font-semibold hover:bg-gray-100 transition"
           >
             Browse Rods
           </a>
           <a
-            href="#inquiry"
+            href="/inquiry"
             className="inline-flex items-center justify-center px-6 py-3 border-2 border-white text-white text-base font-semibold hover:bg-white hover:text-black transition"
           >
             Send Inquiry

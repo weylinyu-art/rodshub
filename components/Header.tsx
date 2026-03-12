@@ -39,13 +39,12 @@ export default function Header() {
               onMouseEnter={() => setOpenNav("categories")}
               onMouseLeave={() => setOpenNav(null)}
             >
-              <button
-                type="button"
-                onClick={() => setOpenNav((v) => (v === "categories" ? null : "categories"))}
-                className="px-4 py-2 text-gray-700 hover:text-black font-medium transition"
+              <Link
+                href="/categories"
+                className="px-4 py-2 text-gray-700 hover:text-black font-medium transition inline-block"
               >
                 Categories
-              </button>
+              </Link>
               {openNav === "categories" && (
                 <div className="absolute top-full left-0 pt-1">
                   <div className="w-48 bg-white border border-gray-200 shadow-lg py-2">
