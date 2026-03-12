@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProductById, getAllProductIds } from "@/lib/productRegistry";
+import { getProductDetail } from "@/lib/productDetail";
 import ProductImageGallery from "@/components/ProductImageGallery";
 
 interface PageProps {
@@ -16,6 +17,7 @@ export default async function ProductPage({ params }: PageProps) {
   const product = getProductById(id);
   if (!product) notFound();
 
+  const detail = getProductDetail(product);
   const imgList = (product.images && product.images.length > 0 ? product.images : [product.image]) as string[];
 
   return (
@@ -29,7 +31,7 @@ export default async function ProductPage({ params }: PageProps) {
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* 图片区域 - 固定尺寸 480x480 */}
+          {/* 图片区域 - 固定尺寸 */}
           <ProductImageGallery images={imgList} alt={product.name} />
 
           {/* 产品信息 */}
@@ -47,6 +49,7 @@ export default async function ProductPage({ params }: PageProps) {
               <p className="text-gray-600 mb-6">MOQ: {product.moq}</p>
             )}
 
+            {/* 规格摘要 */}
             <dl className="space-y-2 mb-8">
               {product.length && (
                 <div>
@@ -75,6 +78,40 @@ export default async function ProductPage({ params }: PageProps) {
               Send Inquiry
             </Link>
           </div>
+        </div>
+
+        {/* 详情区域：描述、规格表、卖点 */}
+        <div className="mt-12 lg:mt-16 space-y-12">
+          <section className="bg-white rounded-lg border border-gray-200 p-6 sm:p-8">
+            <h2 className="text-lg font-bold text-gray-900 mb-4">Product Description</h2>
+            <p className="text-gray-600 leading-relaxed">{detail.description}</p>
+          </section>
+
+          <section className="bg-white rounded-lg border border-gray-200 p-6 sm:p-8">
+            <h2 className="text-lg font-bold text-gray-900 mb-4">Specifications</h2>
+            <table className="w-full text-sm">
+              <tbody>
+                {detail.specifications.map(({ label, value }) => (
+                  <tr key={label} className="border-b border-gray-100 last:border-0">
+                    <td className="py-3 pr-4 text-gray-500">{label}</td>
+                    <td className="py-3 font-medium text-gray-900">{value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+
+          <section className="bg-white rounded-lg border border-gray-200 p-6 sm:p-8">
+            <h2 className="text-lg font-bold text-gray-900 mb-4">Key Features</h2>
+            <ul className="space-y-2">
+              {detail.features.map((f, i) => (
+                <li key={i} className="flex items-start gap-2 text-gray-600">
+                  <span className="text-black mt-1">•</span>
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
         </div>
       </div>
     </main>

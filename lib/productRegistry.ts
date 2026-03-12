@@ -23,3 +23,7 @@ export function getProductById(id: string): (Product & { id: string }) | undefin
 export function getAllProductIds(): string[] {
   return Array.from(registry.keys());
 }
+
+export function getAllProducts(): (Product & { id: string })[] {
+  return allProducts;
+}

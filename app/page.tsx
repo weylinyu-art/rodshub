@@ -1,57 +1,100 @@
+import Link from "next/link";
 import Hero from "@/components/Hero";
 import ShopByCategory from "@/components/ShopByCategory";
 import ProductCard from "@/components/ProductCard";
 import ShopByFishingStyle from "@/components/ShopByFishingStyle";
 import RodCollections from "@/components/RodCollections";
-import WholesalePicks from "@/components/WholesalePicks";
 import OEMCustomization from "@/components/OEMCustomization";
-import QuickInquiryForm from "@/components/QuickInquiryForm";
-import FishingInsights from "@/components/FishingInsights";
-import { trendingRods, newArrivals } from "@/lib/products";
+import { trendingRods, newArrivals, wholesalePicks } from "@/lib/products";
+import { ARTICLES } from "@/lib/insights";
 
-/** 卖场布局：大图 + 分类目录 + 货架展示 */
+/** 首页：入口导向，各模块跳转独立页面 */
 export default function Home() {
   return (
     <main className="bg-gray-50">
       <Hero />
-      {/* 分类目录 - 市场入口 */}
+      {/* 分类目录 */}
       <ShopByCategory />
-      {/* 货架区 1：畅销品 */}
-      <section id="trending" className="py-12 sm:py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Trending Rods</h2>
-          <p className="text-gray-500 mb-8">Top picks from our B2B marketplace</p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            {trendingRods.map((rod, i) => (
-              <ProductCard key={i} {...rod} variant="trending" />
-            ))}
-          </div>
-        </div>
-      </section>
-      {/* 场景导航区 */}
+      {/* 场景导航 */}
       <ShopByFishingStyle />
-      {/* 货架区 2：新品上架 */}
-      <section className="py-12 sm:py-16 bg-gray-50">
+      {/* 精选入口 - 4 个 Trending + 4 个 Wholesale 预览 */}
+      <section className="py-12 sm:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">New Arrivals</h2>
-          <p className="text-gray-500 mb-8">Just added to our catalog</p>
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
+            <div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Featured Rods</h2>
+              <p className="text-gray-500 mt-1">Top picks & wholesale deals</p>
+            </div>
+            <div className="flex gap-3">
+              <Link href="/trending" className="text-sm font-semibold text-gray-900 hover:underline">
+                View Trending →
+              </Link>
+              <Link href="/wholesale" className="text-sm font-semibold text-gray-900 hover:underline">
+                View Wholesale →
+              </Link>
+            </div>
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            {newArrivals.map((rod, i) => (
-              <ProductCard key={i} {...rod} />
+            {trendingRods.slice(0, 4).map((rod) => (
+              <ProductCard key={rod.id} {...rod} variant="trending" />
+            ))}
+            {wholesalePicks.slice(0, 4).map((rod) => (
+              <ProductCard key={rod.id} {...rod} />
             ))}
           </div>
         </div>
       </section>
       {/* 精选系列 */}
       <RodCollections />
-      {/* 批发精选 */}
-      <WholesalePicks />
-      {/* 内容运营：Fishing Insights */}
-      <FishingInsights />
+      {/* 新品预览 + Insights 入口 */}
+      <section className="py-12 sm:py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <div className="flex justify-between items-end mb-6">
+                <h2 className="text-2xl font-bold text-gray-900">New Arrivals</h2>
+                <Link href="/category/spinning" className="text-sm font-semibold text-gray-600 hover:text-black">
+                  Browse all →
+                </Link>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {newArrivals.slice(0, 4).map((rod) => (
+                  <ProductCard key={rod.id} {...rod} />
+                ))}
+              </div>
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Fishing Insights</h2>
+              <p className="text-gray-600 mb-4">Industry knowledge for smarter sourcing</p>
+              <div className="space-y-2">
+                {ARTICLES.slice(0, 3).map((a) => (
+                  <Link key={a.slug} href="/insights" className="block text-gray-700 hover:text-black">
+                    {a.title}
+                  </Link>
+                ))}
+              </div>
+              <Link href="/insights" className="mt-4 inline-block text-sm font-semibold text-gray-900 hover:underline">
+                Read all articles →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* OEM */}
       <OEMCustomization />
-      {/* 询价表单 */}
-      <QuickInquiryForm />
+      {/* 询价 CTA */}
+      <section className="py-16 sm:py-24 bg-white">
+        <div className="max-w-2xl mx-auto text-center px-4">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Ready to source?</h2>
+          <p className="text-gray-600 mb-6">Send us your requirements. We reply within 24 hours.</p>
+          <Link
+            href="/inquiry"
+            className="inline-flex items-center px-8 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition"
+          >
+            Send Inquiry
+          </Link>
+        </div>
+      </section>
     </main>
   );
 }

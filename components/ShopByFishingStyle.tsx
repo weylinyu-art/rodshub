@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const styles = [
   { name: "Freshwater", slug: "freshwater", image: "https://images.unsplash.com/photo-1524704654690-b56c05c78a00?w=400&h=280&fit=crop", count: "2,400+ rods" },
   { name: "Saltwater", slug: "saltwater", image: "https://images.unsplash.com/photo-1559827260-dc66d43bef33?w=400&h=280&fit=crop", count: "1,100+ rods" },
@@ -14,10 +16,10 @@ export default function ShopByFishingStyle() {
         <p className="text-gray-600 mb-12">Find the perfect rod for your fishing environment</p>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
           {styles.map((style) => (
-            <a
+            <Link
               key={style.slug}
-              href={`#${style.slug}`}
-              className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white hover:shadow-xl hover:border-gray-400 transition-all duration-300"
+              href={`/scenario/${style.slug}`}
+              className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white hover:shadow-xl hover:border-gray-400 transition-all duration-300 block"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -31,7 +33,7 @@ export default function ShopByFishingStyle() {
                 <h3 className="font-bold text-white">{style.name}</h3>
                 <p className="text-sm text-gray-300 font-medium">{style.count}</p>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
