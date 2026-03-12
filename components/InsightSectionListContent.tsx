@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 import { getInsightSections, getInsightByLang } from "@/lib/insights-i18n";
@@ -27,6 +28,7 @@ interface InsightSectionListContentProps {
 }
 
 export default function InsightSectionListContent({ sectionId }: InsightSectionListContentProps) {
+  const searchParams = useSearchParams();
   const { lang } = useLanguage();
   const sections = getInsightSections(lang);
   const section = sections.find((s) => s.id === sectionId);
@@ -35,6 +37,15 @@ export default function InsightSectionListContent({ sectionId }: InsightSectionL
 
   const meta = sectionMeta[section.id] ?? { accent: "slate", bg: "bg-slate-50", icon: "📄" };
   const borderCls = accentBorder[meta.accent] ?? "border-l-slate-500";
+
+  const pageParam = searchParams.get("page");
+  const totalPages = Math.max(1, Math.ceil(section.blocks.length / 10));
+  let currentPage = pageParam ? parseInt(pageParam, 10) || 1 : 1;
+  if (currentPage < 1) currentPage = 1;
+  if (currentPage > totalPages) currentPage = totalPages;
+
+  const startIndex = (currentPage - 1) * 10;
+  const currentBlocks = section.blocks.slice(startIndex, startIndex + 10);
 
   return (
     <>
@@ -61,33 +72,62 @@ export default function InsightSectionListContent({ sectionId }: InsightSectionL
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className={`rounded-2xl p-6 sm:p-8 ${meta.bg}`}>
           <ul className="space-y-4">
-            {section.blocks.map((block) => {
+            {currentBlocks.map((block) => {
               const blockData = getInsightByLang(block.id, lang);
               const excerpt = blockData ? getFirstParagraphText(blockData.content) : "";
               const title = blockData?.title ?? block.title;
               return (
                 <li key={block.id}>
-                  <article
-                    className={`group bg-white rounded-xl border border-gray-200 border-l-4 ${borderCls} p-5 sm:p-6 hover:shadow-lg hover:border-gray-300 transition-all duration-200`}
+                  <Link
+                    href={`/insights/${block.id}`}
+                    className={`group block bg-white rounded-xl border border-gray-200 border-l-4 ${borderCls} p-5 sm:p-6 hover:shadow-md hover:border-gray-300 transition-all duration-200`}
                   >
-                    <h2 className="text-base font-bold text-gray-900 mb-3 group-hover:text-black">
-                      <Link href={`/insights/${block.id}`} className="hover:underline underline-offset-2">
-                        {title}
-                      </Link>
-                    </h2>
-                    <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2">{excerpt}</p>
-                    <Link
-                      href={`/insights/${block.id}`}
-                      className="inline-flex items-center text-sm font-semibold text-gray-900 group-hover:text-black"
-                    >
-                      {t("readArticle", lang)}
-                      <span className="ml-1 opacity-0 group-hover:opacity-100 transition">→</span>
-                    </Link>
-                  </article>
+                    <h2 className="text-base font-bold text-gray-900 mb-2 group-hover:text-black">{title}</h2>
+                    <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">{excerpt}</p>
+                    <div className="mt-3 flex items-center justify-end">
+                      <span className="sr-only">{t("readArticle", lang)}</span>
+                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-gray-200 bg-gray-50 text-xs text-gray-500 group-hover:bg-gray-900 group-hover:text-white transition">
+                        →
+                      </span>
+                    </div>
+                  </Link>
                 </li>
               );
             })}
           </ul>
+          {totalPages > 1 && (
+            <div className="mt-6 flex items-center justify-between border-t border-gray-200 pt-4 text-sm text-gray-600">
+              <div>
+                {t("page", lang)} {currentPage} / {totalPages}
+              </div>
+              <div className="flex items-center gap-2">
+                {currentPage > 1 ? (
+                  <Link
+                    href={`/insights/section/${sectionId}?page=${currentPage - 1}`}
+                    className="px-3 py-1 rounded-full border border-gray-200 bg-white hover:bg-gray-100"
+                  >
+                    ← {t("previous", lang)}
+                  </Link>
+                ) : (
+                  <span className="px-3 py-1 rounded-full border border-gray-100 text-gray-300 cursor-default">
+                    ← {t("previous", lang)}
+                  </span>
+                )}
+                {currentPage < totalPages ? (
+                  <Link
+                    href={`/insights/section/${sectionId}?page=${currentPage + 1}`}
+                    className="px-3 py-1 rounded-full border border-gray-200 bg-white hover:bg-gray-100"
+                  >
+                    {t("next", lang)} →
+                  </Link>
+                ) : (
+                  <span className="px-3 py-1 rounded-full border border-gray-100 text-gray-300 cursor-default">
+                    {t("next", lang)} →
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

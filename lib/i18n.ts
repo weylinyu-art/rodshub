@@ -140,6 +140,9 @@ export const T: Translations = {
   wholesalePicksDesc: { en: "Best-value rods for bulk orders & competitive pricing · MOQ from 30 pcs", es: "Mejor relación calidad-precio · MOQ desde 30 uds", fr: "Meilleur rapport qualité-prix · MOQ dès 30 pcs", de: "Bestes Preis-Leistungs-Verhältnis · MOQ ab 30", ar: "أفضل قيمة · حد أدنى 30 قطعة", ru: "Лучшая цена · MOQ от 30 шт", ja: "コストパフォーマンス最強 · MOQ 30本から", ko: "최고 가성비 · MOQ 30개부터", pt: "Melhor custo-benefício · MOQ 30 un" },
   needCustomMoq: { en: "Need custom MOQ or branding? We support OEM.", es: "¿MOQ o marca personalizada? Soporte OEM.", fr: "MOQ ou marque personnalisée ? Nous supportons l'OEM.", de: "Individuelle MOQ oder Branding? OEM-Support.", ar: "حاجة لـ MOQ أو علامة مخصصة؟ ندعم OEM.", ru: "Индивидуальный MOQ или брендинг? OEM-поддержка.", ja: "カスタムMOQやブランディング？OEM対応。", ko: "맞춤 MOQ 또는 브랜딩? OEM 지원.", pt: "MOQ ou marca personalizada? Suporte OEM." },
   youMayAlsoLike: { en: "You May Also Like", es: "También le puede gustar", fr: "Vous aimerez aussi", de: "Das könnte Sie auch interessieren", ar: "قد يعجبك أيضاً", ru: "Вам также понравится", ja: "おすすめ商品", ko: "관련 상품", pt: "Você também pode gostar" },
+  page: { en: "Page", es: "Página", fr: "Page", de: "Seite", ar: "صفحة", ru: "Страница", ja: "ページ", ko: "페이지", pt: "Página" },
+  previous: { en: "Previous", es: "Anterior", fr: "Précédent", de: "Zurück", ar: "السابق", ru: "Назад", ja: "前へ", ko: "이전", pt: "Anterior" },
+  next: { en: "Next", es: "Siguiente", fr: "Suivant", de: "Weiter", ar: "التالي", ru: "Далее", ja: "次へ", ko: "다음", pt: "Próximo" },
 };
 
 export function t(key: keyof typeof T, lang: LangCode): string {

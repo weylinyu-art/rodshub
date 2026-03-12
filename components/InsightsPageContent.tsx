@@ -89,7 +89,12 @@ export default function InsightsPageContent() {
               >
                 <h3 className="font-semibold text-gray-900 group-hover:text-black line-clamp-2">{title}</h3>
                 <p className="mt-2 text-sm text-gray-600 line-clamp-2 flex-1">{excerpt}</p>
-                <span className="mt-3 text-sm font-medium text-indigo-600 group-hover:text-indigo-700">{t("readArticle", lang)} →</span>
+                <span className="mt-4 flex justify-end">
+                  <span className="sr-only">{t("readArticle", lang)}</span>
+                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-indigo-100 bg-indigo-50 text-indigo-500 text-sm group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 transition">
+                    →
+                  </span>
+                </span>
               </Link>
             );
           })}
@@ -106,12 +111,23 @@ export default function InsightsPageContent() {
 
           return (
             <section key={section.id} id={section.id} className={`scroll-mt-8 rounded-2xl p-6 sm:p-8 ${meta.bg}`}>
-              <div className="mb-6">
-                <h2 className="inline-flex items-center gap-2 text-xl font-bold text-gray-900">
-                  <span>{meta.icon}</span>
-                  {section.title}
-                </h2>
-                <p className="mt-1 text-gray-600">{section.description}</p>
+              <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <h2 className="inline-flex items-center gap-2 text-xl font-bold text-gray-900">
+                    <span>{meta.icon}</span>
+                    {section.title}
+                  </h2>
+                  <p className="mt-1 text-gray-600">{section.description}</p>
+                </div>
+                {hasMore && (
+                  <Link
+                    href={`/insights/section/${section.id}`}
+                    className="inline-flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-gray-900"
+                  >
+                    {t("viewMore", lang)}
+                    <span className="text-xs">→</span>
+                  </Link>
+                )}
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 {displayedBlocks.map((block) => {
@@ -133,24 +149,17 @@ export default function InsightsPageContent() {
                       </p>
                       <Link
                         href={`/insights/${block.id}`}
-                        className="inline-flex items-center text-sm font-semibold text-gray-900 group-hover:text-black"
+                        className="mt-1 inline-flex w-full items-center justify-end text-sm text-gray-400 hover:text-gray-900"
                       >
-                        {t("readArticle", lang)}
-                        <span className="ml-1 opacity-0 group-hover:opacity-100 transition">→</span>
+                        <span className="sr-only">{t("readArticle", lang)}</span>
+                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-gray-200 bg-gray-50 text-xs group-hover:bg-gray-900 group-hover:text-white transition">
+                          →
+                        </span>
                       </Link>
                     </article>
                   );
                 })}
               </div>
-              {hasMore && (
-                <Link
-                  href={`/insights/section/${section.id}`}
-                  className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-gray-900"
-                >
-                  {t("viewMore", lang)}
-                  <span>→</span>
-                </Link>
-              )}
             </section>
           );
         })}
