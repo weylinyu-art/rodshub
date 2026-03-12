@@ -7,20 +7,20 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { LANGUAGES, t } from "@/lib/i18n";
 
 const CATEGORIES = [
-  { name: "Spinning", slug: "spinning" },
-  { name: "Casting", slug: "casting" },
-  { name: "Telescopic", slug: "telescopic" },
-  { name: "Surf", slug: "surf" },
-  { name: "Ice Fishing", slug: "ice" },
-  { name: "Travel", slug: "travel" },
+  { key: "catSpinning" as const, slug: "spinning" },
+  { key: "catCasting" as const, slug: "casting" },
+  { key: "catTelescopic" as const, slug: "telescopic" },
+  { key: "catSurf" as const, slug: "surf" },
+  { key: "catIceFishing" as const, slug: "ice" },
+  { key: "catTravel" as const, slug: "travel" },
 ];
 
 const SCENARIOS = [
-  { name: "Freshwater", slug: "freshwater" },
-  { name: "Saltwater", slug: "saltwater" },
-  { name: "Surf", slug: "surf" },
-  { name: "Boat", slug: "boat" },
-  { name: "Ice", slug: "ice" },
+  { key: "scenFreshwater" as const, slug: "freshwater" },
+  { key: "scenSaltwater" as const, slug: "saltwater" },
+  { key: "scenSurf" as const, slug: "surf" },
+  { key: "scenBoat" as const, slug: "boat" },
+  { key: "scenIce" as const, slug: "ice" },
 ];
 
 export default function Header() {
@@ -100,7 +100,7 @@ export default function Header() {
                 href="/rods/category"
                 className="px-4 py-2 text-gray-700 hover:text-black font-medium transition inline-block"
               >
-                Categories
+                {t("categories", lang)}
               </Link>
               {openNav === "categories" && (
                 <div className="absolute top-full left-0 pt-1">
@@ -109,7 +109,7 @@ export default function Header() {
                       href="/rods/category"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-black font-medium"
                     >
-                      All
+                      {t("all", lang)}
                     </Link>
                     {CATEGORIES.map((c) => (
                       <Link
@@ -117,7 +117,7 @@ export default function Header() {
                         href={`/category/${c.slug}`}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-black"
                       >
-                        {c.name} Rods
+                        {t(c.key, lang)} {t("rods", lang)}
                       </Link>
                     ))}
                   </div>
@@ -133,7 +133,7 @@ export default function Header() {
                 href="/rods/scenario"
                 className="px-4 py-2 text-gray-700 hover:text-black font-medium transition inline-block"
               >
-                Scenarios
+                {t("scenarios", lang)}
               </Link>
               {openNav === "scenarios" && (
                 <div className="absolute top-full left-0 pt-1">
@@ -142,7 +142,7 @@ export default function Header() {
                       href="/rods/scenario"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-black font-medium"
                     >
-                      All
+                      {t("all", lang)}
                     </Link>
                     {SCENARIOS.map((s) => (
                       <Link
@@ -150,7 +150,7 @@ export default function Header() {
                         href={`/scenario/${s.slug}`}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-black"
                       >
-                        {s.name}
+                        {t(s.key, lang)}
                       </Link>
                     ))}
                   </div>
@@ -158,16 +158,16 @@ export default function Header() {
               )}
             </div>
             <Link href="/trending" className="px-4 py-2 text-gray-700 hover:text-black font-medium transition">
-              Trending
+              {t("trending", lang)}
             </Link>
             <Link href="/wholesale" className="px-4 py-2 text-gray-700 hover:text-black font-medium transition">
-              Wholesale
+              {t("wholesale", lang)}
             </Link>
             <Link href="/insights" className="px-4 py-2 text-gray-700 hover:text-black font-medium transition">
-              Insights
+              {t("insights", lang)}
             </Link>
             <Link href="/inquiry" className="px-4 py-2 text-gray-700 hover:text-black font-medium transition">
-              Inquiry
+              {t("inquiry", lang)}
             </Link>
           </nav>
 
@@ -176,13 +176,13 @@ export default function Header() {
               href="/inquiry"
               className="hidden sm:inline-flex items-center px-4 py-2 border border-black text-black text-sm font-medium hover:bg-gray-50 transition"
             >
-              Send Inquiry
+              {t("sendInquiry", lang)}
             </Link>
             <Link
               href="/trending"
               className="hidden sm:inline-flex items-center px-4 py-2 bg-black text-white text-sm font-medium hover:bg-gray-800 transition"
             >
-              Browse Rods
+              {t("browseRods", lang)}
             </Link>
             <button
               type="button"
@@ -216,9 +216,9 @@ export default function Header() {
                   className="w-full px-3 py-2 text-sm border border-gray-200 rounded"
                 />
               </form>
-              <p className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">Categories</p>
+              <p className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">{t("categories", lang)}</p>
               <Link href="/rods/category" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black font-medium">
-                All
+                {t("all", lang)}
               </Link>
               {CATEGORIES.map((c) => (
                 <Link
@@ -227,25 +227,25 @@ export default function Header() {
                   onClick={() => setMobileOpen(false)}
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black"
                 >
-                  {c.name} Rods
+                  {t(c.key, lang)} {t("rods", lang)}
                 </Link>
               ))}
-              <p className="px-4 py-2 mt-2 text-xs font-semibold text-gray-500 uppercase">Sections</p>
+              <p className="px-4 py-2 mt-2 text-xs font-semibold text-gray-500 uppercase">{t("sections", lang)}</p>
               <Link href="/trending" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black">
-                Trending
+                {t("trending", lang)}
               </Link>
               <Link href="/wholesale" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black">
-                Wholesale
+                {t("wholesale", lang)}
               </Link>
               <Link href="/insights" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black">
-                Insights
+                {t("insights", lang)}
               </Link>
               <Link href="/inquiry" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black">
-                Inquiry
+                {t("inquiry", lang)}
               </Link>
-              <p className="px-4 py-2 mt-2 text-xs font-semibold text-gray-500 uppercase">Scenarios</p>
+              <p className="px-4 py-2 mt-2 text-xs font-semibold text-gray-500 uppercase">{t("scenarios", lang)}</p>
               <Link href="/rods/scenario" onClick={() => setMobileOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black font-medium">
-                All
+                {t("all", lang)}
               </Link>
               {SCENARIOS.map((s) => (
                 <Link
@@ -254,7 +254,7 @@ export default function Header() {
                   onClick={() => setMobileOpen(false)}
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-black"
                 >
-                  {s.name}
+                  {t(s.key, lang)}
                 </Link>
               ))}
             </div>
