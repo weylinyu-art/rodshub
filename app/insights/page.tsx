@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
-import { INSIGHT_SECTIONS, INSIGHT_BLOCKS } from "@/lib/insights";
+import {
+  INSIGHT_SECTIONS,
+  INSIGHT_BLOCKS,
+  getFirstParagraphText,
+  getArticleBodyText,
+} from "@/lib/insights";
 import { absoluteUrl, buildOpenGraph, buildTwitter, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -35,23 +40,20 @@ export default function InsightsPage() {
     "@context": "https://schema.org" as const,
     "@type": "Article" as const,
     headline: block.title,
-    articleBody: block.content.join(" "),
+    articleBody: getArticleBodyText(block.content),
     url: `${SITE_URL}/insights/${block.id}`,
     publisher: { "@id": `${SITE_URL}/#organization` },
   }));
 
   const supplierBlock = INSIGHT_BLOCKS.find((b) => b.id === "supplier-selection");
+  const supplierBody = supplierBlock ? getArticleBodyText(supplierBlock.content) : "";
   const howToSchema = supplierBlock
     ? {
         "@context": "https://schema.org" as const,
         "@type": "HowTo" as const,
         name: supplierBlock.title,
-        description: supplierBlock.content.join(" ").slice(0, 500),
-        step: supplierBlock.content.map((text, i) => ({
-          "@type": "HowToStep" as const,
-          position: i + 1,
-          text,
-        })),
+        description: supplierBody.slice(0, 500),
+        step: [{ "@type": "HowToStep" as const, position: 1, text: supplierBody }],
         url: `${SITE_URL}/insights/supplier-selection`,
       }
     : null;
@@ -116,7 +118,7 @@ export default function InsightsPage() {
                     </Link>
                   </h3>
                   <p className="text-gray-600 leading-relaxed mb-4 line-clamp-2">
-                    {block.content[0]}
+                    {getFirstParagraphText(block.content)}
                   </p>
                   <Link
                     href={`/insights/${block.id}`}

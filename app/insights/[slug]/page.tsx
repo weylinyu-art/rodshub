@@ -3,8 +3,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import ArticleProductRecommendation from "@/components/ArticleProductRecommendation";
+import InsightContentRenderer from "@/components/InsightContentRenderer";
 import { getAllProducts } from "@/lib/productRegistry";
-import { getInsightBySlug, getAllInsightSlugs } from "@/lib/insights";
+import {
+  getInsightBySlug,
+  getAllInsightSlugs,
+  getFirstParagraphText,
+  getArticleBodyText,
+} from "@/lib/insights";
 import { absoluteUrl, buildOpenGraph, buildTwitter, SITE_URL } from "@/lib/seo";
 
 interface PageProps {
@@ -21,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!block) return { title: "Article Not Found" };
 
   const title = `${block.title} | RodsHub Insights`;
-  const desc = block.content[0]?.slice(0, 155) ?? block.title;
+  const desc = getFirstParagraphText(block.content).slice(0, 155) || block.title;
 
   return {
     title,
@@ -44,7 +50,7 @@ export default async function InsightArticlePage({ params }: PageProps) {
     "@context": "https://schema.org" as const,
     "@type": "Article" as const,
     headline: block.title,
-    articleBody: block.content.join(" "),
+    articleBody: getArticleBodyText(block.content),
     url: `${SITE_URL}/insights/${slug}`,
     publisher: { "@id": `${SITE_URL}/#organization` },
   };
@@ -75,11 +81,7 @@ export default async function InsightArticlePage({ params }: PageProps) {
         <article className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">{block.title}</h1>
 
-          <div className="space-y-4 text-gray-600 leading-relaxed">
-            {block.content.map((para, i) => (
-              <p key={i}>{para}</p>
-            ))}
-          </div>
+          <InsightContentRenderer content={block.content} />
 
           {/* Product Recommendation - in article */}
           <section className="mt-10 pt-8 border-t border-gray-200">
