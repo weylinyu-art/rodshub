@@ -3,17 +3,17 @@ import { wholesalePicks } from "@/lib/products";
 
 export default function WholesalePicks() {
   return (
-    <section id="wholesale" className="py-16 sm:py-24 bg-gradient-to-b from-teal-50/50 to-white">
+    <section id="wholesale" className="py-16 sm:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
           <div>
-            <span className="inline-block px-3 py-1 bg-teal-400/30 text-teal-800 text-sm font-semibold rounded-full mb-3">💰 Bulk Savings</span>
+            <span className="inline-block px-3 py-1 bg-gray-900 text-white text-sm font-semibold rounded mb-3">Bulk Savings</span>
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Wholesale Picks</h2>
             <p className="text-gray-600">Best-value rods for bulk orders & competitive pricing</p>
           </div>
           <a
             href="#trending"
-            className="text-coral-600 font-semibold hover:text-coral-500 transition flex items-center gap-1"
+            className="text-gray-900 font-semibold hover:underline transition flex items-center gap-1"
           >
             View all <span>→</span>
           </a>

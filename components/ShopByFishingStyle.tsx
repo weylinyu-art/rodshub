@@ -17,7 +17,7 @@ export default function ShopByFishingStyle() {
             <a
               key={style.slug}
               href={`#${style.slug}`}
-              className="group relative overflow-hidden rounded-2xl bg-white hover:shadow-2xl hover:shadow-amber-200/50 transition-all duration-300 ring-2 ring-gray-100 hover:ring-coral/50"
+              className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white hover:shadow-xl hover:border-gray-400 transition-all duration-300"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -29,7 +29,7 @@ export default function ShopByFishingStyle() {
               </div>
               <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/85 via-black/40 to-transparent">
                 <h3 className="font-bold text-white">{style.name}</h3>
-                <p className="text-sm text-amber-300 font-medium">{style.count}</p>
+                <p className="text-sm text-gray-300 font-medium">{style.count}</p>
               </div>
             </a>
           ))}

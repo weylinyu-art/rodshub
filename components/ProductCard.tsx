@@ -8,7 +8,6 @@ interface ProductCardProps extends Product {
   variant?: "default" | "trending" | "wholesale";
 }
 
-/** Use /#inquiry when rendered on category pages (no inquiry form on same page) */
 const inquiryHref = "/#inquiry";
 
 export default function ProductCard({
@@ -31,7 +30,7 @@ export default function ProductCard({
   return (
     <Link
       href={inquiryHref}
-      className="group flex flex-col bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-blue-500 hover:shadow-xl transition-all duration-200"
+      className="group flex flex-col bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-gray-400 hover:shadow-lg transition-all duration-200"
     >
       <div
         className="relative aspect-square overflow-hidden bg-gray-100"
@@ -46,11 +45,10 @@ export default function ProductCard({
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:scale-105 ${
               i === activeIndex ? "opacity-100 z-0" : "opacity-0"
             }`}
-            style={{ transform: i === activeIndex ? "scale(1.02)" : "scale(1)" }}
           />
         ))}
         {badge && (
-          <span className="absolute top-3 left-3 px-2 py-1 bg-blue-600 text-white text-xs font-medium rounded z-10">
+          <span className="absolute top-2 left-2 px-2 py-0.5 bg-black text-white text-xs font-medium z-10">
             {badge}
           </span>
         )}
@@ -59,38 +57,32 @@ export default function ProductCard({
             {imgList.map((_, i) => (
               <span
                 key={i}
-                className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                  i === activeIndex ? "bg-blue-600" : "bg-white/70"
-                }`}
+                className={`w-1.5 h-1.5 rounded-full ${i === activeIndex ? "bg-black" : "bg-white/80"}`}
               />
             ))}
           </div>
         )}
       </div>
-      <div className="p-4 flex-1 flex flex-col">
-        <h3 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-blue-600 transition">
+      <div className="p-3 flex-1 flex flex-col">
+        <h3 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-black transition text-sm">
           {name}
         </h3>
         {showSpecs && (
-          <div className="mt-2 flex flex-wrap gap-2 text-xs text-gray-500">
-            {length && <span>Len: {length}</span>}
+          <div className="mt-1.5 flex flex-wrap gap-2 text-xs text-gray-500">
+            {length && <span>{length}</span>}
             {material && <span>• {material}</span>}
             {power && <span>• {power}</span>}
           </div>
         )}
-        <p className="mt-1 text-lg font-bold text-blue-600">{price}</p>
-        {moq && (
-          <p className="mt-0.5 text-sm text-gray-500">
-            MOQ: {moq}
-          </p>
-        )}
+        <p className="mt-1 font-bold text-gray-900">{price}</p>
+        {moq && <p className="mt-0.5 text-xs text-gray-500">MOQ: {moq}</p>}
         {showInquiryButton ? (
-          <span className="mt-3 inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg group-hover:bg-blue-700 transition w-full pointer-events-none">
+          <span className="mt-2 inline-flex justify-center px-3 py-1.5 bg-black text-white text-xs font-medium rounded hover:bg-gray-800 transition w-full pointer-events-none">
             Send Inquiry
           </span>
         ) : (
-          <span className="mt-2 text-sm text-blue-600 font-medium opacity-0 group-hover:opacity-100 transition">
-            Send Inquiry →
+          <span className="mt-1.5 text-xs text-gray-600 font-medium opacity-0 group-hover:opacity-100 transition">
+            Inquiry →
           </span>
         )}
       </div>

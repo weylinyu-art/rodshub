@@ -7,7 +7,7 @@ const collections = [
 
 export default function RodCollections() {
   return (
-    <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-amber-50/50">
+    <section className="py-16 sm:py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-black text-gray-900 mb-2">Rod Collections</h2>
         <p className="text-gray-600 mb-12">Curated collections for every fishing need</p>
@@ -16,7 +16,7 @@ export default function RodCollections() {
             <a
               key={col.slug}
               href={`#${col.slug}`}
-              className="group block overflow-hidden rounded-2xl bg-white hover:shadow-2xl hover:shadow-coral/15 transition-all duration-300 ring-2 ring-gray-100 hover:ring-coral/40"
+              className="group block overflow-hidden rounded-xl border border-gray-200 bg-white hover:shadow-xl hover:border-gray-400 transition-all duration-300"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -27,11 +27,11 @@ export default function RodCollections() {
                 />
               </div>
               <div className="p-5 bg-white">
-                <h3 className="font-bold text-gray-900 group-hover:text-coral transition">
+                <h3 className="font-bold text-gray-900 group-hover:text-black transition">
                   {col.name}
                 </h3>
                 <p className="mt-1 text-sm text-gray-500">{col.desc}</p>
-                <span className="mt-2 inline-block text-sm font-bold text-coral">
+                <span className="mt-2 inline-block text-sm font-bold text-gray-900 group-hover:underline">
                   Explore →
                 </span>
               </div>
