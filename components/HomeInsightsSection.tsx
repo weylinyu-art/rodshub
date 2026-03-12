@@ -1,0 +1,47 @@
+"use client";
+
+import Link from "next/link";
+import ProductCard from "@/components/ProductCard";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/i18n";
+import { getArticleTitle, ARTICLES } from "@/lib/insights-i18n";
+import { newArrivals } from "@/lib/products";
+
+export default function HomeInsightsSection() {
+  const { lang } = useLanguage();
+  return (
+    <section className="py-12 sm:py-16 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2">
+            <div className="flex justify-between items-end mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">{t("newArrivals", lang)}</h2>
+              <Link href="/category/spinning" className="text-sm font-semibold text-gray-600 hover:text-black">
+                {t("browseAll", lang)}
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {newArrivals.slice(0, 4).map((rod) => (
+                <ProductCard key={rod.id} {...rod} />
+              ))}
+            </div>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t("fishingInsightsTitle", lang)}</h2>
+            <p className="text-gray-600 mb-4">{t("industryKnowledge", lang)}</p>
+            <div className="space-y-2">
+              {ARTICLES.slice(0, 4).map((a) => (
+                <Link key={a.slug} href={`/insights/${a.slug}`} className="block text-gray-700 hover:text-black">
+                  {getArticleTitle(a.slug, lang)}
+                </Link>
+              ))}
+            </div>
+            <Link href="/insights" className="mt-4 inline-block text-sm font-semibold text-gray-900 hover:underline">
+              {t("readAllArticles", lang)}
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

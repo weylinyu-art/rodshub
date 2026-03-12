@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/i18n";
 
 export default function Hero() {
+  const { lang } = useLanguage();
   const heroRef = useRef<HTMLElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
 
@@ -39,37 +42,37 @@ export default function Hero() {
 
       <div className="relative z-20 flex flex-col items-center justify-center min-h-[75vh] lg:min-h-[85vh] px-4 sm:px-6 lg:px-8 text-center">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight">
-          One Hub. Endless Rods.
+          {t("heroTitle", lang)}
         </h1>
         <p className="mt-5 text-lg sm:text-xl text-gray-300 max-w-xl mx-auto">
-          The global marketplace for fishing rod sourcing
+          {t("heroSubtitle", lang)}
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
           <a
             href="/trending"
             className="inline-flex items-center justify-center px-6 py-3 bg-white text-black text-base font-semibold hover:bg-gray-100 transition"
           >
-            Browse Rods
+            {t("browseRods", lang)}
           </a>
           <a
             href="/inquiry"
             className="inline-flex items-center justify-center px-6 py-3 border-2 border-white text-white text-base font-semibold hover:bg-white hover:text-black transition"
           >
-            Send Inquiry
+            {t("sendInquiry", lang)}
           </a>
         </div>
         <div className="mt-10 flex flex-wrap justify-center gap-6 sm:gap-10 text-sm text-gray-400">
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-white" />
-            Bulk Orders
+            {t("bulkOrders", lang)}
           </span>
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-white" />
-            OEM Customization
+            {t("oemCustomization", lang)}
           </span>
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-white" />
-            Global Shipping
+            {t("globalShipping", lang)}
           </span>
         </div>
       </div>

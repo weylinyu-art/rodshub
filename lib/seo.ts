@@ -91,7 +91,7 @@ export const organizationSchema = {
     "@type": "ContactPoint" as const,
     contactType: "customer service",
     email: "hello@rodshub.com",
-    availableLanguage: ["English", "Spanish", "French", "Arabic", "Russian"],
+    availableLanguage: ["English", "Spanish", "French", "German", "Arabic", "Russian", "Japanese", "Korean", "Portuguese"],
   },
 };
 
