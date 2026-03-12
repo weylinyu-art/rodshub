@@ -5,8 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { inquiryForm } from "@/lib/content";
 
-const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://rodshub.com";
+const INQUIRY_EMAIL = "hello@rodshub.com";
 
 export default function QuickInquiryForm() {
   const searchParams = useSearchParams();
@@ -17,11 +16,22 @@ export default function QuickInquiryForm() {
   const placeholders = c.placeholders;
 
   const showSuccess = submitted || searchParams.get("success") === "1";
-  const useWeb3Forms = !!WEB3FORMS_KEY;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    if (useWeb3Forms) return;
     e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData) as Record<string, string>;
+    const body = [
+      `Name: ${data.name || ""}`,
+      `Email: ${data.email || ""}`,
+      `Company: ${data.company || ""}`,
+      `Country: ${data.country || ""}`,
+      `Product: ${data.product || ""}`,
+      `Message: ${data.message || ""}`,
+    ].join("\n");
+    const mailto = `mailto:${INQUIRY_EMAIL}?subject=${encodeURIComponent("RodsHub Inquiry from " + (data.name || ""))}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
     setSubmitted(true);
   };
 
@@ -37,6 +47,9 @@ export default function QuickInquiryForm() {
             </div>
             <h3 className="text-xl font-semibold text-gray-900">{c.successTitle}</h3>
             <p className="mt-2 text-gray-600">{c.successDesc}</p>
+            <p className="mt-4 text-sm text-gray-500">
+              <a href={`mailto:${INQUIRY_EMAIL}`} className="text-gray-900 underline">{INQUIRY_EMAIL}</a>
+            </p>
           </div>
         </div>
       </section>
@@ -49,19 +62,10 @@ export default function QuickInquiryForm() {
         <h2 className="text-3xl font-bold text-gray-900 mb-2">{c.title}</h2>
         <p className="text-gray-600 mb-2">{c.subtitle}</p>
         <p className="text-orange-600 font-semibold mb-8">{c.replyNote}</p>
-        <form
-          onSubmit={handleSubmit}
-          action={useWeb3Forms ? "https://api.web3forms.com/submit" : undefined}
-          method={useWeb3Forms ? "POST" : undefined}
-          className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 shadow-sm"
-        >
-          {useWeb3Forms && (
-            <>
-              <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
-              <input type="hidden" name="subject" value="RodsHub: New Sourcing Inquiry" />
-              <input type="hidden" name="redirect" value={`${SITE_URL}/inquiry?success=1`} />
-            </>
-          )}
+        <p className="mb-6 text-sm text-gray-500">
+          Or email directly: <a href={`mailto:${INQUIRY_EMAIL}?subject=RodsHub%20Inquiry`} className="text-gray-900 underline font-medium">{INQUIRY_EMAIL}</a>
+        </p>
+        <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 shadow-sm">
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
