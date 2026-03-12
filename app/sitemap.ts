@@ -3,7 +3,7 @@ import { SITE_URL } from "@/lib/seo";
 import { getAllProductIds } from "@/lib/productRegistry";
 import { categories } from "@/lib/categoryProducts";
 import { SCENARIOS } from "@/lib/scenarios";
-import { ARTICLES } from "@/lib/insights";
+import { getAllInsightSlugs } from "@/lib/insights";
 
 export const dynamic = "force-static";
 
@@ -48,8 +48,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const insightAnchors: MetadataRoute.Sitemap = ARTICLES.map((a) => ({
-    url: `${base}/insights#${a.slug}`,
+  const insightPages: MetadataRoute.Sitemap = getAllInsightSlugs().map((slug) => ({
+    url: `${base}/insights/${slug}`,
     lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.6,
@@ -60,6 +60,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...productPages,
     ...categoryPages,
     ...scenarioPages,
-    ...insightAnchors,
+    ...insightPages,
   ];
 }

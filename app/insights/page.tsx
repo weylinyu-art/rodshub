@@ -1,30 +1,31 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
-import { INSIGHT_BLOCKS } from "@/lib/insights";
+import { INSIGHT_SECTIONS, INSIGHT_BLOCKS } from "@/lib/insights";
 import { absoluteUrl, buildOpenGraph, buildTwitter, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Fishing Insights | RodsHub",
   description:
-    "Fishing rod types: spinning vs casting vs surf. Carbon fiber materials, rod power & action explained. How to choose a supplier, manufacturing process, line & lure weight guide.",
+    "Practical guides and sourcing insights for fishing rod buyers and tackle businesses. Rod guides, techniques, product knowledge, and B2B sourcing.",
   keywords: [
     "fishing rod types",
-    "spinning vs casting rod",
-    "carbon fiber rod",
+    "fishing techniques",
     "rod power action",
+    "carbon fiber rod",
     "fishing rod supplier",
+    "private label fishing rod",
+    "MOQ wholesale",
     "rod manufacturing",
-    "line weight lure weight",
   ],
   openGraph: buildOpenGraph(
-    "Fishing Insights - Rod Types, Materials & Sourcing Guide | RodsHub",
-    "Learn about fishing rod types, carbon fiber materials, power & action. How to choose a B2B supplier & manufacturing process.",
+    "Fishing Insights - Practical Guides for Buyers & Tackle Businesses | RodsHub",
+    "Rod guides, fishing techniques, product knowledge, and B2B sourcing insights.",
     "/insights"
   ),
   twitter: buildTwitter(
     "Fishing Insights | RodsHub",
-    "Fishing rod types, materials, power & action, supplier selection, manufacturing."
+    "Practical guides and sourcing insights for fishing rod buyers and tackle businesses."
   ),
   alternates: { canonical: absoluteUrl("/insights") },
 };
@@ -35,7 +36,7 @@ export default function InsightsPage() {
     "@type": "Article" as const,
     headline: block.title,
     articleBody: block.content.join(" "),
-    url: `${SITE_URL}/insights#${block.id}`,
+    url: `${SITE_URL}/insights/${block.id}`,
     publisher: { "@id": `${SITE_URL}/#organization` },
   }));
 
@@ -51,7 +52,7 @@ export default function InsightsPage() {
           position: i + 1,
           text,
         })),
-        url: `${SITE_URL}/insights#supplier-selection`,
+        url: `${SITE_URL}/insights/supplier-selection`,
       }
     : null;
 
@@ -73,37 +74,64 @@ export default function InsightsPage() {
             : [...articleSchemas, breadcrumbSchema]
         }
       />
+      {/* Hero */}
       <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <nav className="flex items-center gap-2 text-sm text-gray-500 mb-2">
             <Link href="/" className="hover:text-black transition">Home</Link>
             <span>/</span>
             <span className="text-gray-900 font-medium">Fishing Insights</span>
           </nav>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Fishing Insights</h1>
-          <p className="mt-1 text-gray-600">
-            Industry knowledge for smarter rod sourcing — rod types, materials, power & action, supplier selection, manufacturing, and more.
+          <p className="mt-2 text-gray-600 text-lg max-w-2xl">
+            Practical guides and sourcing insights for fishing rod buyers and tackle businesses.
           </p>
+          {/* Section jump nav */}
+          <div className="mt-6 flex flex-wrap gap-2">
+            {INSIGHT_SECTIONS.map((s) => (
+              <a key={s.id} href={`#${s.id}`} className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition">
+                {s.title}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        {INSIGHT_BLOCKS.map((block) => (
-          <article
-            key={block.id}
-            id={block.id}
-            className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8"
-          >
-            <h2 className="text-lg font-bold text-gray-900 mb-4">{block.title}</h2>
-            <div className="space-y-4 text-gray-600 leading-relaxed">
-              {block.content.map((para, i) => (
-                <p key={i}>{para}</p>
+      {/* Four sections */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        {INSIGHT_SECTIONS.map((section) => (
+          <section key={section.id} id={section.id} className="scroll-mt-8">
+            <h2 className="text-xl font-bold text-gray-900 mb-1">{section.title}</h2>
+            <p className="text-gray-600 mb-6">{section.description}</p>
+            <div className="space-y-6">
+              {section.blocks.map((block) => (
+                <article
+                  key={block.id}
+                  id={block.id}
+                  className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8"
+                >
+                  <h3 className="text-lg font-bold text-gray-900 mb-4">
+                    <Link href={`/insights/${block.id}`} className="hover:underline">
+                      {block.title}
+                    </Link>
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed mb-4 line-clamp-2">
+                    {block.content[0]}
+                  </p>
+                  <Link
+                    href={`/insights/${block.id}`}
+                    className="text-sm font-semibold text-gray-900 hover:underline"
+                  >
+                    Read full article →
+                  </Link>
+                </article>
               ))}
             </div>
-          </article>
+          </section>
         ))}
       </div>
 
+      {/* CTA */}
       <div className="max-w-4xl mx-auto px-4 pb-16 text-center">
         <Link
           href="/inquiry"

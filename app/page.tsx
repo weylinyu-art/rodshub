@@ -102,7 +102,7 @@ export default function Home() {
               <p className="text-gray-600 mb-4">Industry knowledge for smarter sourcing</p>
               <div className="space-y-2">
                 {ARTICLES.slice(0, 4).map((a) => (
-                  <Link key={a.slug} href={`/insights#${a.slug}`} className="block text-gray-700 hover:text-black">
+                  <Link key={a.slug} href={`/insights/${a.slug}`} className="block text-gray-700 hover:text-black">
                     {a.title}
                   </Link>
                 ))}
