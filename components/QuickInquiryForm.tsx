@@ -6,55 +6,22 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { inquiryForm } from "@/lib/content";
 
 const INQUIRY_EMAIL = "hello@rodshub.com";
-const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
 
 export default function QuickInquiryForm() {
   const searchParams = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const { lang } = useLanguage();
   const c = inquiryForm[lang] ?? inquiryForm.en;
   const labels = c.labels;
   const placeholders = c.placeholders;
 
   const showSuccess = submitted || searchParams.get("success") === "1";
-  const useWeb3Forms = !!WEB3FORMS_KEY;
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData) as Record<string, string>;
-
-    if (useWeb3Forms && WEB3FORMS_KEY) {
-      setError(null);
-      setLoading(true);
-      try {
-        const res = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({
-            ...data,
-            access_key: WEB3FORMS_KEY,
-            subject: "RodsHub Inquiry from " + (data.name || ""),
-          }),
-        });
-        const json = (await res.json()) as { success?: boolean; message?: string };
-        if (json.success) {
-          setSubmitted(true);
-        } else {
-          setError(json.message || "Submission failed. Please email us directly.");
-        }
-      } catch {
-        setError("Network error. Please email us directly (link below).");
-      } finally {
-        setLoading(false);
-      }
-      return;
-    }
-
-    // Fallback: mailto
     const body = [
       `Name: ${data.name || ""}`,
       `Email: ${data.email || ""}`,
@@ -99,11 +66,6 @@ export default function QuickInquiryForm() {
           Or email directly: <a href={`mailto:${INQUIRY_EMAIL}?subject=RodsHub%20Inquiry`} className="text-gray-900 underline font-medium">{INQUIRY_EMAIL}</a>
         </p>
         <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 shadow-sm">
-          {error && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-              {error}
-            </div>
-          )}
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -146,10 +108,9 @@ export default function QuickInquiryForm() {
           </div>
           <button
             type="submit"
-            disabled={loading}
-            className="mt-8 w-full min-h-[48px] px-8 py-4 bg-gray-900 hover:bg-black disabled:bg-gray-500 disabled:cursor-not-allowed text-white text-lg font-bold rounded-lg transition shadow-md border-2 border-gray-900"
+            className="mt-8 w-full min-h-[48px] px-8 py-4 bg-gray-900 hover:bg-black text-white text-lg font-bold rounded-lg transition shadow-md border-2 border-gray-900"
           >
-            {loading ? "Sending..." : c.submitBtn}
+            {c.submitBtn}
           </button>
         </form>
       </div>
