@@ -49,6 +49,8 @@ export default function ProductCard({
             key={i}
             src={src}
             alt={`${displayName} - ${i + 1}`}
+            loading="lazy"
+            decoding="async"
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:scale-105 ${
               i === activeIndex ? "opacity-100 z-0" : "opacity-0"
             }`}

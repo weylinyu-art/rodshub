@@ -32,6 +32,8 @@ export default function WhyRodsHub() {
                 <img
                   src="https://images.unsplash.com/photo-1624218656926-da680b8127c9?w=200&h=200&fit=crop"
                   alt=""
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -46,6 +48,8 @@ export default function WhyRodsHub() {
                 <img
                   src="https://images.unsplash.com/photo-1537872384762-e785271d14f8?w=200&h=200&fit=crop"
                   alt=""
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </div>

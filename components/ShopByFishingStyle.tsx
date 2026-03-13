@@ -40,6 +40,8 @@ export default function ShopByFishingStyle() {
                 <img
                   src={style.image}
                   alt={STYLE_NAMES[style.slug]?.[lang] ?? style.slug}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
               </div>

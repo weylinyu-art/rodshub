@@ -23,6 +23,8 @@ export default function ProductImageGallery({
         <img
           src={images[activeIndex]}
           alt={alt}
+          loading="eager"
+          decoding="async"
           className="w-full h-full object-cover"
         />
       </div>
@@ -38,7 +40,7 @@ export default function ProductImageGallery({
               }`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={src} alt="" className="w-full h-full object-cover" />
+              <img src={src} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover" />
             </button>
           ))}
         </div>

@@ -31,6 +31,8 @@ export default function ProductDetailRecommend({ products }: Props) {
                 <img
                   src={(p.images?.[0] ?? p.image) + "?w=300&h=300&fit=crop"}
                   alt={displayName}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                 />
               </div>

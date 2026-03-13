@@ -32,9 +32,11 @@ export default function Hero() {
         <div className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/hero-banner.png"
+            src="/hero-banner.jpeg"
             alt="Fishing rods and gear"
             className="w-full h-full object-cover"
+            fetchPriority="high"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80" />
         </div>

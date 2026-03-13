@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import dynamic from "next/dynamic";
 import Hero from "@/components/Hero";
 import ValueCards from "@/components/ValueCards";
 import ShopByCategory from "@/components/ShopByCategory";
-import ProductCard from "@/components/ProductCard";
 import ShopByFishingStyle from "@/components/ShopByFishingStyle";
-import CompanyIntro from "@/components/CompanyIntro";
-import RodCollections from "@/components/RodCollections";
-import OEMCustomization from "@/components/OEMCustomization";
-import WhyRodsHub from "@/components/WhyRodsHub";
-import Testimonials from "@/components/Testimonials";
-import { trendingRods, newArrivals, wholesalePicks } from "@/lib/products";
-import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
 import HomeFeaturedSection from "@/components/HomeFeaturedSection";
-import HomeInsightsSection from "@/components/HomeInsightsSection";
-import HomeCTA from "@/components/HomeCTA";
+import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
+
+const CompanyIntro = dynamic(() => import("@/components/CompanyIntro"), { ssr: true });
+const RodCollections = dynamic(() => import("@/components/RodCollections"), { ssr: true });
+const OEMCustomization = dynamic(() => import("@/components/OEMCustomization"), { ssr: true });
+const WhyRodsHub = dynamic(() => import("@/components/WhyRodsHub"), { ssr: true });
+const Testimonials = dynamic(() => import("@/components/Testimonials"), { ssr: true });
+const HomeInsightsSection = dynamic(() => import("@/components/HomeInsightsSection"), { ssr: true });
+const HomeCTA = dynamic(() => import("@/components/HomeCTA"), { ssr: true });
 
 export const metadata: Metadata = {
   title: "RodsHub | B2B Fishing Rod Wholesale & OEM Marketplace",
