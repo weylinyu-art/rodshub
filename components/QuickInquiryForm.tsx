@@ -7,9 +7,24 @@ import { inquiryForm } from "@/lib/content";
 
 const INQUIRY_EMAIL = "hello@rodshub.com";
 
+function buildMailto(data: Record<string, string>): string {
+  const body = [
+    `Name: ${data.name || ""}`,
+    `Email: ${data.email || ""}`,
+    `Company: ${data.company || ""}`,
+    `Country: ${data.country || ""}`,
+    `Product: ${data.product || ""}`,
+    `Message: ${data.message || ""}`,
+  ].join("\n");
+  const truncated = body.length > 1500 ? body.slice(0, 1500) + "..." : body;
+  return `mailto:${INQUIRY_EMAIL}?subject=${encodeURIComponent("RodsHub Inquiry from " + (data.name || ""))}&body=${encodeURIComponent(truncated)}`;
+}
+
 export default function QuickInquiryForm() {
   const searchParams = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
+  const [lastData, setLastData] = useState<Record<string, string> | null>(null);
+  const [copied, setCopied] = useState(false);
   const { lang } = useLanguage();
   const c = inquiryForm[lang] ?? inquiryForm.en;
   const labels = c.labels;
@@ -22,33 +37,61 @@ export default function QuickInquiryForm() {
     const form = e.currentTarget;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData) as Record<string, string>;
-    const body = [
+    setLastData(data);
+    setSubmitted(true);
+  };
+
+  const handleCopy = (data: Record<string, string>) => {
+    const text = [
+      `RodsHub Inquiry`,
+      ``,
       `Name: ${data.name || ""}`,
       `Email: ${data.email || ""}`,
       `Company: ${data.company || ""}`,
       `Country: ${data.country || ""}`,
       `Product: ${data.product || ""}`,
       `Message: ${data.message || ""}`,
+      ``,
+      `— Send to ${INQUIRY_EMAIL}`,
     ].join("\n");
-    const mailto = `mailto:${INQUIRY_EMAIL}?subject=${encodeURIComponent("RodsHub Inquiry from " + (data.name || ""))}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-    setSubmitted(true);
+    navigator.clipboard?.writeText(text).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
   };
 
   if (showSuccess) {
+    const data = lastData || {};
+    const mailto = buildMailto(data);
     return (
       <section id="inquiry" className="py-16 sm:py-24 bg-slate-50">
-        <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-white rounded-xl border border-gray-200 p-12">
+        <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-xl border border-gray-200 p-8 sm:p-12">
             <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900">{c.successTitle}</h3>
-            <p className="mt-2 text-gray-600">{c.successDesc}</p>
-            <p className="mt-4 text-sm text-gray-500">
-              <a href={`mailto:${INQUIRY_EMAIL}`} className="text-gray-900 underline">{INQUIRY_EMAIL}</a>
+            <h3 className="text-xl font-semibold text-gray-900 text-center">{c.successTitle}</h3>
+            <p className="mt-2 text-gray-600 text-center">{c.successDesc}</p>
+            <p className="mt-6 text-sm text-gray-700 font-medium text-center">{c.chooseMethod}</p>
+            <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center">
+              <a
+                href={mailto}
+                className="inline-flex items-center justify-center px-6 py-4 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition"
+              >
+                {c.openEmailBtn}
+              </a>
+              <button
+                type="button"
+                onClick={() => handleCopy(data)}
+                className="inline-flex items-center justify-center px-6 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-black hover:text-black transition"
+              >
+                {copied ? c.copied : c.copyContent}
+              </button>
+            </div>
+            <p className="mt-4 text-sm text-gray-500 text-center">
+              {c.emailDirectlyTo} <a href={`mailto:${INQUIRY_EMAIL}`} className="text-gray-900 underline font-medium">{INQUIRY_EMAIL}</a>
             </p>
           </div>
         </div>
