@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 const EMAIL = "hello@rodshub.com";
-const WHATSAPP = "+8613800138000";
+const WHATSAPP = "+86 19957106387";
 
 export default function ContactPage() {
   return (
@@ -43,7 +43,7 @@ export default function ContactPage() {
           </div>
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <h2 className="font-semibold text-gray-900 mb-2">WhatsApp</h2>
-            <a href={`https://wa.me/${WHATSAPP.replace(/\+/g, "")}`} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-black transition">
+            <a href={`https://wa.me/${WHATSAPP.replace(/\D/g, "")}`} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-black transition">
               {WHATSAPP}
             </a>
             <p className="mt-2 text-sm text-gray-500">Click to chat on WhatsApp. Business hours: Mon–Fri 9:00–18:00 (UTC+8)</p>
