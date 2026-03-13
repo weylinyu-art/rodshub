@@ -40,7 +40,7 @@ export default function ProductImageGallery({
               }`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={src} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover" />
+              <img src={src} alt={`${alt} - view ${i + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover" />
             </button>
           ))}
         </div>

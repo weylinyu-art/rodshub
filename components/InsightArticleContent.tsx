@@ -30,7 +30,7 @@ export default function InsightArticleContent({ slug, recommendedProducts }: Pro
         <span className="text-gray-900 font-medium truncate max-w-[180px] sm:max-w-xs">{block.title}</span>
       </nav>
 
-      <article className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
+      <article className="insight-speakable bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">{block.title}</h1>
 
         <InsightContentRenderer content={block.content} />

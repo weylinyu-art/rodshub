@@ -49,9 +49,22 @@ export default async function ScenarioPage({ params }: PageProps) {
     ],
   };
 
+  const itemListSchema = {
+    "@context": "https://schema.org" as const,
+    "@type": "ItemList" as const,
+    name: `${scenario.name} Fishing Rods - RodsHub`,
+    numberOfItems: products.length,
+    itemListElement: products.slice(0, 20).map((p, i) => ({
+      "@type": "ListItem" as const,
+      position: i + 1,
+      url: absoluteUrl(`/product/${p.id}`),
+      name: p.name,
+    })),
+  };
+
   return (
     <main className="min-h-screen bg-gray-50">
-      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={[breadcrumbSchema, itemListSchema]} />
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <nav className="flex items-center gap-2 text-sm text-gray-500">

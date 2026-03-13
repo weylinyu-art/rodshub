@@ -55,6 +55,10 @@ export default async function InsightArticlePage({ params }: PageProps) {
     dateModified: "2024-06-01",
     author: { "@type": "Organization" as const, name: "RodsHub", url: SITE_URL },
     publisher: { "@id": `${SITE_URL}/#organization` },
+    speakable: {
+      "@type": "SpeakableSpecification" as const,
+      cssSelector: [".insight-speakable"],
+    },
   };
 
   const breadcrumbSchema = {

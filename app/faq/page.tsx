@@ -29,6 +29,10 @@ const FAQ_ITEMS = [
   { q: "What payment methods are accepted?", a: "We accept T/T (bank transfer), L/C, and other B2B payment terms. Payment details are provided upon order confirmation." },
   { q: "What types of fishing rods does RodsHub offer?", a: "RodsHub offers spinning rods, casting rods, telescopic rods, surf rods, ice fishing rods, and travel rods. We have 200+ SKUs across 6 categories for B2B wholesale." },
   { q: "How do I source fishing rods for wholesale?", a: "Browse our catalog by category or scenario, select products, and submit an inquiry with your MOQ and destination. We reply within 24 hours with pricing and availability." },
+  { q: "What is a telescopic fishing rod?", a: "A telescopic rod has collapsible sections that retract into each other, making it compact for travel. Ideal for backpacking, camping, and portable fishing. RodsHub offers telescopic rods from 1.2m to 2.7m." },
+  { q: "What is the best spinning rod length for bass?", a: "For bass fishing, 6'6\" to 7' medium or medium-heavy spinning rods are popular. Shorter rods (6'–6'6\") suit close-quarter and finesse; longer (7'+) suit bank and cover. RodsHub stocks multiple lengths for B2B." },
+  { q: "How to source fishing rods from China?", a: "Use RodsHub: browse 200+ SKUs by category, submit an inquiry with MOQ and destination, receive a quote within 24 hours. We handle quality control, OEM, and global shipping. MOQ from 30 pcs." },
+  { q: "What is MOQ for fishing rods?", a: "MOQ (minimum order quantity) for fishing rods at RodsHub starts from 30 pieces per SKU. Larger orders often get better per-unit pricing. Custom OEM may have different MOQs—contact us for details." },
 ];
 
 export default function FAQPage() {
@@ -54,9 +58,21 @@ export default function FAQPage() {
     ],
   };
 
+  const webPageSchema = {
+    "@context": "https://schema.org" as const,
+    "@type": "WebPage" as const,
+    url: absoluteUrl("/faq"),
+    name: "FAQ - Sourcing Fishing Rods | RodsHub",
+    description: "Frequently asked questions about RodsHub: MOQ, OEM, lead times, shipping, payment. B2B fishing rod sourcing answered.",
+    speakable: {
+      "@type": "SpeakableSpecification" as const,
+      cssSelector: [".faq-speakable"],
+    },
+  };
+
   return (
     <main className="min-h-screen bg-gray-50">
-      <JsonLd data={[faqSchema, breadcrumbSchema]} />
+      <JsonLd data={[faqSchema, breadcrumbSchema, webPageSchema]} />
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <nav className="flex items-center gap-2 text-sm text-gray-500 mb-2">
@@ -72,7 +88,7 @@ export default function FAQPage() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="space-y-4">
           {FAQ_ITEMS.map((item, i) => (
-            <div key={i} className="bg-white rounded-xl border border-gray-200 p-6">
+            <div key={i} className="faq-speakable bg-white rounded-xl border border-gray-200 p-6">
               <h2 className="font-semibold text-gray-900 mb-2">{item.q}</h2>
               <p className="text-gray-600">{item.a}</p>
             </div>

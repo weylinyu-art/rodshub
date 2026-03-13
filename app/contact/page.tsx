@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
+import { absoluteUrl, buildOpenGraph, buildTwitter, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Contact Us | RodsHub",
@@ -19,8 +20,40 @@ const EMAIL = "hello@rodshub.com";
 const WHATSAPP = "+86 19957106387";
 
 export default function ContactPage() {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org" as const,
+    "@type": "BreadcrumbList" as const,
+    itemListElement: [
+      { "@type": "ListItem" as const, position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem" as const, position: 2, name: "Contact Us", item: absoluteUrl("/contact") },
+    ],
+  };
+
+  const contactPageSchema = {
+    "@context": "https://schema.org" as const,
+    "@type": "ContactPage" as const,
+    name: "Contact RodsHub",
+    description: "Reach RodsHub by email or WhatsApp. We reply within 24 hours.",
+    url: absoluteUrl("/contact"),
+    mainEntity: {
+      "@type": "Organization" as const,
+      name: "RodsHub",
+      email: EMAIL,
+      contactPoint: {
+        "@type": "ContactPoint" as const,
+        contactType: "customer service",
+        email: EMAIL,
+        telephone: WHATSAPP,
+        areaServed: "Worldwide",
+        availableLanguage: ["English", "Spanish", "French", "German", "Arabic", "Russian", "Japanese", "Korean", "Portuguese"],
+        hoursAvailable: { "@type": "HoursSpecification" as const, dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "18:00" },
+      },
+    },
+  };
+
   return (
     <main className="min-h-screen bg-gray-50">
+      <JsonLd data={[breadcrumbSchema, contactPageSchema]} />
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <nav className="flex items-center gap-2 text-sm text-gray-500 mb-2">

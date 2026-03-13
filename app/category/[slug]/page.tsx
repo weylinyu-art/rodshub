@@ -53,9 +53,22 @@ export default async function CategoryPage({ params }: PageProps) {
     ],
   };
 
+  const itemListSchema = {
+    "@context": "https://schema.org" as const,
+    "@type": "ItemList" as const,
+    name: `${category.name} - RodsHub Wholesale`,
+    numberOfItems: products.length,
+    itemListElement: products.slice(0, 20).map((p, i) => ({
+      "@type": "ListItem" as const,
+      position: i + 1,
+      url: absoluteUrl(`/product/${p.id}`),
+      name: p.name,
+    })),
+  };
+
   return (
     <main className="min-h-screen bg-gray-50">
-      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={[breadcrumbSchema, itemListSchema]} />
       <CategoryPageHeader slug={slug} productCount={products.length} />
 
       {/* Filters + Product Grid */}

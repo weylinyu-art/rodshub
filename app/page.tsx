@@ -5,7 +5,8 @@ import ValueCards from "@/components/ValueCards";
 import ShopByCategory from "@/components/ShopByCategory";
 import ShopByFishingStyle from "@/components/ShopByFishingStyle";
 import HomeFeaturedSection from "@/components/HomeFeaturedSection";
-import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
+import { absoluteUrl, buildOpenGraph, buildTwitter, howToOrderSchema } from "@/lib/seo";
 
 const CompanyIntro = dynamic(() => import("@/components/CompanyIntro"), { ssr: true });
 const RodCollections = dynamic(() => import("@/components/RodCollections"), { ssr: true });
@@ -43,6 +44,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="bg-gray-50">
+      <JsonLd data={howToOrderSchema} />
       <Hero />
       {/* 4 价值卡片 */}
       <ValueCards />
