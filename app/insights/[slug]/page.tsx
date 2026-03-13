@@ -48,8 +48,12 @@ export default async function InsightArticlePage({ params }: PageProps) {
     "@context": "https://schema.org" as const,
     "@type": "Article" as const,
     headline: block.title,
+    description: getFirstParagraphText(block.content).slice(0, 160),
     articleBody: getArticleBodyText(block.content),
     url: `${SITE_URL}/insights/${slug}`,
+    datePublished: "2024-01-01",
+    dateModified: "2024-06-01",
+    author: { "@type": "Organization" as const, name: "RodsHub", url: SITE_URL },
     publisher: { "@id": `${SITE_URL}/#organization` },
   };
 
