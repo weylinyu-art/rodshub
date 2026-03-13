@@ -80,6 +80,8 @@ export const T: Translations = {
   privacyPolicy: { en: "Privacy Policy", es: "Política de privacidad", fr: "Politique de confidentialité", de: "Datenschutz", ar: "سياسة الخصوصية", ru: "Политика конфиденциальности", ja: "プライバシーポリシー", ko: "개인정보처리방침", pt: "Política de privacidade" },
   faq: { en: "FAQ", es: "FAQ", fr: "FAQ", de: "FAQ", ar: "الأسئلة الشائعة", ru: "Часто задаваемые вопросы", ja: "よくある質問", ko: "자주 묻는 질문", pt: "FAQ" },
   allRightsReserved: { en: "All rights reserved.", es: "Todos los derechos reservados.", fr: "Tous droits réservés.", de: "Alle Rechte vorbehalten.", ar: "جميع الحقوق محفوظة.", ru: "Все права защищены.", ja: "All rights reserved.", ko: "All rights reserved.", pt: "Todos os direitos reservados." },
+  copy: { en: "Copy", es: "Copiar", fr: "Copier", de: "Kopieren", ar: "نسخ", ru: "Копировать", ja: "コピー", ko: "복사", pt: "Copiar" },
+  copied: { en: "Copied!", es: "¡Copiado!", fr: "Copié !", de: "Kopiert!", ar: "تم النسخ!", ru: "Скопировано!", ja: "コピーしました！", ko: "복사됨!", pt: "Copiado!" },
   // Page content keys
   featuredRods: { en: "Featured Rods", es: "Cañas destacadas", fr: "Roden mis en avant", de: "Ausgewählte Ruten", ar: "قضبان مميزة", ru: "Популярные удилища", ja: "注目のロッド", ko: "추천 로드", pt: "Varas em destaque" },
   topPicksWholesale: { en: "Top picks & wholesale deals", es: "Mejores selecciones y ofertas mayoristas", fr: "Meilleures sélections et offres gros", de: "Top-Angebote und Großhandelsdeals", ar: "أفضل الاختيارات وعروض الجملة", ru: "Лучшие предложения и оптовые цены", ja: "厳選アイテムと卸売特価", ko: "추천 상품 및 도매 특가", pt: "Melhores escolhas e ofertas atacado" },
