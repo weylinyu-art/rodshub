@@ -5,11 +5,11 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { shopByFishingStyle } from "@/lib/content";
 
 const styles = [
-  { slug: "freshwater", image: "https://images.pexels.com/photos/14339529/pexels-photo-14339529.jpeg?auto=compress&w=400&h=280&fit=crop", count: "2,400+" },
-  { slug: "saltwater", image: "https://images.unsplash.com/photo-1689618601755-ef7ce1230bea?w=400&h=280&fit=crop", count: "1,100+" },
-  { slug: "surf", image: "https://images.unsplash.com/photo-1689618601755-ef7ce1230bea?w=400&h=280&fit=crop", count: "580+" },
-  { slug: "boat", image: "https://images.pexels.com/photos/18040479/pexels-photo-18040479.jpeg?auto=compress&w=400&h=280&fit=crop", count: "920+" },
-  { slug: "ice", image: "https://images.unsplash.com/photo-1537872384762-e785271d14f8?w=400&h=280&fit=crop", count: "340+" },
+  { slug: "freshwater", image: "/style-freshwater.png", count: "2,400+" },
+  { slug: "saltwater", image: "/style-saltwater.png", count: "1,100+" },
+  { slug: "surf", image: "/style-surf.png", count: "580+" },
+  { slug: "boat", image: "/style-boat.png", count: "920+" },
+  { slug: "ice", image: "/style-ice.png", count: "340+" },
 ];
 
 const STYLE_NAMES: Record<string, Record<string, string>> = {
