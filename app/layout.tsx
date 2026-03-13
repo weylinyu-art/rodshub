@@ -43,9 +43,11 @@ export const metadata: Metadata = {
     follow: true,
   },
   verification: {
-    // Add Google Search Console / Bing verification when available
     // google: "xxx",
-    // yandex: "xxx",
+    yandex: "d80b68c89ddd057e",
+    other: {
+      "msvalidate.01": "FF5C640EDE929FBE5184E1BA4B64140D",
+    },
   },
 };
 
