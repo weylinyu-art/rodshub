@@ -13,8 +13,8 @@ export interface SkuRow {
   title: string;
 }
 
-/** 标题最大长度 */
-const TITLE_MAX_LEN = 70;
+/** 标题最大长度（详情页展示） */
+const TITLE_MAX_LEN = 50;
 
 /** 去掉 1PC/180cm/70.86inch 等尺寸描述，提升 B2B 文案质感 */
 function sanitizeTitle(s: string): string {

@@ -115,6 +115,7 @@ export default function ProductDetailContent({
 }: ProductDetailContentProps) {
   const { lang } = useLanguage();
   const displayName = getProductName(product, lang);
+  const displayNameShort = displayName.length > 52 ? displayName.slice(0, 49).trimEnd() + "…" : displayName;
 
   const variants = realProduct?.variants ?? [];
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(() => {
@@ -137,7 +138,7 @@ export default function ProductDetailContent({
       <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6">
         <Link href="/" className="hover:text-black transition">{t("home", lang)}</Link>
         <span>/</span>
-        <span className="text-gray-900 font-medium truncate">{displayName}</span>
+        <span className="text-gray-900 font-medium truncate" title={displayName}>{displayNameShort}</span>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
@@ -149,7 +150,7 @@ export default function ProductDetailContent({
               {product.badge}
             </span>
           )}
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">{displayName}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight" title={displayName}>{displayNameShort}</h1>
 
           {variants.length > 1 && (
             <div>
@@ -197,7 +198,9 @@ export default function ProductDetailContent({
             </div>
           )}
 
-          <p className="text-xl font-bold text-gray-900">{displayPrice}</p>
+          {displayPrice && !/^(Inquiry|詢價|询价)$/i.test(String(displayPrice).trim()) && (
+            <p className="text-xl font-bold text-gray-900">{displayPrice}</p>
+          )}
 
           <dl className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
             {displaySpecs.length && (
