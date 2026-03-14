@@ -41,7 +41,7 @@ export default async function ProductPage({ params }: PageProps) {
 
   const detail = getProductDetail(product);
   const imgList = (product.images && product.images.length > 0 ? product.images : [product.image]) as string[];
-  const related = getRelatedProducts(id, 8);
+  const related = getRelatedProducts(id, 16);
 
   const productSchema = {
     "@context": "https://schema.org" as const,

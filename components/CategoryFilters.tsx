@@ -1,8 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import type { Product } from "@/lib/products";
+
+const PAGE_SIZE = 30;
 
 type SortOption = "default" | "price-asc" | "price-desc";
 
@@ -30,7 +32,12 @@ export default function CategoryFilters({
   const [priceMax, setPriceMax] = useState<number | null>(null);
   const [fishingStyle, setFishingStyle] = useState<Set<string>>(new Set());
   const [sort, setSort] = useState<SortOption>("default");
+  const [currentPage, setCurrentPage] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(false); // 移动端默认收起筛选
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [material, power, length, fishingStyle, priceMin, priceMax, sort]);
 
   const materials = useMemo(() => uniq(products.map((p) => p.material)), [products]);
   const powers = useMemo(() => uniq(products.map((p) => p.power)), [products]);
@@ -75,6 +82,9 @@ export default function CategoryFilters({
 
     return list;
   }, [products, material, power, length, fishingStyle, priceMin, priceMax, sort]);
+
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE) || 1;
+  const paginatedProducts = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   return (
     <div className="flex flex-col md:flex-row gap-6 md:gap-8">
@@ -225,7 +235,7 @@ export default function CategoryFilters({
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
-          {filtered.map((p, i) => (
+          {paginatedProducts.map((p, i) => (
             <div key={p.id ?? i} className="min-w-0">
               <ProductCard {...p} variant="default" />
             </div>
@@ -233,6 +243,29 @@ export default function CategoryFilters({
         </div>
         {filtered.length === 0 && (
           <p className="text-center py-12 text-gray-500">No products match your filters. Try adjusting.</p>
+        )}
+        {filtered.length > 0 && totalPages > 1 && (
+          <nav className="mt-8 flex items-center justify-center gap-2">
+            <button
+              type="button"
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage <= 1}
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 enabled:hover:border-gray-400"
+            >
+              Previous
+            </button>
+            <span className="px-4 py-2 text-sm text-gray-600">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              type="button"
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage >= totalPages}
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 enabled:hover:border-gray-400"
+            >
+              Next
+            </button>
+          </nav>
         )}
       </div>
     </div>

@@ -61,7 +61,7 @@ export default function CompanyIntro() {
               {c.aboutLink}
             </Link>
           </div>
-          {/* 移动端：横向滚动紧凑卡片，避免垂直堆叠臃肿 */}
+          {/* 移动端：横向滚动紧凑卡片，图标置于顶部小区域，避免与文字重叠 */}
           <div className="lg:col-span-2 md:hidden -mx-4 px-4 overflow-x-auto scrollbar-hide">
             <div className="flex gap-3 pb-2">
               {c.stats.map((stat, i) => {
@@ -69,12 +69,12 @@ export default function CompanyIntro() {
                 return (
                   <div
                     key={i}
-                    className="relative flex-shrink-0 w-[130px] aspect-[4/3] rounded-lg overflow-hidden bg-gray-800/80 border border-gray-700/50 flex flex-col justify-end p-2.5"
+                    className="flex-shrink-0 w-[130px] rounded-lg overflow-hidden bg-gray-800/80 border border-gray-700/50 flex flex-col"
                   >
-                    <div className="absolute inset-0 flex items-center justify-center p-2 opacity-50">
+                    <div className="h-10 flex items-center justify-center shrink-0 opacity-25 overflow-hidden">
                       <Illo />
                     </div>
-                    <div className="relative z-10">
+                    <div className="p-2.5 pt-1 flex-1 flex flex-col justify-end">
                       <h3 className="font-bold text-white text-xs">{stat.title}</h3>
                       <p className="text-[10px] text-gray-400 leading-tight">{stat.subtitle}</p>
                     </div>
@@ -83,19 +83,19 @@ export default function CompanyIntro() {
               })}
             </div>
           </div>
-          {/* 桌面端：原有网格布局 */}
+          {/* 桌面端：图标置于顶部独立区域，文字在下方，无重叠 */}
           <div className="hidden md:grid lg:col-span-2 md:grid-cols-3 gap-3 sm:gap-4">
             {c.stats.map((stat, i) => {
               const Illo = ILLUSTRATIONS[i];
               return (
                 <div
                   key={i}
-                  className="relative rounded-lg overflow-hidden aspect-[16/10] bg-gray-800/80 border border-gray-700/50 flex flex-col justify-end p-3 sm:p-4 group hover:border-gray-500/60 transition-colors min-w-0"
+                  className="rounded-lg overflow-hidden aspect-[16/10] bg-gray-800/80 border border-gray-700/50 flex flex-col group hover:border-gray-500/60 transition-colors min-w-0"
                 >
-                  <div className="absolute inset-0 flex items-center justify-center p-4 opacity-60 group-hover:opacity-80 transition-opacity">
+                  <div className="h-12 sm:h-14 flex items-center justify-center shrink-0 opacity-25 group-hover:opacity-35 overflow-hidden">
                     <Illo />
                   </div>
-                  <div className="relative z-10">
+                  <div className="flex-1 flex flex-col justify-end p-3 sm:p-4 pt-1">
                     <h3 className="font-bold text-white text-sm sm:text-base">{stat.title}</h3>
                     <p className="text-xs sm:text-sm text-gray-400 mt-0.5">{stat.subtitle}</p>
                   </div>

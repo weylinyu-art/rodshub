@@ -90,6 +90,23 @@ function defaultImageFiles(sku: string, count = 6): string[] {
 
 import { buildProductsFromSkuRows } from "./skuData";
 
+/** 首页 Featured 首行展示价：$X.XX/pc 格式，与第二行 wholesale 样式一致 */
+export const HOME_FEATURED_PRICES: Record<string, string> = {
+  TSG01: "$14.50/pc",
+  TSG02: "$13.99/pc",
+  TSG03: "$15.00/pc",
+  TSG04: "$14.00/pc",
+  TSG05: "$11.50/pc",
+  TSG06: "$12.99/pc",
+  TSG07: "$9.80/pc",
+  TSG08: "$10.50/pc",
+};
+
+/** 首页图片筛选：首图含文字时改用备用图（索引），避免展示带文字的图 */
+export const HOME_IMAGE_INDEX_OVERRIDE: Record<string, number> = {
+  TSG02: 1, // 首图为参数图含 L/UL 文字，用第二张
+};
+
 /** 从 skuData 构建 RealProduct，标题替换为 CSV 标题，有子 SKU 时以伸展长作为 variant 维度 */
 export const REAL_PRODUCTS: RealProduct[] = buildProductsFromSkuRows().map(({ parentSku, title, rows }) => {
   const style = inferFishingStyle(parentSku);

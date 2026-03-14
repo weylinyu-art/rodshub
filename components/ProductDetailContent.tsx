@@ -347,7 +347,7 @@ export default function ProductDetailContent({
           </div>
         </section>
 
-        {related.length > 0 && <ProductDetailRecommend products={related} />}
+        {related.length > 0 && <ProductDetailRecommend key={product.id} products={related} />}
       </div>
     </div>
   );
