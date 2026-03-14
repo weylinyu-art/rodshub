@@ -105,14 +105,7 @@ export default function ProductDetailContent({
             </div>
           )}
 
-          <div className="flex flex-wrap items-baseline gap-3">
-            <p className="text-xl font-bold text-gray-900">{displayPrice}</p>
-            {product.moq && (
-              <span className="text-sm text-gray-500">
-                {t("moq", lang)}: {product.moq}
-              </span>
-            )}
-          </div>
+          <p className="text-xl font-bold text-gray-900">{displayPrice}</p>
 
           <dl className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
             {displaySpecs.length && (

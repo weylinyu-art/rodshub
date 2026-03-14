@@ -1,5 +1,6 @@
 import type { Product } from "@/lib/products";
 import { getProductImages } from "@/lib/products";
+import { REAL_PRODUCTS, realProductToDisplayProduct } from "@/lib/realProducts";
 
 export const CATEGORIES = [
   { name: "Spinning Rods", slug: "spinning" },
@@ -50,7 +51,7 @@ function generateProducts(
 
   for (let i = 0; i < count; i++) {
     const idx = globalImageIndex++;
-    const images = getProductImages(idx, (i % 3) + 1 as 1 | 2 | 3);
+    const images = getProductImages(idx, 3);
     const base = bases[i % bases.length];
     const len = lengthPool[i % lengthPool.length];
     const pr = PRICE_RANGES[i % PRICE_RANGES.length];
@@ -81,6 +82,22 @@ export const PRODUCTS_BY_CATEGORY: Record<CategorySlug, Product[]> = {
   travel: generateProducts("travel", "Travel Rod", 32, ["1.8m", "2.1m", "2.4m", "2.0m", "4-piece", "5-piece"]),
 };
 
-export function getProductsByCategory(slug: string): Product[] {
-  return (PRODUCTS_BY_CATEGORY as Record<string, Product[]>)[slug] ?? [];
+/** 分类 slug 与 fishingStyle 映射 */
+const SLUG_TO_STYLE: Record<string, string> = {
+  spinning: "Spinning",
+  casting: "Casting",
+  telescopic: "Telescopic",
+  surf: "Surf",
+  ice: "Ice",
+  travel: "Travel",
+};
+
+/** 获取分类下的产品：真实产品排在前面，按 fishingStyle 归拢 */
+export function getProductsByCategory(slug: string): (Product & { id: string })[] {
+  const style = SLUG_TO_STYLE[slug];
+  const generated = (PRODUCTS_BY_CATEGORY as Record<string, Product[]>)[slug] ?? [];
+  const realForCategory = REAL_PRODUCTS.filter(
+    (p) => p.fishingStyle.toLowerCase() === (style?.toLowerCase() ?? "")
+  ).map(realProductToDisplayProduct);
+  return [...realForCategory, ...generated] as (Product & { id: string })[];
 }

@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!product) return { title: "Product Not Found" };
 
   const title = `${product.name} | B2B Wholesale`;
-  const desc = `${product.name} - ${product.price}${product.moq ? `, MOQ ${product.moq}` : ""}. ${product.material || ""} ${product.length || ""} ${product.power || ""}. RodsHub B2B fishing rod sourcing.`;
+  const desc = `${product.name} - ${product.price}. ${product.material || ""} ${product.length || ""} ${product.power || ""}. RodsHub B2B fishing rod sourcing.`;
   const path = `/product/${id}`;
   const image = (product.images?.[0] || product.image) as string;
 
