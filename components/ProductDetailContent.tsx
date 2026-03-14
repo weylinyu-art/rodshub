@@ -29,6 +29,73 @@ const SPEC_LABEL_KEYS: Record<string, string> = {
   "Package Dimensions": "packageDimensions",
 };
 
+/** 有子 SKU 时以伸展长（dimensions）为主切换项，先选长度再选类型 */
+function VariantSwitcher({
+  variants,
+  selectedVariant,
+  onSelect,
+  useLengthAsPrimary,
+}: {
+  variants: ProductVariant[];
+  selectedVariant: ProductVariant | null;
+  onSelect: (v: ProductVariant) => void;
+  useLengthAsPrimary: boolean;
+}) {
+  if (!useLengthAsPrimary) {
+    return (
+      <div className="flex flex-wrap gap-2">
+        {variants.map((v) => (
+          <button
+            key={v.sku}
+            type="button"
+            onClick={() => onSelect(v)}
+            className={`px-4 py-2 rounded-lg border text-sm font-medium transition ${
+              selectedVariant?.sku === v.sku ? "border-black bg-black text-white" : "border-gray-300 text-gray-700 hover:border-gray-400"
+            }`}
+          >
+            {v.sku} · {v.dimensions} · {v.price}
+          </button>
+        ))}
+      </div>
+    );
+  }
+  const byLength = new Map<string, ProductVariant[]>();
+  for (const v of variants) {
+    const list = byLength.get(v.dimensions) ?? [];
+    list.push(v);
+    byLength.set(v.dimensions, list);
+  }
+  const lengths = Array.from(byLength.keys()).sort((a, b) => parseFloat(a) - parseFloat(b));
+  return (
+    <div className="space-y-3">
+      {lengths.map((len) => {
+        const list = byLength.get(len)!;
+        const isSingle = list.length === 1;
+        const isSelected = list.some((v) => v.sku === selectedVariant?.sku);
+        return (
+          <div key={len} className="flex flex-wrap items-center gap-2">
+            <span className="text-sm font-medium text-gray-600 w-14 flex-shrink-0">{len}</span>
+            <div className="flex flex-wrap gap-2">
+              {list.map((v) => (
+                <button
+                  key={v.sku}
+                  type="button"
+                  onClick={() => onSelect(v)}
+                  className={`px-3 py-1.5 rounded-lg border text-sm font-medium transition ${
+                    selectedVariant?.sku === v.sku ? "border-black bg-black text-white" : "border-gray-300 text-gray-700 hover:border-gray-400"
+                  }`}
+                >
+                  {v.type}
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 interface ProductDetailContentProps {
   product: Product & { id: string };
   detail: ProductDetail;
@@ -86,22 +153,46 @@ export default function ProductDetailContent({
           {variants.length > 1 && (
             <div>
               <p className="text-sm font-medium text-gray-700 mb-2">{t("selectModel", lang)}</p>
-              <div className="flex flex-wrap gap-2">
-                {variants.map((v) => (
+              {(() => {
+                const hasSubSkus = variants.some((v) => v.sku !== realProduct?.id);
+                const btn = (v: ProductVariant, active: boolean) => (
                   <button
                     key={v.sku}
                     type="button"
                     onClick={() => setSelectedVariant(v)}
                     className={`px-4 py-2 rounded-lg border text-sm font-medium transition ${
-                      selectedVariant?.sku === v.sku
-                        ? "border-black bg-black text-white"
-                        : "border-gray-300 text-gray-700 hover:border-gray-400"
+                      active ? "border-black bg-black text-white" : "border-gray-300 text-gray-700 hover:border-gray-400"
                     }`}
                   >
-                    {v.sku} · {v.dimensions} · {v.price}
+                    {hasSubSkus ? `${v.dimensions} · ${v.type}` : `${v.sku} · ${v.dimensions} · ${v.price}`}
                   </button>
-                ))}
-              </div>
+                );
+                if (hasSubSkus) {
+                  const byLength = variants.reduce<Record<string, ProductVariant[]>>((acc, v) => {
+                    const d = v.dimensions;
+                    if (!acc[d]) acc[d] = [];
+                    acc[d].push(v);
+                    return acc;
+                  }, {});
+                  const lengths = Object.keys(byLength).sort((a, b) => parseFloat(a) - parseFloat(b));
+                  return (
+                    <div className="space-y-3">
+                      {lengths.map((len) => {
+                        const group = byLength[len];
+                        return (
+                          <div key={len}>
+                            <span className="text-xs text-gray-500 mr-2">{len} extended</span>
+                            <div className="flex flex-wrap gap-2 mt-1">
+                              {group.map((v) => btn(v, selectedVariant?.sku === v.sku))}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                }
+                return <div className="flex flex-wrap gap-2">{variants.map((v) => btn(v, selectedVariant?.sku === v.sku))}</div>;
+              })()}
             </div>
           )}
 

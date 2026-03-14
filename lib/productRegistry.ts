@@ -39,8 +39,11 @@ export function isVariantSku(id: string): boolean {
   return variantToFamily.has(id);
 }
 
+/** 返回所有产品 ID（含父 SKU 与子 SKU），用于静态生成与 sitemap */
 export function getAllProductIds(): string[] {
-  return Array.from(registry.keys());
+  const familyIds = new Set(registry.keys());
+  const variantIds = new Set(variantToFamily.keys());
+  return Array.from(new Set([...familyIds, ...variantIds]));
 }
 
 export function getAllProducts(): (Product & { id: string })[] {

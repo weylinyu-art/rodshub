@@ -75,22 +75,7 @@ export function realProductToDisplayProduct(p: RealProduct): import("./products"
   };
 }
 
-/** 生成占位 variant（单型号产品） */
-function singleVariant(sku: string, style: string): ProductVariant[] {
-  return [
-    {
-      sku,
-      dimensions: "—",
-      weight: "—",
-      type: style,
-      price: "Inquiry",
-      priceMin: 0,
-      remarks: "Please contact for specifications.",
-    },
-  ];
-}
-
-/** 推断产品类型：TSG→Travel, SSG→Surf, 其余→Spinning */
+/** 推断产品类型：TSG→Travel, SSG→Surf, DGL/DJG→Casting, 其余→Spinning */
 function inferFishingStyle(sku: string): string {
   if (sku.startsWith("TSG")) return "Travel";
   if (sku.startsWith("SSG")) return "Surf";
@@ -103,42 +88,27 @@ function defaultImageFiles(sku: string, count = 6): string[] {
   return Array.from({ length: count }, (_, i) => `${sku}-${i + 1}.jpg`);
 }
 
-/** 真实产品 - 与 R2 对象一一对应，imageFolder 对应 R2 文件夹名 */
-const SKU_LIST = [
-  "BDG01",
-  "BDG09",
-  "DGL01",
-  "DJG01",
-  "SSG01",
-  "TSG01",
-  "TSG02",
-  "TSG03",
-  "TSG04",
-  "TSG05",
-  "TSG06",
-  "TSG07",
-  "TSG09",
-  "TSG10",
-  "TSG11",
-  "TSG12",
-  "TSG13",
-  "TSG14",
-  "TSG16",
-  "TSG17",
-  "TSG18",
-  "TSG19",
-  "TSG20",
-  "TSG22",
-];
+import { buildProductsFromSkuRows } from "./skuData";
 
-export const REAL_PRODUCTS: RealProduct[] = SKU_LIST.map((sku) => {
-  const style = inferFishingStyle(sku);
+/** 从 skuData 构建 RealProduct，标题替换为 CSV 标题，有子 SKU 时以伸展长作为 variant 维度 */
+export const REAL_PRODUCTS: RealProduct[] = buildProductsFromSkuRows().map(({ parentSku, title, rows }) => {
+  const style = inferFishingStyle(parentSku);
+  const variants: ProductVariant[] = rows.map((r) => ({
+    sku: r.subSku === "无" ? parentSku : r.subSku,
+    dimensions: `${r.lengthInch}"`,
+    weight: `${r.weightG}g`,
+    type: r.type,
+    detailDimensions: r.collapsedDimensions,
+    price: "Inquiry",
+    priceMin: 0,
+    remarks: "Please contact for specifications.",
+  }));
   return {
-    id: sku,
-    name: `${sku} Rod`,
-    imageFolder: sku,
-    imageFiles: defaultImageFiles(sku),
+    id: parentSku,
+    name: title,
+    imageFolder: parentSku,
+    imageFiles: defaultImageFiles(parentSku),
     fishingStyle: style,
-    variants: singleVariant(sku, style),
+    variants,
   };
 });
