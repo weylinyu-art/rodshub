@@ -48,20 +48,43 @@ export default function CompanyIntro() {
   const { lang } = useLanguage();
   const c = companyIntro[lang] ?? companyIntro.en;
   return (
-    <section className="py-12 sm:py-16 bg-gray-900 text-white overflow-x-hidden">
+    <section className="py-8 sm:py-12 lg:py-16 bg-gray-900 text-white overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           <div className="lg:col-span-1 flex flex-col justify-center">
-            <h2 className="text-2xl font-bold mb-4">{c.title}</h2>
-            <p className="text-gray-300 leading-relaxed text-sm sm:text-base">{c.desc}</p>
+            <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">{c.title}</h2>
+            <p className="text-gray-300 leading-relaxed text-sm sm:text-base line-clamp-3 sm:line-clamp-none">{c.desc}</p>
             <Link
               href="/about"
-              className="mt-6 inline-flex items-center px-4 py-2 border border-white text-white text-sm font-medium hover:bg-white hover:text-black transition w-fit"
+              className="mt-4 sm:mt-6 inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 border border-white text-white text-sm font-medium hover:bg-white hover:text-black transition w-fit"
             >
               {c.aboutLink}
             </Link>
           </div>
-          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+          {/* 移动端：横向滚动紧凑卡片，避免垂直堆叠臃肿 */}
+          <div className="lg:col-span-2 md:hidden -mx-4 px-4 overflow-x-auto scrollbar-hide">
+            <div className="flex gap-3 pb-2">
+              {c.stats.map((stat, i) => {
+                const Illo = ILLUSTRATIONS[i];
+                return (
+                  <div
+                    key={i}
+                    className="relative flex-shrink-0 w-[130px] aspect-[4/3] rounded-lg overflow-hidden bg-gray-800/80 border border-gray-700/50 flex flex-col justify-end p-2.5"
+                  >
+                    <div className="absolute inset-0 flex items-center justify-center p-2 opacity-50">
+                      <Illo />
+                    </div>
+                    <div className="relative z-10">
+                      <h3 className="font-bold text-white text-xs">{stat.title}</h3>
+                      <p className="text-[10px] text-gray-400 leading-tight">{stat.subtitle}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          {/* 桌面端：原有网格布局 */}
+          <div className="hidden md:grid lg:col-span-2 md:grid-cols-3 gap-3 sm:gap-4">
             {c.stats.map((stat, i) => {
               const Illo = ILLUSTRATIONS[i];
               return (

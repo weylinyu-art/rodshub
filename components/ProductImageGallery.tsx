@@ -179,7 +179,7 @@ export default function ProductImageGallery({
                 key={i}
                 type="button"
                 onClick={() => setActiveIndex(i)}
-                className={`flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded border overflow-hidden bg-white transition snap-center ${
+                className={`relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded border overflow-hidden bg-white transition snap-center ${
                   i === activeIndex ? "border-black ring-2 ring-black ring-offset-1" : "border-gray-200 hover:border-gray-400"
                 }`}
               >
@@ -189,7 +189,7 @@ export default function ProductImageGallery({
                   alt={`${alt} - view ${i + 1}`}
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-cover"
+                  className="absolute inset-0 size-full min-w-full min-h-full object-cover object-center"
                   onError={() => setFailedUrls((prev) => new Set(prev).add(src))}
                 />
               </button>

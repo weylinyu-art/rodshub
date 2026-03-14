@@ -1,6 +1,21 @@
 import type { Product } from "./products";
 import type { ProductVariant } from "./realProducts";
 
+/** 从标题中提炼 Key Features（按 " - " 或 ", " 分段，过滤短句与通用词） */
+export function extractKeyFeaturesFromTitle(title: string): string[] {
+  if (!title?.trim()) return [];
+  const raw = title.split(/\s*-\s*|\s*,\s*/).map((s) => s.trim()).filter(Boolean);
+  const skip = new Set(["1pc", "1pc.", "fishing rod", "rod", "and", "the", "with"]);
+  return raw.filter((s) => {
+    if (s.length < 3) return false;
+    const lower = s.toLowerCase();
+    if (skip.has(lower)) return false;
+    if (/^\d+[cm]*$/.test(lower)) return false;
+    if (/^[a-z]{1,2}$/i.test(s)) return false;
+    return true;
+  });
+}
+
 export interface ProductDetail {
   description: string;
   specifications: { label: string; value: string }[];

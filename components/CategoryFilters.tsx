@@ -30,7 +30,7 @@ export default function CategoryFilters({
   const [priceMax, setPriceMax] = useState<number | null>(null);
   const [fishingStyle, setFishingStyle] = useState<Set<string>>(new Set());
   const [sort, setSort] = useState<SortOption>("default");
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // 移动端默认收起筛选
 
   const materials = useMemo(() => uniq(products.map((p) => p.material)), [products]);
   const powers = useMemo(() => uniq(products.map((p) => p.power)), [products]);
@@ -84,7 +84,7 @@ export default function CategoryFilters({
           sidebarOpen ? "w-full md:w-56" : "w-full md:w-0 md:overflow-hidden"
         }`}
       >
-        <div className="space-y-6 p-4 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none border md:border-0 border-gray-200">
+        <div className="space-y-4 p-4 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none border md:border-0 border-gray-200">
             <div>
               <h3 className="text-sm font-semibold text-gray-900 mb-2">Material</h3>
               <div className="space-y-1.5">
@@ -121,7 +121,7 @@ export default function CategoryFilters({
 
             <div>
               <h3 className="text-sm font-semibold text-gray-900 mb-2">Length</h3>
-              <div className="space-y-1.5">
+              <div className={`space-y-1.5 ${lengths.length > 10 ? "max-h-32 overflow-y-auto" : ""}`}>
                 {lengths.map((l) => (
                   <label key={l} className="flex items-center gap-2 cursor-pointer">
                     <input
@@ -195,16 +195,22 @@ export default function CategoryFilters({
 
       {/* Main - products + sort */}
       <div className="flex-1 min-w-0">
-        <div className="flex items-center justify-between mb-6">
-          <p className="text-gray-600">{filtered.length} products</p>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+              </svg>
+              {sidebarOpen ? "Hide filters" : "Filters"}
+            </button>
+            <p className="text-gray-600 text-sm">{filtered.length} products</p>
+          </div>
           <div className="flex items-center gap-2">
             {!sidebarOpen && (
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="hidden md:inline text-sm text-gray-600 hover:text-black"
-              >
-                Show filters
-              </button>
+              <span className="hidden" />
             )}
             <select
               value={sort}
@@ -221,7 +227,7 @@ export default function CategoryFilters({
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
           {filtered.map((p, i) => (
             <div key={p.id ?? i} className="min-w-0">
-              <ProductCard {...p} variant="trending" />
+              <ProductCard {...p} variant="default" />
             </div>
           ))}
         </div>
