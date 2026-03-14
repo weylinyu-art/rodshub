@@ -45,9 +45,9 @@ export default function InquiryPage() {
     <main className="min-h-screen bg-gray-50">
       <JsonLd data={[howToOrderSchema, breadcrumbSchema, inquiryWebPageSchema]} />
       {/* How it works - left-right flowchart */}
-      <section className="bg-gradient-to-b from-gray-50 to-white border-b border-gray-200 py-6 sm:py-8">
+      <section className="bg-gradient-to-b from-gray-50 to-white border-b border-gray-200 py-4 sm:py-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 text-center">How to order</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 md:mb-6 text-center">How to order</h2>
           {/* Desktop: horizontal flowchart with arrows */}
           <div className="hidden md:block">
             <div className="flex items-stretch gap-2 lg:gap-4">
@@ -71,21 +71,21 @@ export default function InquiryPage() {
               ))}
             </div>
           </div>
-          {/* Mobile: vertical stack with arrows */}
-          <div className="md:hidden space-y-3">
+          {/* Mobile: vertical stack - compact layout */}
+          <div className="md:hidden space-y-1">
             {HOW_TO_STEPS.map((step, i) => (
-              <div key={i} className="flex gap-4">
+              <div key={i} className="flex gap-2">
                 <div className="flex flex-col items-center">
-                  <div className="inquiry-speakable w-10 h-10 rounded-full bg-gray-900 text-white flex items-center justify-center text-sm font-bold shrink-0">
+                  <div className="inquiry-speakable w-7 h-7 rounded-full bg-gray-900 text-white flex items-center justify-center text-[10px] font-bold shrink-0">
                     {i + 1}
                   </div>
                   {i < HOW_TO_STEPS.length - 1 && (
-                    <div className="flex-1 w-px min-h-[24px] bg-gray-200 my-1" aria-hidden />
+                    <div className="flex-1 w-px min-h-[10px] bg-gray-200 my-0.5" aria-hidden />
                   )}
                 </div>
-                <div className="flex-1 pb-2">
-                  <h3 className="font-semibold text-gray-900">{step.title}</h3>
-                  <p className="mt-0.5 text-sm text-gray-600">{step.text}</p>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-gray-900 text-sm leading-tight">{step.title}</h3>
+                  <p className="mt-0.5 text-xs text-gray-600 leading-snug">{step.text}</p>
                 </div>
               </div>
             ))}

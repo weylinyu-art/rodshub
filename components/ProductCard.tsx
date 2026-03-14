@@ -37,7 +37,7 @@ export default function ProductCard({
   return (
     <Link
       href={href}
-      className="group flex flex-col bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-gray-400 hover:shadow-lg transition-all duration-200"
+      className="group flex flex-col min-w-0 bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-gray-400 hover:shadow-lg transition-all duration-200"
     >
       <div
         className="relative aspect-square overflow-hidden bg-gray-100"

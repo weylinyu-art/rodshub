@@ -48,7 +48,7 @@ export default function CompanyIntro() {
   const { lang } = useLanguage();
   const c = companyIntro[lang] ?? companyIntro.en;
   return (
-    <section className="py-12 sm:py-16 bg-gray-900 text-white">
+    <section className="py-12 sm:py-16 bg-gray-900 text-white overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           <div className="lg:col-span-1 flex flex-col justify-center">
@@ -61,13 +61,13 @@ export default function CompanyIntro() {
               {c.aboutLink}
             </Link>
           </div>
-          <div className="lg:col-span-2 grid grid-cols-3 gap-3 sm:gap-4">
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
             {c.stats.map((stat, i) => {
               const Illo = ILLUSTRATIONS[i];
               return (
                 <div
                   key={i}
-                  className="relative rounded-lg overflow-hidden aspect-[16/10] bg-gray-800/80 border border-gray-700/50 flex flex-col justify-end p-3 sm:p-4 group hover:border-gray-500/60 transition-colors"
+                  className="relative rounded-lg overflow-hidden aspect-[16/10] bg-gray-800/80 border border-gray-700/50 flex flex-col justify-end p-3 sm:p-4 group hover:border-gray-500/60 transition-colors min-w-0"
                 >
                   <div className="absolute inset-0 flex items-center justify-center p-4 opacity-60 group-hover:opacity-80 transition-opacity">
                     <Illo />

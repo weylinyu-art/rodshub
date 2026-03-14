@@ -77,13 +77,14 @@ export default function CategoryFilters({
   }, [products, material, power, length, fishingStyle, priceMin, priceMax, sort]);
 
   return (
-    <div className="flex gap-8">
-      {/* Sidebar - filters */}
+    <div className="flex flex-col md:flex-row gap-6 md:gap-8">
+      {/* Filters - on mobile: above content; on desktop: left sidebar */}
       <aside
-        className={`${sidebarOpen ? "w-56 flex-shrink-0" : "w-0 overflow-hidden"} transition-all duration-200`}
+        className={`flex-shrink-0 transition-all duration-200 ${
+          sidebarOpen ? "w-full md:w-56" : "w-full md:w-0 md:overflow-hidden"
+        }`}
       >
-        {sidebarOpen && (
-          <div className="space-y-6">
+        <div className="space-y-6 p-4 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none border md:border-0 border-gray-200">
             <div>
               <h3 className="text-sm font-semibold text-gray-900 mb-2">Material</h3>
               <div className="space-y-1.5">
@@ -184,13 +185,12 @@ export default function CategoryFilters({
               </button>
               <button
                 onClick={() => setSidebarOpen(false)}
-                className="flex-1 px-3 py-2 bg-black text-white rounded text-sm font-medium hover:bg-gray-800"
+                className="hidden md:flex flex-1 px-3 py-2 bg-black text-white rounded text-sm font-medium hover:bg-gray-800"
               >
                 DONE
               </button>
             </div>
           </div>
-        )}
       </aside>
 
       {/* Main - products + sort */}
@@ -201,7 +201,7 @@ export default function CategoryFilters({
             {!sidebarOpen && (
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="text-sm text-gray-600 hover:text-black"
+                className="hidden md:inline text-sm text-gray-600 hover:text-black"
               >
                 Show filters
               </button>
@@ -218,9 +218,11 @@ export default function CategoryFilters({
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
           {filtered.map((p, i) => (
-            <ProductCard key={p.id ?? i} {...p} variant="trending" />
+            <div key={p.id ?? i} className="min-w-0">
+              <ProductCard {...p} variant="trending" />
+            </div>
           ))}
         </div>
         {filtered.length === 0 && (
