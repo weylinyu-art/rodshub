@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { t } from "@/lib/i18n";
+import { t, type LangCode } from "@/lib/i18n";
 import { getProductName } from "@/lib/products-i18n";
 import type { Product } from "@/lib/products";
 
@@ -21,7 +21,7 @@ function RecommendCard({
   slotIndex,
 }: {
   p: Product & { id: string };
-  lang: string;
+  lang: LangCode;
   onImageFail?: (index: number) => void;
   slotIndex: number;
 }) {
