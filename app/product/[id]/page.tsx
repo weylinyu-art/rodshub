@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProductById, getAllProductIds, getRelatedProducts } from "@/lib/productRegistry";
+import { getProductById, getAllProductIds, getRelatedProducts, getRealProduct, isVariantSku } from "@/lib/productRegistry";
 import { getProductDetail } from "@/lib/productDetail";
 import ProductDetailContent from "@/components/ProductDetailContent";
 import JsonLd from "@/components/JsonLd";
@@ -74,7 +74,14 @@ export default async function ProductPage({ params }: PageProps) {
   return (
     <main className="min-h-screen bg-gray-50">
       <JsonLd data={[productSchema, breadcrumbSchema]} />
-      <ProductDetailContent product={product} detail={detail} imgList={imgList} related={related} />
+      <ProductDetailContent
+        product={product}
+        detail={detail}
+        imgList={imgList}
+        related={related}
+        realProduct={getRealProduct(id)}
+        initialVariantSku={isVariantSku(id) ? id : undefined}
+      />
     </main>
   );
 }

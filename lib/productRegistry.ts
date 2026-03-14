@@ -1,10 +1,14 @@
 import type { Product } from "@/lib/products";
 import { trendingRods, newArrivals, wholesalePicks } from "@/lib/products";
 import { PRODUCTS_BY_CATEGORY } from "@/lib/categoryProducts";
+import { REAL_PRODUCTS, realProductToDisplayProduct } from "@/lib/realProducts";
 
 type ProductWithId = Product & { id: string };
 
+const realDisplayProducts = REAL_PRODUCTS.map(realProductToDisplayProduct);
+
 const allProducts: ProductWithId[] = [
+  ...realDisplayProducts,
   ...trendingRods,
   ...newArrivals,
   ...wholesalePicks,
@@ -12,12 +16,27 @@ const allProducts: ProductWithId[] = [
 ];
 
 const registry = new Map<string, Product & { id: string }>();
+const variantToFamily = new Map<string, string>();
+
 for (const p of allProducts) {
   if (p.id) registry.set(p.id, p as Product & { id: string });
 }
+for (const rp of REAL_PRODUCTS) {
+  for (const v of rp.variants) variantToFamily.set(v.sku, rp.id);
+}
 
 export function getProductById(id: string): (Product & { id: string }) | undefined {
-  return registry.get(id);
+  const familyId = variantToFamily.get(id) ?? id;
+  return registry.get(familyId);
+}
+
+export function getRealProduct(id: string): import("./realProducts").RealProduct | undefined {
+  const familyId = variantToFamily.get(id) ?? id;
+  return REAL_PRODUCTS.find((p) => p.id === familyId);
+}
+
+export function isVariantSku(id: string): boolean {
+  return variantToFamily.has(id);
 }
 
 export function getAllProductIds(): string[] {

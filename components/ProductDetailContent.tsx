@@ -1,13 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 import { getProductName } from "@/lib/products-i18n";
 import ProductImageGallery from "@/components/ProductImageGallery";
 import ProductDetailRecommend from "@/components/ProductDetailRecommend";
+import { getProductDetailForVariant } from "@/lib/productDetail";
 import type { Product } from "@/lib/products";
 import type { ProductDetail } from "@/lib/productDetail";
+import type { RealProduct, ProductVariant } from "@/lib/realProducts";
 
 const SPEC_LABEL_KEYS: Record<string, string> = {
   Length: "length",
@@ -18,6 +21,12 @@ const SPEC_LABEL_KEYS: Record<string, string> = {
   "Lure Weight": "lureWeight",
   Sections: "rodSections",
   Handle: "handle",
+  SKU: "sku",
+  Dimensions: "dimensions",
+  Weight: "weight",
+  Type: "type",
+  "Detail Dimensions": "detailDimensions",
+  "Package Dimensions": "packageDimensions",
 };
 
 interface ProductDetailContentProps {
@@ -25,6 +34,8 @@ interface ProductDetailContentProps {
   detail: ProductDetail;
   imgList: string[];
   related: (Product & { id: string })[];
+  realProduct?: RealProduct;
+  initialVariantSku?: string;
 }
 
 export default function ProductDetailContent({
@@ -32,9 +43,26 @@ export default function ProductDetailContent({
   detail,
   imgList,
   related,
+  realProduct,
+  initialVariantSku,
 }: ProductDetailContentProps) {
   const { lang } = useLanguage();
   const displayName = getProductName(product, lang);
+
+  const variants = realProduct?.variants ?? [];
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(() => {
+    if (!initialVariantSku || !variants.length) return variants[0] ?? null;
+    return variants.find((v) => v.sku === initialVariantSku) ?? variants[0] ?? null;
+  });
+
+  const effectiveVariant = selectedVariant ?? variants[0];
+  const effectiveDetail = effectiveVariant
+    ? getProductDetailForVariant(effectiveVariant)
+    : detail;
+  const displayPrice = effectiveVariant?.price ?? product.price;
+  const displaySpecs = effectiveVariant
+    ? { length: effectiveVariant.dimensions, material: effectiveVariant.type, power: effectiveVariant.type }
+    : { length: product.length, material: product.material, power: product.power };
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -54,25 +82,55 @@ export default function ProductDetailContent({
             </span>
           )}
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">{displayName}</h1>
-          <p className="text-xl font-bold text-gray-900">{product.price}</p>
+
+          {variants.length > 1 && (
+            <div>
+              <p className="text-sm font-medium text-gray-700 mb-2">{t("selectModel", lang)}</p>
+              <div className="flex flex-wrap gap-2">
+                {variants.map((v) => (
+                  <button
+                    key={v.sku}
+                    type="button"
+                    onClick={() => setSelectedVariant(v)}
+                    className={`px-4 py-2 rounded-lg border text-sm font-medium transition ${
+                      selectedVariant?.sku === v.sku
+                        ? "border-black bg-black text-white"
+                        : "border-gray-300 text-gray-700 hover:border-gray-400"
+                    }`}
+                  >
+                    {v.sku} · {v.dimensions} · {v.price}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="flex flex-wrap items-baseline gap-3">
+            <p className="text-xl font-bold text-gray-900">{displayPrice}</p>
+            {product.moq && (
+              <span className="text-sm text-gray-500">
+                {t("moq", lang)}: {product.moq}
+              </span>
+            )}
+          </div>
 
           <dl className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
-            {product.length && (
+            {displaySpecs.length && (
               <div>
                 <dt className="text-gray-500">{t("length", lang)}</dt>
-                <dd className="font-medium text-gray-900">{product.length}</dd>
+                <dd className="font-medium text-gray-900">{displaySpecs.length}</dd>
               </div>
             )}
-            {product.material && (
+            {displaySpecs.material && (
               <div>
                 <dt className="text-gray-500">{t("material", lang)}</dt>
-                <dd className="font-medium text-gray-900">{product.material}</dd>
+                <dd className="font-medium text-gray-900">{displaySpecs.material}</dd>
               </div>
             )}
-            {product.power && (
+            {displaySpecs.power && (
               <div>
                 <dt className="text-gray-500">{t("power", lang)}</dt>
-                <dd className="font-medium text-gray-900">{product.power}</dd>
+                <dd className="font-medium text-gray-900">{displaySpecs.power}</dd>
               </div>
             )}
           </dl>
@@ -125,24 +183,24 @@ export default function ProductDetailContent({
       <div className="mt-12 lg:mt-16 space-y-8">
         <section className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
           <h2 className="text-lg font-bold text-gray-900 mb-4">{t("description", lang)}</h2>
-          <p className="text-gray-600 leading-relaxed">{detail.description}</p>
+          <p className="text-gray-600 leading-relaxed">{effectiveDetail.description}</p>
           <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
-            {product.material && (
+            {displaySpecs.material && (
               <div className="flex gap-2">
                 <span className="text-gray-500">{t("material", lang)}:</span>
-                <span className="font-medium">{product.material}</span>
+                <span className="font-medium">{displaySpecs.material}</span>
               </div>
             )}
-            {product.length && (
+            {displaySpecs.length && (
               <div className="flex gap-2">
                 <span className="text-gray-500">{t("length", lang)}:</span>
-                <span className="font-medium">{product.length}</span>
+                <span className="font-medium">{displaySpecs.length}</span>
               </div>
             )}
-            {product.power && (
+            {displaySpecs.power && (
               <div className="flex gap-2">
                 <span className="text-gray-500">{t("power", lang)}:</span>
-                <span className="font-medium">{product.power}</span>
+                <span className="font-medium">{displaySpecs.power}</span>
               </div>
             )}
           </div>
@@ -153,7 +211,7 @@ export default function ProductDetailContent({
           <div className="overflow-x-auto -mx-2 px-2">
           <table className="w-full text-sm min-w-[280px]">
             <tbody>
-              {detail.specifications.map(({ label, value }) => {
+              {effectiveDetail.specifications.map(({ label, value }) => {
                 const key = SPEC_LABEL_KEYS[label];
                 const translatedLabel = key ? t(key as "length", lang) : label;
                 return (
@@ -171,7 +229,7 @@ export default function ProductDetailContent({
         <section className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
           <h2 className="text-lg font-bold text-gray-900 mb-4">{t("keyFeatures", lang)}</h2>
           <ul className="space-y-2">
-            {detail.features.map((f, i) => (
+            {effectiveDetail.features.map((f, i) => (
               <li key={i} className="flex items-start gap-2 text-gray-600">
                 <span className="text-emerald-600 mt-1">•</span>
                 <span>{f}</span>
@@ -187,15 +245,15 @@ export default function ProductDetailContent({
             <ul className="space-y-2 text-sm">
               <li className="flex items-center gap-2">
                 <span className="text-emerald-600">✓</span>
-                Standard export carton packaging; OEM branding available
+                {t("packagingItem1", lang)}
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-emerald-600">✓</span>
-                Air freight: 6–9 business days; Sea freight: 20–35 days
+                {t("packagingItem2", lang)}
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-emerald-600">✓</span>
-                FOB/CIF available; documentation included
+                {t("packagingItem3", lang)}
               </li>
             </ul>
           </div>

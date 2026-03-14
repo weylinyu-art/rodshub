@@ -1,4 +1,5 @@
 import type { Product } from "./products";
+import type { ProductVariant } from "./realProducts";
 
 export interface ProductDetail {
   description: string;
@@ -84,4 +85,35 @@ export function getProductDetail(product: Product): ProductDetail {
   ];
 
   return { description, specifications, features };
+}
+
+/** 根据 ProductVariant 生成详情（多型号产品的规格、描述、卖点） */
+export function getProductDetailForVariant(variant: ProductVariant): ProductDetail {
+  const specs: { label: string; value: string }[] = [
+    { label: "SKU", value: variant.sku },
+    { label: "Dimensions", value: variant.dimensions },
+    { label: "Weight", value: variant.weight },
+    { label: "Type", value: variant.type },
+  ];
+  if (variant.detailDimensions) {
+    specs.push({ label: "Detail Dimensions", value: variant.detailDimensions });
+  }
+  if (variant.packageDimensions) {
+    specs.push({ label: "Package Dimensions", value: variant.packageDimensions });
+  }
+
+  const description =
+    variant.remarks ||
+    `This ${variant.type.toLowerCase()} rod (${variant.sku}) measures ${variant.dimensions} with a weight of ${variant.weight}. Suitable for B2B wholesale and OEM customization.`;
+
+  const features = variant.remarks
+    ? variant.remarks.split(/[.;]/).filter((s) => s.trim().length > 0)
+    : [
+        `${variant.type} type, ${variant.dimensions} length`,
+        `Weight: ${variant.weight}`,
+        "OEM/custom branding available",
+        "Export-ready packaging",
+      ];
+
+  return { description, specifications: specs, features };
 }
