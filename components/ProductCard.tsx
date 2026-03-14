@@ -13,6 +13,8 @@ interface ProductCardProps extends Product {
 
 const inquiryHref = "/#inquiry";
 
+const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=500&h=500&fit=crop";
+
 export default function ProductCard({
   id,
   name,
@@ -32,6 +34,7 @@ export default function ProductCard({
   const showInquiryButton = variant === "trending";
   const imgList = (images && images.length > 0 ? images : [image]) as string[];
   const [activeIndex, setActiveIndex] = useState(0);
+  const [failedUrls, setFailedUrls] = useState<Set<string>>(new Set());
   const href = id ? `/product/${id}` : inquiryHref;
 
   return (
@@ -43,19 +46,22 @@ export default function ProductCard({
         className="relative aspect-square overflow-hidden bg-gray-100"
         onMouseEnter={() => imgList.length > 1 && setActiveIndex((i) => (i + 1) % imgList.length)}
       >
-        {imgList.map((src, i) => (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
-            key={i}
-            src={src}
-            alt={`${displayName} - ${i + 1}`}
-            loading="lazy"
-            decoding="async"
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:scale-105 ${
-              i === activeIndex ? "opacity-100 z-0" : "opacity-0"
-            }`}
-          />
-        ))}
+        {imgList.map((src, i) => {
+          const effectiveSrc = failedUrls.has(src) ? FALLBACK_IMAGE : src;
+          return (
+            <img
+              key={i}
+              src={effectiveSrc}
+              alt={`${displayName} - ${i + 1}`}
+              loading="lazy"
+              decoding="async"
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:scale-105 ${
+                i === activeIndex ? "opacity-100 z-0" : "opacity-0"
+              }`}
+              onError={() => setFailedUrls((prev) => new Set(prev).add(src))}
+            />
+          );
+        })}
         {badge && (
           <span className="absolute top-2 left-2 px-2 py-0.5 bg-black text-white text-xs font-medium z-10">
             {badge}

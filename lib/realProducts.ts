@@ -39,10 +39,11 @@ export interface RealProduct {
   variants: ProductVariant[];
 }
 
-const R2_BASE = "https://images.rodshub.com";
+/** R2 图片根域名，可通过 NEXT_PUBLIC_R2_IMAGE_BASE 覆盖 */
+const R2_BASE = process.env.NEXT_PUBLIC_R2_IMAGE_BASE ?? "https://images.rodshub.com";
 
 function buildImageUrls(folder: string, files: string[]): string[] {
-  return files.map((f) => `${R2_BASE}/${folder}/${f}`);
+  return files.map((f) => `${R2_BASE}/products/${folder}/${f}`);
 }
 
 /** 将 RealProduct 转成列表展示用的 Product */
@@ -97,9 +98,9 @@ function inferFishingStyle(sku: string): string {
   return "Spinning";
 }
 
-/** 根据 SKU 生成默认图片列表。R2 常见命名：1.jpg,2.jpg 或 SKU-1.jpg，请按实际文件名调整 */
+/** 根据 SKU 生成默认图片列表，与 R2 路径一致：products/{SKU}/{SKU}-1.jpg */
 function defaultImageFiles(sku: string, count = 6): string[] {
-  return Array.from({ length: count }, (_, i) => `${i + 1}.jpg`);
+  return Array.from({ length: count }, (_, i) => `${sku}-${i + 1}.jpg`);
 }
 
 /** 真实产品 - 与 R2 对象一一对应，imageFolder 对应 R2 文件夹名 */
