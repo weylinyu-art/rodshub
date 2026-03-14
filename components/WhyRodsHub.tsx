@@ -26,7 +26,7 @@ export default function WhyRodsHub() {
             </div>
           </div>
           <div className="space-y-6">
-            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 flex gap-6">
+            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 flex flex-col sm:flex-row gap-4 sm:gap-6">
               <div className="flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -37,12 +37,12 @@ export default function WhyRodsHub() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div>
+              <div className="min-w-0">
                 <h3 className="font-semibold text-gray-900 mb-2">{c.block2Title}</h3>
                 <p className="text-sm text-gray-600">{c.block2Desc}</p>
               </div>
             </div>
-            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 flex gap-6">
+            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 flex flex-col sm:flex-row gap-4 sm:gap-6">
               <div className="flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -53,7 +53,7 @@ export default function WhyRodsHub() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div>
+              <div className="min-w-0">
                 <h3 className="font-semibold text-gray-900 mb-2">{c.block3Title}</h3>
                 <p className="text-sm text-gray-600">{c.block3Desc}</p>
               </div>

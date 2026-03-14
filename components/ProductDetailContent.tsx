@@ -150,7 +150,8 @@ export default function ProductDetailContent({
 
         <section className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
           <h2 className="text-lg font-bold text-gray-900 mb-4">{t("specifications", lang)}</h2>
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto -mx-2 px-2">
+          <table className="w-full text-sm min-w-[280px]">
             <tbody>
               {detail.specifications.map(({ label, value }) => {
                 const key = SPEC_LABEL_KEYS[label];
@@ -164,6 +165,7 @@ export default function ProductDetailContent({
               })}
             </tbody>
           </table>
+          </div>
         </section>
 
         <section className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8">

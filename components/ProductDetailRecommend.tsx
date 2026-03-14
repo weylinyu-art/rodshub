@@ -24,7 +24,7 @@ export default function ProductDetailRecommend({ products }: Props) {
             <Link
               key={p.id}
               href={`/product/${p.id}`}
-              className="group block rounded-lg border border-gray-200 overflow-hidden hover:border-gray-400 hover:shadow-md transition"
+              className="group block rounded-lg border border-gray-200 overflow-hidden hover:border-gray-400 hover:shadow-md transition min-w-0"
             >
               <div className="aspect-square overflow-hidden bg-gray-100">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
