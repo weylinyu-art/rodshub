@@ -63,14 +63,14 @@ function withIds<T extends Product>(items: T[], startId: number): (T & { id: str
 }
 
 export const trendingRods: (Product & { id: string })[] = withIds([
-  tr(0, "Hot", { name: "Carbon Fiber Spinning Rod", price: "$10.50 - $14.00", moq: "100 pcs", length: "2.1m", material: "Carbon", power: "Medium" }),
-  tr(1, undefined, { name: "Heavy Duty Casting Rod", price: "$9.80 - $13.50", moq: "50 pcs", length: "2.4m", material: "Graphite", power: "Heavy" }),
-  tr(2, "Best Seller", { name: "Portable Telescopic Rod Set", price: "$8.50 - $12.00", moq: "200 pcs", length: "1.8-2.7m", material: "Fiberglass", power: "Light" }),
-  tr(3, undefined, { name: "Saltwater Surf Rod", price: "$11.00 - $15.00", moq: "30 pcs", length: "3.6m", material: "Carbon", power: "Heavy" }),
-  tr(4, undefined, { name: "Ultralight Freshwater Rod", price: "$9.20 - $12.50", moq: "100 pcs", length: "1.8m", material: "Carbon", power: "Ultralight" }),
-  tr(5, undefined, { name: "Ice Fishing Combo Rod", price: "$8.90 - $11.50", moq: "80 pcs", length: "0.7m", material: "Graphite", power: "Light" }),
-  tr(6, undefined, { name: "Boat Fishing Graphite Rod", price: "$10.00 - $14.50", moq: "40 pcs", length: "2.1m", material: "Graphite", power: "Medium-Heavy" }),
-  tr(7, "New", { name: "Travel 4-Piece Spinning Rod", price: "$9.50 - $13.00", moq: "150 pcs", length: "2.1m", material: "Carbon", power: "Medium" }),
+  tr(0, "Hot", { name: "Carbon Fiber Spinning Rod", price: "$10.50 - $14.00", moq: "100 pcs", length: "2.1m", material: "Carbon", power: "Medium", fishingStyle: "Spinning" }),
+  tr(1, undefined, { name: "Heavy Duty Casting Rod", price: "$9.80 - $13.50", moq: "50 pcs", length: "2.4m", material: "Graphite", power: "Heavy", fishingStyle: "Casting" }),
+  tr(2, "Best Seller", { name: "Portable Telescopic Rod Set", price: "$8.50 - $12.00", moq: "200 pcs", length: "1.8-2.7m", material: "Fiberglass", power: "Light", fishingStyle: "Telescopic" }),
+  tr(3, undefined, { name: "Saltwater Surf Rod", price: "$11.00 - $15.00", moq: "30 pcs", length: "3.6m", material: "Carbon", power: "Heavy", fishingStyle: "Surf" }),
+  tr(4, undefined, { name: "Ultralight Freshwater Rod", price: "$9.20 - $12.50", moq: "100 pcs", length: "1.8m", material: "Carbon", power: "Ultralight", fishingStyle: "Spinning" }),
+  tr(5, undefined, { name: "Ice Fishing Combo Rod", price: "$8.90 - $11.50", moq: "80 pcs", length: "0.7m", material: "Graphite", power: "Light", fishingStyle: "Ice" }),
+  tr(6, undefined, { name: "Boat Fishing Graphite Rod", price: "$10.00 - $14.50", moq: "40 pcs", length: "2.1m", material: "Graphite", power: "Medium-Heavy", fishingStyle: "Casting" }),
+  tr(7, "New", { name: "Travel 4-Piece Spinning Rod", price: "$9.50 - $13.00", moq: "150 pcs", length: "2.1m", material: "Carbon", power: "Medium", fishingStyle: "Travel" }),
 ], 1);
 
 export const newArrivals: (Product & { id: string })[] = withIds([

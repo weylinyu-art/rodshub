@@ -66,3 +66,18 @@ function getPrimaryScenarioIndex(p: Product): number {
 export function sortProductsByScenario<T extends Product>(products: T[]): T[] {
   return [...products].sort((a, b) => getPrimaryScenarioIndex(a) - getPrimaryScenarioIndex(b));
 }
+
+/** Scenarios 页：主序=scenario，次序=点击量（同场景下点击多的靠前） */
+export function sortProductsByScenarioThenClicks<T extends Product>(
+  products: T[],
+  counts: Record<string, number>
+): T[] {
+  return [...products].sort((a, b) => {
+    const ia = getPrimaryScenarioIndex(a);
+    const ib = getPrimaryScenarioIndex(b);
+    if (ia !== ib) return ia - ib;
+    const ca = counts[(a as Product & { id?: string }).id ?? ""] ?? 0;
+    const cb = counts[(b as Product & { id?: string }).id ?? ""] ?? 0;
+    return cb - ca;
+  });
+}

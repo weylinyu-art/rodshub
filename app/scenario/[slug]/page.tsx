@@ -82,7 +82,7 @@ export default async function ScenarioPage({ params }: PageProps) {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <CategoryFilters products={products} categoryName={`${scenario.name} Rods`} />
+        <CategoryFilters products={products} categoryName={`${scenario.name} Rods`} sortMode="scenario" />
       </div>
     </main>
   );

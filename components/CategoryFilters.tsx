@@ -4,6 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import type { Product } from "@/lib/products";
 import { applyListImageOverride } from "@/lib/realProducts";
+import { useClickCounts } from "@/contexts/ClickCountsContext";
+import {
+  sortProductsByCategoryThenClicks,
+  sortProductsByPriceThenClicks,
+  sortProductsByPriceDescThenClicks,
+  extractPriceMin,
+} from "@/lib/categoryProducts";
+import { sortProductsByScenarioThenClicks } from "@/lib/scenarios";
 
 const PAGE_SIZE = 30;
 
@@ -13,19 +21,16 @@ function uniq<T>(arr: (T | undefined | null)[]): T[] {
   return Array.from(new Set(arr.filter(Boolean))) as T[];
 }
 
-function extractPriceMin(p: Product): number {
-  if (p.priceMin != null) return p.priceMin;
-  const m = p.price.match(/\$?([\d.]+)/);
-  return m ? parseFloat(m[1]) : 0;
-}
-
 export default function CategoryFilters({
   products,
   categoryName,
+  sortMode = "category",
 }: {
   products: Product[];
   categoryName: string;
+  sortMode?: "category" | "scenario";
 }) {
+  const counts = useClickCounts();
   const [material, setMaterial] = useState<Set<string>>(new Set());
   const [power, setPower] = useState<Set<string>>(new Set());
   const [length, setLength] = useState<Set<string>>(new Set());
@@ -78,11 +83,18 @@ export default function CategoryFilters({
       return true;
     });
 
-    if (sort === "price-asc") list = [...list].sort((a, b) => extractPriceMin(a) - extractPriceMin(b));
-    if (sort === "price-desc") list = [...list].sort((a, b) => extractPriceMin(b) - extractPriceMin(a));
+    if (sort === "default") {
+      list = sortMode === "category"
+        ? sortProductsByCategoryThenClicks(list, counts)
+        : sortProductsByScenarioThenClicks(list, counts);
+    } else if (sort === "price-asc") {
+      list = sortProductsByPriceThenClicks(list, counts);
+    } else {
+      list = sortProductsByPriceDescThenClicks(list, counts);
+    }
 
     return list;
-  }, [products, material, power, length, fishingStyle, priceMin, priceMax, sort]);
+  }, [products, material, power, length, fishingStyle, priceMin, priceMax, sort, sortMode, counts]);
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE) || 1;
   const paginatedProducts = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);

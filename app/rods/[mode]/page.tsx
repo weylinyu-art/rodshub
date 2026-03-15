@@ -4,6 +4,7 @@ import { getAllProducts } from "@/lib/productRegistry";
 import { categories, sortProductsByCategory } from "@/lib/categoryProducts";
 import { SCENARIOS, sortProductsByScenario } from "@/lib/scenarios";
 import CategoryFilters from "@/components/CategoryFilters";
+import RodsTabBar from "@/components/RodsTabBar";
 
 type Mode = "category" | "scenario";
 
@@ -37,9 +38,6 @@ export default async function RodsModePage({ params }: PageProps) {
   ];
   const tabs = mode === "category" ? categoryTabs : scenarioTabs;
 
-  const href = (slug: string) =>
-    slug === "all" ? `/rods/${mode}` : `/rods/${mode}/${slug}`;
-
   return (
     <main className="min-h-screen bg-gray-50">
       <div className="bg-white border-b border-gray-200">
@@ -54,29 +52,12 @@ export default async function RodsModePage({ params }: PageProps) {
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{title}</h1>
           <p className="mt-1 text-gray-600">{subTitle}</p>
 
-          <div className="mt-6 flex flex-wrap gap-2">
-            {tabs.map((t) => {
-              const isActive = t.slug === "all";
-              return (
-                <Link
-                  key={t.slug}
-                  href={href(t.slug)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                    isActive
-                      ? "bg-black text-white"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-black"
-                  }`}
-                >
-                  {t.name}
-                </Link>
-              );
-            })}
-          </div>
+          <RodsTabBar tabs={tabs} mode={mode} activeSlug="all" />
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <CategoryFilters products={products} categoryName="All Rods" />
+        <CategoryFilters products={products} categoryName="All Rods" sortMode={mode} />
       </div>
     </main>
   );

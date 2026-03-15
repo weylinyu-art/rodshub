@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { ClickCountsProvider } from "@/contexts/ClickCountsContext";
 import JsonLd from "@/components/JsonLd";
 import {
   SITE_URL,
@@ -69,12 +70,14 @@ export default function RootLayout({
       <body className="antialiased overflow-x-hidden">
         <JsonLd data={[organizationSchema, websiteSchema]} />
         <LanguageProvider>
-          <Header />
+          <ClickCountsProvider>
+            <Header />
           <div className="pb-20 md:pb-0">
             {children}
           </div>
           <Footer />
           <MobileBottomNav />
+          </ClickCountsProvider>
         </LanguageProvider>
       </body>
     </html>

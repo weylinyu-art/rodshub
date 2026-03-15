@@ -3,6 +3,7 @@ import JsonLd from "@/components/JsonLd";
 import TrendingPageContent from "@/components/TrendingPageContent";
 import { absoluteUrl, buildOpenGraph, buildTwitter, SITE_URL } from "@/lib/seo";
 import { trendingRods } from "@/lib/products";
+import { sortProductsByPriceAsc } from "@/lib/categoryProducts";
 import { REAL_PRODUCTS, realProductToDisplayProduct } from "@/lib/realProducts";
 
 export const metadata: Metadata = {
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function TrendingPage() {
   const realDisplay = REAL_PRODUCTS.map(realProductToDisplayProduct);
-  const trendingProducts = [...realDisplay, ...trendingRods];
+  const trendingProducts = sortProductsByPriceAsc([...realDisplay, ...trendingRods]);
 
   const listItems = trendingProducts.filter((p): p is typeof p & { id: string } => !!p.id);
   const itemListSchema = {

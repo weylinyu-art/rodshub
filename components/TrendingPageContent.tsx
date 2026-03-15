@@ -4,14 +4,23 @@ import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 import ProductCard from "@/components/ProductCard";
+import { useMemo } from "react";
 import { trendingRods } from "@/lib/products";
+import { sortProductsByPriceThenClicks } from "@/lib/categoryProducts";
+import { useClickCounts } from "@/contexts/ClickCountsContext";
 import { REAL_PRODUCTS, realProductToDisplayProduct, applyListImageOverride } from "@/lib/realProducts";
 
 const realDisplay = REAL_PRODUCTS.map(realProductToDisplayProduct);
-const trendingProducts = [...realDisplay, ...trendingRods];
+const baseProducts = [...realDisplay, ...trendingRods];
 
 export default function TrendingPageContent() {
   const { lang } = useLanguage();
+  const counts = useClickCounts();
+  const trendingProducts = useMemo(
+    () => sortProductsByPriceThenClicks([...baseProducts], counts),
+    [counts]
+  );
+
   return (
     <>
       <div className="bg-white border-b border-gray-200">

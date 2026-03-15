@@ -7,6 +7,7 @@ import { t } from "@/lib/i18n";
 import { getProductName, getListDisplayName } from "@/lib/products-i18n";
 import { dedupeImagesByBase } from "@/lib/imageUtils";
 import { getDisplayPrice } from "@/lib/realProducts";
+import { recordProductClick } from "@/lib/clickTracking";
 import type { Product } from "@/lib/products";
 
 interface ProductCardProps extends Product {
@@ -44,13 +45,14 @@ export default function ProductCard({
   const [activeIndex, setActiveIndex] = useState(0);
   const [failedUrls, setFailedUrls] = useState<Set<string>>(new Set());
   const href = id ? `/product/${id}` : inquiryHref;
+  const handleProductClick = () => id && recordProductClick(id);
 
   /** 全站统一价格：使用 getDisplayPrice 保证与详情页、列表页一致 */
   const displayPrice = getDisplayPrice(price, fishingStyle, id);
 
   return (
     <div className="group flex flex-col min-w-0 bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-gray-400 hover:shadow-lg transition-all duration-200">
-      <Link href={href} className="block flex-shrink-0">
+      <Link href={href} className="block flex-shrink-0" onClick={handleProductClick}>
         <div
           className="relative aspect-square overflow-hidden bg-gray-100"
           onMouseEnter={() => hasMultipleImages && setActiveIndex((i) => (i + 1) % imgList.length)}
@@ -91,7 +93,7 @@ export default function ProductCard({
         </div>
       </Link>
       <div className="p-3 flex-1 flex flex-col min-h-0">
-        <Link href={href} className="shrink-0 block min-h-[2.5rem]">
+        <Link href={href} className="shrink-0 block min-h-[2.5rem]" onClick={handleProductClick}>
           <h3 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-black transition text-sm">
             {listDisplayName}
           </h3>

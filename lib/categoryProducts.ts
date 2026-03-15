@@ -106,6 +106,64 @@ export function sortProductsByCategory<T extends Product>(products: T[]): T[] {
   return [...products].sort((a, b) => getCategoryIndex(a) - getCategoryIndex(b));
 }
 
+function extractPriceMin(p: Product): number {
+  if (p.priceMin != null) return p.priceMin;
+  const m = (p.price ?? "").match(/\$?([\d.]+)/);
+  return m ? parseFloat(m[1]) : 0;
+}
+
+/** Trending 页默认排序：按价格从低到高（hot deals / 超值好价角度） */
+export function sortProductsByPriceAsc<T extends Product>(products: T[]): T[] {
+  return [...products].sort((a, b) => extractPriceMin(a) - extractPriceMin(b));
+}
+
+/** Categories 页：主序=rod type，次序=点击量（同类目下点击多的靠前） */
+export function sortProductsByCategoryThenClicks<T extends Product>(
+  products: T[],
+  counts: Record<string, number>
+): T[] {
+  return [...products].sort((a, b) => {
+    const ia = getCategoryIndex(a);
+    const ib = getCategoryIndex(b);
+    if (ia !== ib) return ia - ib;
+    const ca = counts[(a as Product & { id?: string }).id ?? ""] ?? 0;
+    const cb = counts[(b as Product & { id?: string }).id ?? ""] ?? 0;
+    return cb - ca;
+  });
+}
+
+/** 按价格+点击量排序（主序=价格升序，次序=点击量降序） */
+export function sortProductsByPriceThenClicks<T extends Product>(
+  products: T[],
+  counts: Record<string, number>
+): T[] {
+  return [...products].sort((a, b) => {
+    const pa = extractPriceMin(a);
+    const pb = extractPriceMin(b);
+    if (pa !== pb) return pa - pb;
+    const ca = counts[(a as Product & { id?: string }).id ?? ""] ?? 0;
+    const cb = counts[(b as Product & { id?: string }).id ?? ""] ?? 0;
+    return cb - ca;
+  });
+}
+
+/** 按价格降序+点击量排序（主序=价格降序，次序=点击量降序） */
+export function sortProductsByPriceDescThenClicks<T extends Product>(
+  products: T[],
+  counts: Record<string, number>
+): T[] {
+  return [...products].sort((a, b) => {
+    const pa = extractPriceMin(a);
+    const pb = extractPriceMin(b);
+    if (pa !== pb) return pb - pa;
+    const ca = counts[(a as Product & { id?: string }).id ?? ""] ?? 0;
+    const cb = counts[(b as Product & { id?: string }).id ?? ""] ?? 0;
+    return cb - ca;
+  });
+}
+
+export { extractPriceMin };
+
 /** 获取分类下的产品：真实产品排在前面，按 fishingStyle 归拢 */
 export function getProductsByCategory(slug: string): (Product & { id: string })[] {
   const style = SLUG_TO_STYLE[slug];
