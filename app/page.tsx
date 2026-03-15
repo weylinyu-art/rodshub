@@ -19,7 +19,7 @@ const HomeCTA = dynamic(() => import("@/components/HomeCTA"), { ssr: true });
 export const metadata: Metadata = {
   title: "RodsHub | B2B Fishing Rod Wholesale & OEM Marketplace",
   description:
-    "One hub for all fishing rods. 200+ SKUs · $8-18 wholesale · MOQ from 30 pcs · 24h reply · OEM custom branding. Spinning, casting, telescopic, surf, ice & travel.",
+    "One hub for all fishing rods. 2000+ SKUs · $8-18 wholesale · MOQ from 30 pcs · 24h reply · OEM custom branding. Spinning, casting, telescopic, surf, ice & travel.",
   keywords: [
     "fishing rod wholesale",
     "B2B fishing rods",
@@ -30,12 +30,12 @@ export const metadata: Metadata = {
   ],
   openGraph: buildOpenGraph(
     "RodsHub | B2B Fishing Rod Wholesale & OEM Marketplace",
-    "Source fishing rods at wholesale. 200+ SKUs, MOQ from 30 pcs. OEM custom branding.",
+    "Source fishing rods at wholesale. 2000+ SKUs, MOQ from 30 pcs. OEM custom branding.",
     "/"
   ),
   twitter: buildTwitter(
     "RodsHub | B2B Fishing Rod Wholesale Marketplace",
-    "Source fishing rods at wholesale. 200+ SKUs, OEM available."
+    "Source fishing rods at wholesale. 2000+ SKUs, OEM available."
   ),
   alternates: { canonical: absoluteUrl("/") },
 };

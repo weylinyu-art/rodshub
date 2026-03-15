@@ -6,7 +6,7 @@ import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "All Categories | Fishing Rods | RodsHub",
-  description: "Browse spinning, casting, telescopic, surf, ice fishing, travel rods. 200+ SKUs. Wholesale prices.",
+  description: "Browse spinning, casting, telescopic, surf, ice fishing, travel rods. 2000+ SKUs. Wholesale prices.",
   openGraph: buildOpenGraph("All Categories | RodsHub", "Spinning, casting, telescopic, surf, ice, travel rods.", "/categories"),
   alternates: { canonical: absoluteUrl("/categories") },
 };

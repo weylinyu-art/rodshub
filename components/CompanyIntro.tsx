@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { companyIntro } from "@/lib/content";
 
-/** 手绘风格 SVG 插图 - 200+ SKUs / 多品类 */
+/** 手绘风格 SVG 插图 - 2000+ SKUs / 多品类 */
 function IllustrationSKUs() {
   return (
     <svg viewBox="0 0 200 120" className="w-full h-full" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ strokeDasharray: "3 2" }}>
