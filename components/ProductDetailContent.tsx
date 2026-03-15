@@ -10,7 +10,7 @@ import ProductDetailRecommend from "@/components/ProductDetailRecommend";
 import ShareButtons from "@/components/ShareButtons";
 import { absoluteUrl } from "@/lib/seo";
 import { getProductDetailForVariant, getKeyFeaturesForProduct } from "@/lib/productDetail";
-import { getDisplayPrice } from "@/lib/realProducts";
+import { getDisplayPrice, inferMaterialFromTitle, inferPowerFromTitle } from "@/lib/realProducts";
 import { getOriginalProductTitle } from "@/lib/skuData";
 import type { Product } from "@/lib/products";
 import type { ProductDetail } from "@/lib/productDetail";
@@ -130,7 +130,7 @@ export default function ProductDetailContent({
 
   const effectiveVariant = selectedVariant ?? variants[0];
   const effectiveDetail = effectiveVariant
-    ? getProductDetailForVariant(effectiveVariant)
+    ? getProductDetailForVariant(effectiveVariant, product, realProduct)
     : detail;
   const keyFeatures = getKeyFeaturesForProduct({
     originalTitle: realProduct ? getOriginalProductTitle(realProduct.id) : undefined,
@@ -139,9 +139,21 @@ export default function ProductDetailContent({
     detailFeatures: effectiveVariant ? [] : detail.features,
   });
   const displayPrice = effectiveVariant?.price ?? product.price;
+  const materialVal = product.material ?? (realProduct ? inferMaterialFromTitle(realProduct.name) : undefined) ?? "Carbon Fiber";
+  const powerVal = product.power ?? (realProduct ? inferPowerFromTitle(realProduct.name) : undefined) ?? "Medium";
   const displaySpecs = effectiveVariant
-    ? { length: effectiveVariant.dimensions, material: effectiveVariant.type, power: effectiveVariant.type }
-    : { length: product.length, material: product.material, power: product.power };
+    ? {
+        length: effectiveVariant.dimensions ?? product.length ?? "—",
+        material: materialVal,
+        power: powerVal,
+        type: effectiveVariant.type ?? product.fishingStyle ?? "—",
+      }
+    : {
+        length: product.length ?? "2.1m",
+        material: materialVal,
+        power: powerVal,
+        type: product.fishingStyle ?? "—",
+      };
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -241,6 +253,12 @@ export default function ProductDetailContent({
                 <dd className="font-medium text-gray-900">{displaySpecs.power}</dd>
               </div>
             )}
+            {displaySpecs.type && (
+              <div>
+                <dt className="text-gray-500">{t("type", lang)}</dt>
+                <dd className="font-medium text-gray-900">{displaySpecs.type}</dd>
+              </div>
+            )}
           </dl>
 
           <Link
@@ -309,6 +327,12 @@ export default function ProductDetailContent({
               <div className="flex gap-2">
                 <span className="text-gray-500">{t("power", lang)}:</span>
                 <span className="font-medium">{displaySpecs.power}</span>
+              </div>
+            )}
+            {displaySpecs.type && (
+              <div className="flex gap-2">
+                <span className="text-gray-500">{t("type", lang)}:</span>
+                <span className="font-medium">{displaySpecs.type}</span>
               </div>
             )}
           </div>

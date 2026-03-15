@@ -62,17 +62,20 @@ function parsePriceMinFromRange(s: string): number {
   return m ? parseFloat(m[1]) : 8;
 }
 
-/** 全站统一价格源：产品 ID → 展示价，与 DEFAULT_LIST_PRICE_BY_STYLE 一起保证同一产品在各处展示一致 */
-const PRODUCT_DISPLAY_PRICES: Record<string, string> = {
-  TSG01: "$14.50/pc",
-  TSG02: "$13.99/pc",
-  TSG03: "$15.00/pc",
-  TSG04: "$14.00/pc",
-  TSG05: "$11.50/pc",
-  TSG06: "$12.99/pc",
-  TSG07: "$9.80/pc",
-  TSG08: "$10.50/pc",
-};
+/** 全站统一价格源：产品 ID → 展示价。CSV 中 displayPrice 列会合并进来，支持批量上新 */
+const PRODUCT_DISPLAY_PRICES: Record<string, string> = (() => {
+  const fallback: Record<string, string> = {
+    TSG01: "$14.50/pc", TSG02: "$13.99/pc", TSG03: "$15.00/pc", TSG04: "$14.00/pc",
+    TSG05: "$11.50/pc", TSG06: "$12.99/pc", TSG07: "$9.80/pc", TSG08: "$10.50/pc",
+  };
+  try {
+    const { loadProductsCsv } = require("./loadProductsCsv");
+    const csv = loadProductsCsv();
+    return { ...fallback, ...(csv?.displayPrices ?? {}) };
+  } catch {
+    return fallback;
+  }
+})();
 
 /** 详情页/列表页展示用价格：有有效价格则用，否则按 productId→fishingStyle 顺序取统一价 */
 export function getDisplayPrice(
@@ -115,9 +118,42 @@ export function realProductToDisplayProduct(p: RealProduct): import("./products"
     images: imgs,
     fishingStyle: p.fishingStyle,
     length: p.variants[0]?.dimensions,
-    material: p.variants[0]?.type,
-    power: p.variants[0]?.type,
+    material: inferMaterialFromTitle(p.name),
+    power: inferPowerFromTitle(p.name),
   };
+}
+
+/**
+ * 从标题推断材质。上新标题规范：Carbon Fiber、Fiberglass、Composite、Bamboo、Graphite
+ * 例：1.8M-Silvery Carbon Fiber Lure Fishing Rod-...
+ */
+export function inferMaterialFromTitle(title: string): string {
+  const t = (title ?? "").toLowerCase();
+  if (/\b(carbon\s*fib(er|re)|碳素|碳纤维|碳纤)\b/i.test(t)) return "Carbon Fiber";
+  if (/\b(fiberglass|fibreglass|玻纤|玻璃纤维|玻璃钢)\b/i.test(t)) return "Fiberglass";
+  if (/\b(graphite|石墨)\b/i.test(t)) return "Graphite";
+  if (/\b(composite|混合|复合)\b/i.test(t)) return "Composite";
+  if (/\b(bamboo|竹)\b/i.test(t)) return "Bamboo";
+  if (/\b(im[6789]|im\s*[6789])\b/i.test(t)) return "Carbon Fiber";
+  return "Carbon Fiber"; // 渔竿默认碳素
+}
+
+/**
+ * 从标题推断力度 Power。上新标题规范：UL/L/ML/M/MH/H/XH，无则默认 Medium。
+ * 注意：M Tuning、Medium-Fast 等为 Action(调性)，非 Power，不得误匹配。
+ */
+export function inferPowerFromTitle(title: string): string {
+  const t = (title ?? "").toLowerCase();
+  if (/\b(ultralight|ultra[\s-]?light|ul\b|超轻)\b/i.test(t)) return "Ultralight";
+  if (/\b(medium[- ]?light|ml\b|中轻)\b/i.test(t)) return "Medium-Light";
+  if (/\b(medium[- ]?heavy|mh\b|中硬|中重)\b/i.test(t)) return "Medium-Heavy";
+  if (/\b(extra[\s-]?heavy|xh\b|超硬)\b/i.test(t)) return "Extra Heavy";
+  if (/\b(heavy|h\b)(?!\s*[-]?duty)/i.test(t) && !/medium[- ]?heavy|mh\b/i.test(t)) return "Heavy";
+  if (/\b(light|l\b)(?!\s*ultra)/i.test(t) && !/\bultralight\b/i.test(t)) return "Light";
+  // M/Medium 仅当非 Action 术语时匹配：M Tuning、Medium-Fast 等为调性
+  if (/\bmedium(?!\s*[-]?(?:fast|moderate|slow))/i.test(t)) return "Medium";
+  if (/\bm(?!\s*tun(?:ing|ed))/i.test(t) && !/medium/i.test(t)) return "Medium";
+  return "Medium"; // 标题中无 Power 时默认
 }
 
 /** 推断产品类型：TSG→Travel, SSG→Surf, DGL/DJG→Casting, 其余→Spinning */
