@@ -128,14 +128,13 @@ export default function ProductImageGallery({
           );
         })}
 
-        {/* 左右箭头 - 多图时显示；桌面端悬停可见，移动端常显 */}
+        {/* 左右箭头 - 多图时显示；PC 常显以避免需点击两次（opacity-0 时首次点击易落在主图上） */}
         {hasMultiple && (
           <>
             <button
               type="button"
-              onMouseDown={(e) => { e.preventDefault(); goPrev(); }}
-              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goPrev(); } }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 md:bg-white/90 md:hover:bg-white shadow-md flex items-center justify-center md:opacity-0 md:group-hover/carousel:opacity-100 transition-opacity"
+              onClick={goPrev}
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 md:bg-white/90 md:hover:bg-white shadow-md flex items-center justify-center transition-opacity"
               aria-label="Previous image"
             >
               <svg className="w-5 h-5 text-white md:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,9 +143,8 @@ export default function ProductImageGallery({
             </button>
             <button
               type="button"
-              onMouseDown={(e) => { e.preventDefault(); goNext(); }}
-              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goNext(); } }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 md:bg-white/90 md:hover:bg-white shadow-md flex items-center justify-center md:opacity-0 md:group-hover/carousel:opacity-100 transition-opacity"
+              onClick={goNext}
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 md:bg-white/90 md:hover:bg-white shadow-md flex items-center justify-center transition-opacity"
               aria-label="Next image"
             >
               <svg className="w-5 h-5 text-white md:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -163,8 +161,7 @@ export default function ProductImageGallery({
               <button
                 key={i}
                 type="button"
-                onMouseDown={(e) => { e.preventDefault(); setActiveIndex(i); }}
-                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveIndex(i); } }}
+                onClick={() => setActiveIndex(i)}
                 className={`w-2 h-2 rounded-full transition-colors ${
                   i === activeIndex ? "bg-white shadow" : "bg-white/50 hover:bg-white/70"
                 }`}
@@ -184,8 +181,7 @@ export default function ProductImageGallery({
               <button
                 key={i}
                 type="button"
-                onMouseDown={(e) => { e.preventDefault(); setActiveIndex(i); }}
-                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveIndex(i); } }}
+                onClick={() => setActiveIndex(i)}
                 className={`relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded overflow-hidden bg-white transition snap-center ring-0 focus:ring-0 focus:outline-none ${
                   i === activeIndex ? "ring-1 ring-gray-400 ring-inset" : "border border-transparent hover:border-gray-300"
                 }`}
