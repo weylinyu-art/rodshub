@@ -133,7 +133,8 @@ export default function ProductImageGallery({
           <>
             <button
               type="button"
-              onClick={goPrev}
+              onMouseDown={(e) => { e.preventDefault(); goPrev(); }}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goPrev(); } }}
               className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 md:bg-white/90 md:hover:bg-white shadow-md flex items-center justify-center md:opacity-0 md:group-hover/carousel:opacity-100 transition-opacity"
               aria-label="Previous image"
             >
@@ -143,7 +144,8 @@ export default function ProductImageGallery({
             </button>
             <button
               type="button"
-              onClick={goNext}
+              onMouseDown={(e) => { e.preventDefault(); goNext(); }}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goNext(); } }}
               className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 md:bg-white/90 md:hover:bg-white shadow-md flex items-center justify-center md:opacity-0 md:group-hover/carousel:opacity-100 transition-opacity"
               aria-label="Next image"
             >
@@ -161,7 +163,8 @@ export default function ProductImageGallery({
               <button
                 key={i}
                 type="button"
-                onClick={() => setActiveIndex(i)}
+                onMouseDown={(e) => { e.preventDefault(); setActiveIndex(i); }}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveIndex(i); } }}
                 className={`w-2 h-2 rounded-full transition-colors ${
                   i === activeIndex ? "bg-white shadow" : "bg-white/50 hover:bg-white/70"
                 }`}
@@ -181,7 +184,8 @@ export default function ProductImageGallery({
               <button
                 key={i}
                 type="button"
-                onClick={() => setActiveIndex(i)}
+                onMouseDown={(e) => { e.preventDefault(); setActiveIndex(i); }}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveIndex(i); } }}
                 className={`relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded overflow-hidden bg-white transition snap-center ring-0 focus:ring-0 focus:outline-none ${
                   i === activeIndex ? "ring-1 ring-gray-400 ring-inset" : "border border-transparent hover:border-gray-300"
                 }`}
@@ -192,7 +196,7 @@ export default function ProductImageGallery({
                   alt={`${alt} - view ${i + 1}`}
                   loading="lazy"
                   decoding="async"
-                  className="absolute inset-0 size-full min-w-full min-h-full object-cover object-center"
+                  className="absolute inset-0 size-full min-w-full min-h-full object-cover object-center pointer-events-none"
                   onError={() => setFailedUrls((prev) => new Set(prev).add(src))}
                 />
               </button>
