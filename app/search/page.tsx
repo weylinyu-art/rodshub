@@ -4,13 +4,18 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { t, tFormat } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 import { getAllProducts } from "@/lib/productRegistry";
 import { applyListImageOverride } from "@/lib/realProducts";
 
+function getQueryFromUrl(): string {
+  if (typeof window === "undefined") return "";
+  return (new URLSearchParams(window.location.search).get("q") ?? "").trim();
+}
+
 export default function SearchPage() {
   const { lang } = useLanguage();
-  const [q, setQ] = useState("");
+  const [q, setQ] = useState(getQueryFromUrl);
   const [results, setResults] = useState<ReturnType<typeof getAllProducts>>([]);
 
   useEffect(() => {
@@ -60,16 +65,29 @@ export default function SearchPage() {
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
             {q ? `${t("search", lang)}: "${q}"` : t("searchRods", lang)}
           </h1>
-          <p className="mt-1 text-gray-600">
-            {q ? "" : t("searchHint", lang)}
-          </p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {!q ? (
-          <p className="text-gray-500">{t("searchHint", lang)}</p>
-        ) : results.length > 0 ? (
+        {/* 搜索框 - 移动端直接可输入，无需去 header */}
+        <form action="/search" method="get" className="mb-8">
+          <div className="flex gap-2 max-w-xl">
+            <input
+              type="search"
+              name="q"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder={t("searchPlaceholder", lang)}
+              className="flex-1 min-w-0 px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+              autoFocus={!q}
+            />
+            <button type="submit" className="px-6 py-3 bg-black text-white font-medium rounded-lg hover:bg-gray-800 whitespace-nowrap">
+              {t("search", lang)}
+            </button>
+          </div>
+        </form>
+
+        {!q ? null : results.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
             {results.map((rod) => (
               <ProductCard key={rod.id} {...applyListImageOverride(rod)} variant="trending" />
