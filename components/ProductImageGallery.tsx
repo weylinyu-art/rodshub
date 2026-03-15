@@ -50,16 +50,16 @@ export default function ProductImageGallery({
   );
 
   const goPrev = useCallback(() => {
-    goTo(activeIndex - 1);
+    setActiveIndex((prev) => ((prev - 1) % total + total) % total);
     setIsPaused(true);
     setTimeout(() => setIsPaused(false), autoPlayInterval);
-  }, [activeIndex, goTo, autoPlayInterval]);
+  }, [total, autoPlayInterval]);
 
   const goNext = useCallback(() => {
-    goTo(activeIndex + 1);
+    setActiveIndex((prev) => (prev + 1) % total);
     setIsPaused(true);
     setTimeout(() => setIsPaused(false), autoPlayInterval);
-  }, [activeIndex, goTo, autoPlayInterval]);
+  }, [total, autoPlayInterval]);
 
   // 触摸滑动
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
@@ -128,13 +128,17 @@ export default function ProductImageGallery({
           );
         })}
 
-        {/* 左右箭头 - 多图时显示；桌面端悬停可见，移动端常显 */}
+        {/* 左右箭头 - 多图时显示；常显避免触屏设备需点击两次才响应 */}
         {hasMultiple && (
           <>
             <button
               type="button"
               onClick={goPrev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 md:bg-white/90 md:hover:bg-white shadow-md flex items-center justify-center md:opacity-0 md:group-hover/carousel:opacity-100 transition-opacity"
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                goPrev();
+              }}
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 md:bg-white/90 md:hover:bg-white shadow-md flex items-center justify-center transition-opacity touch-manipulation"
               aria-label="Previous image"
             >
               <svg className="w-5 h-5 text-white md:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,7 +148,11 @@ export default function ProductImageGallery({
             <button
               type="button"
               onClick={goNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 md:bg-white/90 md:hover:bg-white shadow-md flex items-center justify-center md:opacity-0 md:group-hover/carousel:opacity-100 transition-opacity"
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                goNext();
+              }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 md:bg-white/90 md:hover:bg-white shadow-md flex items-center justify-center transition-opacity touch-manipulation"
               aria-label="Next image"
             >
               <svg className="w-5 h-5 text-white md:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
