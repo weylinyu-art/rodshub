@@ -43,8 +43,8 @@ export default async function RodsFilterPage({ params }: PageProps) {
   const title = mode === "category" ? "All Rods by Category" : "All Rods by Scenario";
   const subTitle =
     mode === "category"
-      ? "Browse our full catalog · Filter by rod type"
-      : "Browse our full catalog · Filter by fishing scenario";
+      ? "Browse our full catalog · Switch by rod type"
+      : "Browse our full catalog · Switch by fishing scenario";
 
   const categoryTabs = [
     { slug: "all", name: "All" },

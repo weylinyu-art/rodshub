@@ -76,7 +76,7 @@ export default async function ScenarioPage({ params }: PageProps) {
             {scenario.name} Rods
           </h1>
           <p className="mt-1 text-gray-600">
-            {products.length} SKUs · Rods suited for {scenario.name.toLowerCase()} fishing
+            Rods suited for {scenario.name.toLowerCase()} fishing
           </p>
         </div>
       </div>

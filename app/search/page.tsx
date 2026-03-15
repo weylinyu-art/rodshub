@@ -61,7 +61,7 @@ export default function SearchPage() {
             {q ? `${t("search", lang)}: "${q}"` : t("searchRods", lang)}
           </h1>
           <p className="mt-1 text-gray-600">
-            {q ? (results.length !== 1 ? tFormat("resultsFoundPlural", lang, { n: results.length }) : tFormat("resultsFound", lang, { n: results.length })) : t("searchHint", lang)}
+            {q ? "" : t("searchHint", lang)}
           </p>
         </div>
       </div>

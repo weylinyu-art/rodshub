@@ -23,7 +23,7 @@ export default function CategoriesPage() {
           </nav>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">All Categories</h1>
           <p className="mt-1 text-gray-600">
-            Browse all rod types · Click into any category for secondary filters (Material, Power, Length, Price)
+            Browse all rod types
           </p>
         </div>
       </div>
@@ -53,8 +53,6 @@ export default function CategoriesPage() {
                   <h2 className="font-semibold text-gray-900 text-sm group-hover:text-black transition">
                     {cat.name}
                   </h2>
-                  <p className="mt-0.5 text-xs text-gray-500">{count}+ SKUs</p>
-                  <p className="mt-1 text-xs text-gray-400">Material · Power · Length filters</p>
                 </div>
               </Link>
             );
