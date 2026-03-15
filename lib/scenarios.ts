@@ -53,3 +53,16 @@ export function getProductsByScenario(slug: string): (Product & { id: string })[
   if (!filter) return [];
   return getAllProducts().filter((p) => p.id && filter(p)) as (Product & { id: string })[];
 }
+
+/** 获取产品所属主场景（首个匹配），用于排序 */
+function getPrimaryScenarioIndex(p: Product): number {
+  for (let i = 0; i < SCENARIOS.length; i++) {
+    if (SCENARIO_FILTER[SCENARIOS[i].slug](p)) return i;
+  }
+  return SCENARIOS.length; // 未匹配的放最后
+}
+
+/** 按场景顺序排序产品：Freshwater → Saltwater → Surf → Boat → Ice */
+export function sortProductsByScenario<T extends Product>(products: T[]): T[] {
+  return [...products].sort((a, b) => getPrimaryScenarioIndex(a) - getPrimaryScenarioIndex(b));
+}

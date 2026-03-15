@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllProducts } from "@/lib/productRegistry";
-import { categories } from "@/lib/categoryProducts";
-import { SCENARIOS } from "@/lib/scenarios";
+import { categories, sortProductsByCategory } from "@/lib/categoryProducts";
+import { SCENARIOS, sortProductsByScenario } from "@/lib/scenarios";
 import CategoryFilters from "@/components/CategoryFilters";
 
 type Mode = "category" | "scenario";
@@ -19,7 +19,8 @@ export default async function RodsModePage({ params }: PageProps) {
   const { mode } = await params;
   if (mode !== "category" && mode !== "scenario") notFound();
 
-  const products = getAllProducts();
+  const all = getAllProducts();
+  const products = mode === "category" ? sortProductsByCategory(all) : sortProductsByScenario(all);
   const title = mode === "category" ? "All Rods by Category" : "All Rods by Scenario";
   const subTitle =
     mode === "category"

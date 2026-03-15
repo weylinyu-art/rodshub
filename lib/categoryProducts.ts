@@ -92,6 +92,20 @@ const SLUG_TO_STYLE: Record<string, string> = {
   travel: "Travel",
 };
 
+/** Categories 页默认排序：按 rod type 顺序 Spinning → Casting → Telescopic → Surf → Ice → Travel */
+const CATEGORY_ORDER: CategorySlug[] = ["spinning", "casting", "telescopic", "surf", "ice", "travel"];
+
+function getCategoryIndex(p: Product): number {
+  const fs = (p.fishingStyle ?? "").toLowerCase();
+  const idx = CATEGORY_ORDER.findIndex((s) => s === fs || fs.startsWith(s));
+  return idx >= 0 ? idx : CATEGORY_ORDER.length;
+}
+
+/** 按分类顺序排序产品 */
+export function sortProductsByCategory<T extends Product>(products: T[]): T[] {
+  return [...products].sort((a, b) => getCategoryIndex(a) - getCategoryIndex(b));
+}
+
 /** 获取分类下的产品：真实产品排在前面，按 fishingStyle 归拢 */
 export function getProductsByCategory(slug: string): (Product & { id: string })[] {
   const style = SLUG_TO_STYLE[slug];
