@@ -97,32 +97,8 @@ export default function ProductImageGallery({
     };
   }, [autoPlay, hasMultiple, isPaused, total, autoPlayInterval]);
 
-  const prevBtnRef = useRef<HTMLButtonElement>(null);
-  const nextBtnRef = useRef<HTMLButtonElement>(null);
-  /** 原生 touchend + passive:false，确保触屏首次点击即响应（React 合成 touch 事件 passive 时 preventDefault 无效） */
-  useEffect(() => {
-    if (!hasMultiple) return;
-    const prev = prevBtnRef.current;
-    const next = nextBtnRef.current;
-    if (!prev || !next) return;
-    const onPrev = (e: TouchEvent) => {
-      e.preventDefault();
-      goPrev();
-    };
-    const onNext = (e: TouchEvent) => {
-      e.preventDefault();
-      goNext();
-    };
-    prev.addEventListener("touchend", onPrev, { passive: false });
-    next.addEventListener("touchend", onNext, { passive: false });
-    return () => {
-      prev.removeEventListener("touchend", onPrev);
-      next.removeEventListener("touchend", onNext);
-    };
-  }, [hasMultiple, goPrev, goNext]);
-
   return (
-    <div className="w-full min-w-0 group/carousel touch-manipulation">
+    <div className="w-full min-w-0 group/carousel">
       {/* 主图轮播区域 */}
       <div
         className="relative w-full max-w-[480px] aspect-square bg-white border border-gray-200 rounded-lg overflow-hidden shrink-0"
@@ -152,14 +128,13 @@ export default function ProductImageGallery({
           );
         })}
 
-        {/* 左右箭头 - 多图时显示；桌面端悬停可见 */}
+        {/* 左右箭头 - 多图时显示；桌面端悬停可见，移动端常显 */}
         {hasMultiple && (
           <>
             <button
-              ref={prevBtnRef}
               type="button"
               onClick={goPrev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 md:opacity-0 md:group-hover/carousel:opacity-100 md:bg-white/90 md:hover:bg-white shadow-md flex items-center justify-center transition-opacity touch-manipulation"
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 md:bg-white/90 md:hover:bg-white shadow-md flex items-center justify-center md:opacity-0 md:group-hover/carousel:opacity-100 transition-opacity"
               aria-label="Previous image"
             >
               <svg className="w-5 h-5 text-white md:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -167,10 +142,9 @@ export default function ProductImageGallery({
               </svg>
             </button>
             <button
-              ref={nextBtnRef}
               type="button"
               onClick={goNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 md:opacity-0 md:group-hover/carousel:opacity-100 md:bg-white/90 md:hover:bg-white shadow-md flex items-center justify-center transition-opacity touch-manipulation"
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 md:bg-white/90 md:hover:bg-white shadow-md flex items-center justify-center md:opacity-0 md:group-hover/carousel:opacity-100 transition-opacity"
               aria-label="Next image"
             >
               <svg className="w-5 h-5 text-white md:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -184,13 +158,14 @@ export default function ProductImageGallery({
         {hasMultiple && total <= 12 && (
           <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-20">
             {uniqueImages.map((_, i) => (
-              <ThumbOrDotButton
+              <button
                 key={i}
+                type="button"
                 onClick={() => setActiveIndex(i)}
-                ariaLabel={`Go to image ${i + 1}`}
-                className={`w-2 h-2 rounded-full transition-colors touch-manipulation ${
+                className={`w-2 h-2 rounded-full transition-colors ${
                   i === activeIndex ? "bg-white shadow" : "bg-white/50 hover:bg-white/70"
                 }`}
+                aria-label={`Go to image ${i + 1}`}
               />
             ))}
           </div>
@@ -199,15 +174,15 @@ export default function ProductImageGallery({
 
       {/* 缩略图条 - 支持横向滚动，多图时显示 */}
       {hasMultiple && (
-        <div className="mt-3 flex gap-2 overflow-x-auto pb-1 -mb-1 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent touch-manipulation">
+        <div className="mt-3 flex gap-2 overflow-x-auto pb-1 -mb-1 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
           {uniqueImages.map((src, i) => {
             const effectiveSrc = failedUrls.has(src) ? fallbackImage : src;
             return (
-              <ThumbOrDotButton
+              <button
                 key={i}
+                type="button"
                 onClick={() => setActiveIndex(i)}
-                ariaLabel={`${alt} - view ${i + 1}`}
-                className={`relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded overflow-hidden bg-white transition snap-center ring-0 focus:ring-0 focus:outline-none touch-manipulation ${
+                className={`relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded overflow-hidden bg-white transition snap-center ring-0 focus:ring-0 focus:outline-none ${
                   i === activeIndex ? "ring-1 ring-gray-400 ring-inset" : "border border-transparent hover:border-gray-300"
                 }`}
               >
@@ -220,43 +195,11 @@ export default function ProductImageGallery({
                   className="absolute inset-0 size-full min-w-full min-h-full object-cover object-center"
                   onError={() => setFailedUrls((prev) => new Set(prev).add(src))}
                 />
-              </ThumbOrDotButton>
+              </button>
             );
           })}
         </div>
       )}
     </div>
-  );
-}
-
-/** 带原生 touchend(passive:false) 的按钮，解决触屏需点击两次问题 */
-function ThumbOrDotButton({
-  onClick,
-  ariaLabel,
-  className,
-  children,
-}: {
-  onClick: () => void;
-  ariaLabel: string;
-  className: string;
-  children?: React.ReactNode;
-}) {
-  const ref = useRef<HTMLButtonElement>(null);
-  const fnRef = useRef(onClick);
-  fnRef.current = onClick;
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const fn = (e: TouchEvent) => {
-      e.preventDefault();
-      fnRef.current();
-    };
-    el.addEventListener("touchend", fn, { passive: false });
-    return () => el.removeEventListener("touchend", fn);
-  }, []);
-  return (
-    <button ref={ref} type="button" onClick={onClick} className={className} aria-label={ariaLabel}>
-      {children}
-    </button>
   );
 }
