@@ -23,8 +23,9 @@ export default function ShopByCategory() {
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{c.title}</h2>
         <p className="text-gray-500 mb-8">{c.subtitle}</p>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-          {CATEGORIES.map((cat) => {
+          {CATEGORIES.map((cat, idx) => {
             const name = categoryNames[cat.slug]?.[lang] ?? categoryNames[cat.slug]?.en ?? cat.slug;
+            const aboveFold = idx < 4;
             return (
               <a
                 key={cat.slug}
@@ -36,7 +37,7 @@ export default function ShopByCategory() {
                   <img
                     src={CATEGORY_IMAGE_URLS[cat.slug] ?? ""}
                     alt={name}
-                    loading="lazy"
+                    loading={aboveFold ? "eager" : "lazy"}
                     decoding="async"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />

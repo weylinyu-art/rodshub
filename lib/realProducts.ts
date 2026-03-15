@@ -163,9 +163,17 @@ export const DETAIL_PAGE_EXCLUDED_IMAGE_INDICES: Record<string, number[]> = {
   TSG14: [0, 4, 5], // 首图及第 5、6 张含 Contraction/Stretched Length 等尺寸信息
 };
 
-/** 过滤详情页图片：排除含尺寸信息的图、重复图，保证去重后至少保留 1 张 */
+/** 详情页仅展示首图：R2 内多张图实为同一张（占位/重复）时只显示 1 张，不展示轮播 */
+export const DETAIL_ONLY_FIRST_IMAGE: Record<string, boolean> = {
+  TSG08: true, // R2 内 6 张图内容相同
+};
+
+/** 过滤详情页图片：排除含尺寸信息的图、重复图；当仅首图有效时只保留 1 张 */
 export function filterDetailPageImages(productId: string, images: string[]): string[] {
   if (!images?.length) return images ?? [];
+  if (DETAIL_ONLY_FIRST_IMAGE[productId]) {
+    return [images[0]];
+  }
   const excluded = DETAIL_PAGE_EXCLUDED_IMAGE_INDICES[productId];
   const filtered = excluded?.length
     ? images.filter((_, i) => !excluded.includes(i))

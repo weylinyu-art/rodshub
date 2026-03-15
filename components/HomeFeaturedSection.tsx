@@ -42,7 +42,7 @@ export default function HomeFeaturedSection() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {featured.map((rod) => (
-            <ProductCard key={rod.id} {...rod} variant="default" />
+            <ProductCard key={rod.id} {...rod} variant="default" priority />
           ))}
           {wholesale.map((rod) => (
             <ProductCard key={rod.id} {...rod} variant="default" />

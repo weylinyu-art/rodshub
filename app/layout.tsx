@@ -58,6 +58,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* 预连接图片源，减少首屏图片加载延迟 */}
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="preconnect" href="https://images.pexels.com" />
+        <link rel="preconnect" href="https://images.rodshub.com" />
+        <link rel="preconnect" href="https://categories.rodshub.com" />
+        <link rel="preload" href="/hero-banner.jpeg" as="image" />
+      </head>
       <body className="antialiased overflow-x-hidden">
         <JsonLd data={[organizationSchema, websiteSchema]} />
         <LanguageProvider>

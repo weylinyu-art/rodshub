@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t, type LangCode } from "@/lib/i18n";
-import { getProductName } from "@/lib/products-i18n";
+import { getProductName, getListDisplayName } from "@/lib/products-i18n";
 import { getDisplayPrice } from "@/lib/realProducts";
 import type { Product } from "@/lib/products";
 
@@ -27,7 +27,8 @@ function RecommendCard({
   slotIndex: number;
 }) {
   const [imgFailed, setImgFailed] = useState(false);
-  const displayName = getProductName(p, lang);
+  const fullName = getProductName(p, lang);
+  const listDisplayName = getListDisplayName(p, lang);
   const imgSrc = p.images?.[0] ?? p.image ?? "";
   const effectiveSrc = imgFailed || !imgSrc ? FALLBACK_IMAGE : imgSrc;
   const displayPrice = getDisplayPrice(p.price, p.fishingStyle, p.id);
@@ -44,7 +45,7 @@ function RecommendCard({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={effectiveSrc}
-            alt={displayName}
+            alt={fullName}
             loading="lazy"
             decoding="async"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform"
@@ -54,7 +55,7 @@ function RecommendCard({
       </Link>
       <div className="p-3 flex-1 flex flex-col">
         <Link href={`/product/${p.id}`} className="shrink-0">
-          <h3 className="font-medium text-gray-900 text-sm line-clamp-2 group-hover:text-black">{displayName}</h3>
+          <h3 className="font-medium text-gray-900 text-sm line-clamp-2 min-h-[2.5rem] whitespace-pre-line group-hover:text-black">{listDisplayName}</h3>
         </Link>
         <p className="mt-1 font-bold text-gray-900 text-sm">{displayPrice}</p>
         <Link

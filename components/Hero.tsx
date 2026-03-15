@@ -35,6 +35,7 @@ export default function Hero() {
             src="/hero-banner.jpeg"
             alt="Fishing rods and gear"
             className="w-full h-full object-cover"
+            loading="eager"
             fetchPriority="high"
             decoding="async"
           />

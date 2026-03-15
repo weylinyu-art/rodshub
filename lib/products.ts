@@ -30,13 +30,13 @@ const FISHING_ROD_IMAGES = [
   "https://images.pexels.com/photos/14339529/pexels-photo-14339529.jpeg", // man holding rod (dup for pool)
 ];
 
-/** 同一产品 1-3 张图：相同基图不同裁剪（白底/户外/特写风格） */
+/** 同一产品 1-3 张图：400px 宽满足列表/卡片，减少传输 */
 export function getProductImages(baseIndex: number, count: 1 | 2 | 3 = 3): string[] {
   const base = FISHING_ROD_IMAGES[baseIndex % FISHING_ROD_IMAGES.length];
   const variants = [
-    `${base}?w=500&h=500&fit=crop`,
-    `${base}?w=500&h=450&fit=crop`,
-    `${base}?w=450&h=500&fit=crop`,
+    `${base}?w=400&h=400&fit=crop`,
+    `${base}?w=400&h=360&fit=crop`,
+    `${base}?w=360&h=400&fit=crop`,
   ];
   return variants.slice(0, count);
 }

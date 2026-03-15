@@ -39,3 +39,74 @@ export function getProductName(product: { id?: string; name: string }, lang: Lan
   }
   return product.name;
 }
+
+/** 列表页展示名：去除 rod 等冗余，提炼关键特征，支持 2 行（\n 换行） */
+const LIST_DISPLAY_NAMES: Record<string, string> = {
+  TSG01: "Silvery Carbon\nTravel",
+  TSG02: "Travel Carbon\nSpinning",
+  TSG03: "Carbon Casting",
+  TSG04: "Carbon Lure\nWood Handle",
+  TSG05: "White Fiberglass\nCasting",
+  TSG06: "Travel Lure",
+  TSG07: "Fiberglass\nSpinning",
+  TSG08: "Fiberglass Casting",
+  TSG09: "Green Carbon Casting",
+  TSG10: "Black & Gold\nCarbon",
+  TSG11: "Carbon & Reel\nWood Handle",
+  TSG12: "Durable Spinning",
+  TSG13: "Telescopic\nFiberglass",
+  TSG14: "Carbon Fiber\nLure",
+  TSG15: "Travel Carbon\nSpinning",
+  TSG16: "Colored Carbon\nFiber",
+  TSG17: "High-Carbon\nLure",
+  TSG18: "Red ML Tone\nLure",
+  TSG19: "UL Tone Carbon\nCasting",
+  TSG20: "Camo Casting",
+  TSG21: "Camo Casting",
+  TSG22: "Green Carbon\nFiber",
+  TSG23: "Black M-Tone\nCasting",
+  TSG24: "White Carbon\nC&S",
+  TSG25: "M Tone Carbon\nLure",
+  TSG26: "Long Casting\nCarbon",
+  TSG27: "Silver-Black\nCarbon",
+  TSG28: "Ultra-Light\nCarbon Lure",
+  TSG29: "Blue/Orange\nCarbon Lure",
+  SSG01: "Telescopic Surf",
+  DJG01: "4-Section Mini\nLure",
+  DGL: "Sea Rod & Reel\nSet",
+  YGT01: "55-Pc Telescopic\nLure Set",
+};
+
+/** 去除 rod/rods 等冗余词（列表页上下文已明确是渔竿） */
+function stripRedundantRod(text: string): string {
+  return text
+    .replace(/\s+(rod|rods|竿|渔竿|釣竿)(\s|$)/gi, "$2")
+    .replace(/\s+(caña|canne|vara|rute|ロッド|로드)(\s|$)/gi, "$2")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+/** 列表页卡片用展示名：有 LIST_DISPLAY_NAMES 用映射，否则去除 rod 等冗余词 */
+export function getListDisplayName(product: { id?: string; name: string }, lang: LangCode): string {
+  if (product.id && LIST_DISPLAY_NAMES[product.id]) {
+    return LIST_DISPLAY_NAMES[product.id];
+  }
+  const full = getProductName(product, lang);
+  return stripRedundantRod(full);
+}
+
+/** 详情页标题：更详实，支持 2 行（\n 换行）。优先用 originalTitle 按 " - " 拆分为两行 */
+export function getDetailDisplayName(
+  product: { id?: string; name: string },
+  lang: LangCode,
+  originalTitle?: string
+): string {
+  const base = getProductName(product, lang);
+  const raw = (originalTitle || base).trim();
+  if (!raw) return base;
+  const parts = raw.split(/\s*-\s*/).map((s) => s.trim()).filter(Boolean);
+  if (parts.length >= 2) {
+    return `${parts[0]}\n${parts.slice(1).join(", ")}`;
+  }
+  return raw;
+}

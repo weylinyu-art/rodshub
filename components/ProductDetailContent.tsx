@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
-import { getProductName } from "@/lib/products-i18n";
+import { getProductName, getDetailDisplayName } from "@/lib/products-i18n";
 import ProductImageGallery from "@/components/ProductImageGallery";
 import ProductDetailRecommend from "@/components/ProductDetailRecommend";
 import ShareButtons from "@/components/ShareButtons";
@@ -119,6 +119,7 @@ export default function ProductDetailContent({
 }: ProductDetailContentProps) {
   const { lang } = useLanguage();
   const displayName = getProductName(product, lang);
+  const detailTitle = getDetailDisplayName(product, lang, realProduct ? getOriginalProductTitle(realProduct.id) : undefined);
   const displayNameShort = displayName.length > 52 ? displayName.slice(0, 49).trimEnd() + "…" : displayName;
 
   const variants = realProduct?.variants ?? [];
@@ -168,7 +169,7 @@ export default function ProductDetailContent({
               {product.badge}
             </span>
           )}
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight" title={displayName}>{displayNameShort}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight whitespace-pre-line" title={displayName}>{detailTitle}</h1>
 
           {variants.length > 1 && (
             <div>

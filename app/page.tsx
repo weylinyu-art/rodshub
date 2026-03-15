@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import Hero from "@/components/Hero";
 import ValueCards from "@/components/ValueCards";
-import ShopByCategory from "@/components/ShopByCategory";
-import ShopByFishingStyle from "@/components/ShopByFishingStyle";
-import HomeFeaturedSection from "@/components/HomeFeaturedSection";
 import JsonLd from "@/components/JsonLd";
 import { absoluteUrl, buildOpenGraph, buildTwitter, howToOrderSchema } from "@/lib/seo";
+
+const ShopByCategory = dynamic(() => import("@/components/ShopByCategory"), { ssr: true });
+const ShopByFishingStyle = dynamic(() => import("@/components/ShopByFishingStyle"), { ssr: true });
+const HomeFeaturedSection = dynamic(() => import("@/components/HomeFeaturedSection"), { ssr: true });
 
 const CompanyIntro = dynamic(() => import("@/components/CompanyIntro"), { ssr: true });
 const OEMCustomization = dynamic(() => import("@/components/OEMCustomization"), { ssr: true });

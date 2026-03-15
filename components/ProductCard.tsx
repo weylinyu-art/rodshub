@@ -4,18 +4,20 @@ import { useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
-import { getProductName } from "@/lib/products-i18n";
+import { getProductName, getListDisplayName } from "@/lib/products-i18n";
 import { dedupeImagesByBase } from "@/lib/imageUtils";
 import { getDisplayPrice } from "@/lib/realProducts";
 import type { Product } from "@/lib/products";
 
 interface ProductCardProps extends Product {
   variant?: "default" | "trending" | "wholesale";
+  /** 首屏可见时设为 true，优先加载图片（loading=eager, fetchPriority=high） */
+  priority?: boolean;
 }
 
 const inquiryHref = "/#inquiry";
 
-const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=500&h=500&fit=crop";
+const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=400&h=400&fit=crop";
 
 export default function ProductCard({
   id,
@@ -30,9 +32,11 @@ export default function ProductCard({
   power,
   fishingStyle,
   variant = "default",
+  priority = false,
 }: ProductCardProps) {
   const { lang } = useLanguage();
-  const displayName = getProductName({ id, name }, lang);
+  const listDisplayName = getListDisplayName({ id, name }, lang);
+  const fullName = getProductName({ id, name }, lang);
   /** 按 base URL 去重：同一张图的不同裁剪视为重复，不展示轮播 */
   const rawList = (images && images.length > 0 ? images : [image]) as string[];
   const imgList = dedupeImagesByBase(rawList);
@@ -53,12 +57,14 @@ export default function ProductCard({
         >
           {imgList.map((src, i) => {
             const effectiveSrc = failedUrls.has(src) ? FALLBACK_IMAGE : src;
+            const isFirst = i === 0;
             return (
               <img
                 key={i}
                 src={effectiveSrc}
-                alt={`${displayName} - ${i + 1}`}
-                loading="lazy"
+                alt={`${fullName} - ${i + 1}`}
+                loading={priority && isFirst ? "eager" : "lazy"}
+                {...(priority && isFirst && { fetchPriority: "high" as const })}
                 decoding="async"
                 className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:scale-105 ${
                   i === activeIndex ? "opacity-100 z-0" : "opacity-0"
@@ -84,10 +90,10 @@ export default function ProductCard({
           )}
         </div>
       </Link>
-      <div className="p-3 flex-1 flex flex-col">
-        <Link href={href} className="shrink-0">
-          <h3 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-black transition text-sm">
-            {displayName}
+      <div className="p-3 flex-1 flex flex-col min-h-0">
+        <Link href={href} className="shrink-0 block min-h-[2.5rem]">
+          <h3 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-black transition text-sm whitespace-pre-line">
+            {listDisplayName}
           </h3>
         </Link>
         <p className="mt-1 font-bold text-gray-900 text-sm">{displayPrice}</p>

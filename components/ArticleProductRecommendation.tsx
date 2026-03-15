@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
-import { getProductName } from "@/lib/products-i18n";
+import { getProductName, getListDisplayName } from "@/lib/products-i18n";
 import { getDisplayPrice } from "@/lib/realProducts";
 import type { Product } from "@/lib/products";
 
@@ -17,7 +17,8 @@ interface ArticleProductRecommendationProps {
 /** 文章内商品推荐：图片、名称、价格、Inquiry 按钮 */
 function ArticleProductCard({ product }: { product: Product & { id: string } }) {
   const { lang } = useLanguage();
-  const displayName = getProductName({ id: product.id, name: product.name }, lang);
+  const displayName = getListDisplayName({ id: product.id, name: product.name }, lang);
+  const fullName = getProductName({ id: product.id, name: product.name }, lang);
   const img = (product.images?.[0] ?? product.image) || FALLBACK_IMAGE;
   const href = product.id ? `/product/${product.id}` : "/#inquiry";
   const displayPrice = getDisplayPrice(product.price, product.fishingStyle, product.id);
@@ -29,7 +30,7 @@ function ArticleProductCard({ product }: { product: Product & { id: string } }) 
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={img}
-            alt={displayName}
+            alt={fullName}
             loading="lazy"
             decoding="async"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -38,7 +39,7 @@ function ArticleProductCard({ product }: { product: Product & { id: string } }) 
       </Link>
       <div className="p-3 flex-1 flex flex-col">
         <Link href={href} className="shrink-0">
-          <h4 className="font-medium text-gray-900 text-sm line-clamp-2 group-hover:text-black">{displayName}</h4>
+          <h4 className="font-medium text-gray-900 text-sm line-clamp-2 min-h-[2.5rem] whitespace-pre-line group-hover:text-black">{displayName}</h4>
         </Link>
         <p className="mt-1 font-bold text-gray-900 text-sm">{displayPrice}</p>
         <Link
