@@ -466,6 +466,11 @@ export const testimonials: Record<
         author: "Retail Chain, Australia",
         tags: ["Catalog", "Service"],
       },
+      {
+        quote: "Travel rod section was exactly what we needed for our outdoor retailer chain. MOQ was reasonable and samples arrived quickly. Now we're expanding to more categories.",
+        author: "Outdoor Retailer, UK",
+        tags: ["Travel", "MOQ"],
+      },
     ],
   },
   es: {
@@ -478,6 +483,7 @@ export const testimonials: Record<
       { quote: "OEM fluido de prototipo a producción. Marca y especificaciones manejadas con profesionalidad. Reordenaremos.", author: "Propietario de marca, Sudeste Asiático", tags: ["OEM", "Flexible"] },
       { quote: "Precios competitivos y amplia variedad. Ahora surtimos spinning, telescópica e hielo de un solo lugar.", author: "Distribuidor, Oriente Medio", tags: ["Valor", "Variedad"] },
       { quote: "Catálogo 200+ SKU y filtros facilitaron encontrar lo necesario. Atención al cliente ágil.", author: "Cadena minorista, Australia", tags: ["Catálogo", "Servicio"] },
+      { quote: "La sección de cañas viaje fue justo lo que necesitábamos. MOQ razonable y muestras llegaron rápido. Ahora ampliamos a más categorías.", author: "Minorista outdoor, Reino Unido", tags: ["Viaje", "MOQ"] },
     ],
   },
   fr: {
@@ -490,6 +496,7 @@ export const testimonials: Record<
       { quote: "OEM fluide du prototype à la production. Marque et specs gérées professionnellement.", author: "Propriétaire de marque, Asie du Sud-Est", tags: ["OEM", "Flexible"] },
       { quote: "Prix compétitifs, large gamme. Nous sourçons spinning, télescopique et glace d'un seul endroit.", author: "Distributeur, Moyen-Orient", tags: ["Valeur", "Variété"] },
       { quote: "Catalogue 200+ SKU et filtres ont facilité la recherche. Service client réactif.", author: "Chaîne détaillante, Australie", tags: ["Catalogue", "Service"] },
+      { quote: "Section cannes voyage parfaite pour notre chaîne outdoor. MOQ raisonnable, échantillons rapides. On étend à d'autres catégories.", author: "Détaillant outdoor, Royaume-Uni", tags: ["Voyage", "MOQ"] },
     ],
   },
   de: {
@@ -502,6 +509,7 @@ export const testimonials: Record<
       { quote: "OEM-Anpassung reibungslos von Prototyp bis Produktion. Professionell umgesetzt.", author: "Markeninhaber, Südostasien", tags: ["OEM", "Flexibel"] },
       { quote: "Wettbewerbsfähige Preise, große Auswahl. Wir beziehen Spinning, Teleskop und Eis von einem Ort.", author: "Großhändler, Naher Osten", tags: ["Wert", "Vielfalt"] },
       { quote: "200+ SKU-Katalog und Filter machten die Suche einfach. Kundenservice reaktiv.", author: "Einzelhandelskette, Australien", tags: ["Katalog", "Service"] },
+      { quote: "Reiseruten-Sektion war genau was wir brauchten. MOQ vernünftig, Muster schnell da. Jetzt erweitern wir auf weitere Kategorien.", author: "Outdoor-Händler, UK", tags: ["Reise", "MOQ"] },
     ],
   },
   ar: {
@@ -514,6 +522,7 @@ export const testimonials: Record<
       { quote: "تخصيص OEM سلس من النموذج إلى الإنتاج. العلامة والمواصفات معالجة باحترافية.", author: "مالك علامة، جنوب شرق آسيا", tags: ["OEM", "مرن"] },
       { quote: "أسعار تنافسية ومجموعة واسعة. نورد سبينينغ وتلسكوبي وجليد من مكان واحد.", author: "موزع، الشرق الأوسط", tags: ["قيمة", "تنوع"] },
       { quote: "كتالوج 200+ وحدة والفلاتر سهّلت العثور على ما نحتاج. خدمة عملاء مستجيبة.", author: "سلسلة تجزئة، أستراليا", tags: ["كتالوج", "خدمة"] },
+      { quote: "قسم القضبان السفرية كان ما نحتاجه بالضبط. MOQ معقول والعينات وصلت سريعاً. نوسع الآن لفئات أخرى.", author: "تاجر تجزئة للهواء الطلق، المملكة المتحدة", tags: ["سفر", "MOQ"] },
     ],
   },
   ru: {
@@ -526,6 +535,7 @@ export const testimonials: Record<
       { quote: "OEM от прототипа до производства прошло гладко. Брендинг и спецификации на высоком уровне.", author: "Владелец бренда, Юго-Восточная Азия", tags: ["OEM", "Гибкость"] },
       { quote: "Конкурентные цены, широкий ассортимент. Закупаем спиннинг, телескоп и лед в одном месте.", author: "Дистрибьютор, Ближний Восток", tags: ["Ценность", "Разнообразие"] },
       { quote: "Каталог 200+ SKU и фильтры упростили поиск. Служба поддержки отзывчива.", author: "Розничная сеть, Австралия", tags: ["Каталог", "Сервис"] },
+      { quote: "トラベルロッド部門が私たちのアウトドア小売チェーンにぴったり。MOQ妥当、サンプル迅速到着。他カテゴリへ拡大中。", author: "アウトドア小売、英国", tags: ["トラベル", "MOQ"] },
     ],
   },
   ja: {
@@ -538,6 +548,7 @@ export const testimonials: Record<
       { quote: "OEMはプロトタイプから生産までスムーズ。ブランディングと仕様をプロ仕様で。再注文予定。", author: "ブランドオーナー、東南アジア", tags: ["OEM", "柔軟"] },
       { quote: "競争力ある価格、幅広いロッド種。スピニング、テレスコピック、アイスを一括調達。", author: "卸販社、中東", tags: ["価値", "品揃え"] },
       { quote: "200+SKUカタログとフィルターで必要なものがすぐ見つかる。カスタマーサービスは迅速。", author: "小売チェーン、オーストラリア", tags: ["カタログ", "サービス"] },
+      { quote: "トラベルロッド部門が私たちのアウトドア小売チェーンにぴったり。MOQ妥当、サンプル迅速到着。他カテゴリへ拡大中。", author: "アウトドア小売、英国", tags: ["トラベル", "MOQ"] },
     ],
   },
   ko: {
@@ -550,6 +561,7 @@ export const testimonials: Record<
       { quote: "OEM 프로토타입부터 생산까지 원활. 브랜딩과 사양 전문 처리. 재주문 예정.", author: "브랜드 오너, 동남아", tags: ["OEM", "유연"] },
       { quote: "경쟁력 있는 가격, 다양한 로드 타입. 스피닝, 텔레스코픽, 아이스를 한 곳에서.", author: "유통사, 중동", tags: ["가치", "다양성"] },
       { quote: "200+ SKU 카탈로그와 필터로 필요 제품 쉽게 발견. 고객 서비스 반응 좋음.", author: "소매 체인, 호주", tags: ["카탈로그", "서비스"] },
+      { quote: "트래블 로드 섹션이 아웃도어 소매 체인에 딱 맞았습니다. MOQ 합리적, 샘플 빠르게 도착. 이제 더 많은 카테고리로 확장 중.", author: "아웃도어 소매, 영국", tags: ["트래블", "MOQ"] },
     ],
   },
   pt: {
@@ -562,6 +574,7 @@ export const testimonials: Record<
       { quote: "OEM fluido do protótipo à produção. Marca e especificações tratadas com profissionalismo.", author: "Proprietário de marca, Sudeste Asiático", tags: ["OEM", "Flexível"] },
       { quote: "Preços competitivos, ampla variedade. Agora adquirimos spinning, telescópica e gelo de um só lugar.", author: "Distribuidor, Oriente Médio", tags: ["Valor", "Variedade"] },
       { quote: "Catálogo 200+ SKU e filtros facilitaram encontrar o necessário. Atendimento ágil.", author: "Rede varejista, Austrália", tags: ["Catálogo", "Serviço"] },
+      { quote: "Seção de varas de viagem foi exatamente o que precisávamos. MOQ razoável, amostras chegaram rápido. Agora expandindo para mais categorias.", author: "Varejista outdoor, Reino Unido", tags: ["Viagem", "MOQ"] },
     ],
   },
 };

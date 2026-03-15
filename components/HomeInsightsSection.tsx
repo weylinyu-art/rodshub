@@ -14,12 +14,7 @@ export default function HomeInsightsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <div className="flex justify-between items-end mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">{t("newArrivals", lang)}</h2>
-              <Link href="/category/spinning" className="text-sm font-semibold text-gray-600 hover:text-black">
-                {t("browseAll", lang)}
-              </Link>
-            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">{t("newArrivals", lang)}</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {newArrivals.slice(0, 4).map((rod) => (
                 <ProductCard key={rod.id} {...rod} />
@@ -27,7 +22,12 @@ export default function HomeInsightsSection() {
             </div>
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t("fishingInsightsTitle", lang)}</h2>
+            <div className="flex justify-between items-baseline mb-4">
+              <h2 className="text-2xl font-bold text-gray-900">{t("fishingInsightsTitle", lang)}</h2>
+              <Link href="/insights" className="text-sm font-semibold text-gray-600 hover:text-black shrink-0 ml-2">
+                {t("viewAll", lang)}
+              </Link>
+            </div>
             <p className="text-gray-600 mb-4">{t("industryKnowledge", lang)}</p>
             <div className="space-y-2">
               {ARTICLES.slice(0, 4).map((a) => (
@@ -36,9 +36,6 @@ export default function HomeInsightsSection() {
                 </Link>
               ))}
             </div>
-            <Link href="/insights" className="mt-4 inline-block text-sm font-semibold text-gray-900 hover:underline">
-              {t("readAllArticles", lang)}
-            </Link>
           </div>
         </div>
       </div>

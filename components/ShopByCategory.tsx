@@ -2,15 +2,17 @@
 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { shopByCategory, categoryNames } from "@/lib/content";
+import { CATEGORY_IMAGE_URLS } from "@/lib/categoryImages";
 
+/** 首页类目：图片统一从 rodshub-categories R2 桶拉取 */
 const CATEGORIES = [
-  { slug: "spinning" as const, count: "1,240+", image: "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=400&h=300&fit=crop" },
-  { slug: "casting" as const, count: "890+", image: "https://images.unsplash.com/photo-1624218656926-da680b8127c9?w=400&h=300&fit=crop" },
-  { slug: "telescopic" as const, count: "620+", image: "https://images.unsplash.com/photo-1525134055640-f42ef8a7032d?w=400&h=300&fit=crop" },
-  { slug: "surf" as const, count: "380+", image: "https://images.unsplash.com/photo-1689618601755-ef7ce1230bea?w=400&h=300&fit=crop" },
-  { slug: "ice" as const, count: "210+", image: "https://images.unsplash.com/photo-1537872384762-e785271d14f8?w=400&h=300&fit=crop" },
-  { slug: "travel" as const, count: "540+", image: "https://images.pexels.com/photos/14339529/pexels-photo-14339529.jpeg?auto=compress&w=400&h=300&fit=crop" },
-];
+  { slug: "spinning" as const, count: "1,240+" },
+  { slug: "casting" as const, count: "890+" },
+  { slug: "telescopic" as const, count: "620+" },
+  { slug: "surf" as const, count: "380+" },
+  { slug: "ice" as const, count: "210+" },
+  { slug: "travel" as const, count: "540+" },
+] as const;
 
 export default function ShopByCategory() {
   const { lang } = useLanguage();
@@ -32,7 +34,7 @@ export default function ShopByCategory() {
                 <div className="aspect-square overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={cat.image}
+                    src={CATEGORY_IMAGE_URLS[cat.slug] ?? ""}
                     alt={name}
                     loading="lazy"
                     decoding="async"

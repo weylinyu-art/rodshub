@@ -1,8 +1,8 @@
 const collections = [
-  { name: "Carbon Series", desc: "High-performance carbon fiber rods", image: "https://images.unsplash.com/photo-1624218656926-da680b8127c9?w=600&h=400&fit=crop", slug: "carbon" },
-  { name: "Travel Rods", desc: "Compact, portable designs", image: "https://images.pexels.com/photos/14339529/pexels-photo-14339529.jpeg?auto=compress&w=600&h=400&fit=crop", slug: "travel" },
-  { name: "Heavy Duty Rods", desc: "Built for big catches", image: "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=600&h=400&fit=crop", slug: "heavy-duty" },
-  { name: "Ultralight Rods", desc: "Sensitivity meets finesse", image: "https://images.unsplash.com/photo-1525134055640-f42ef8a7032d?w=600&h=400&fit=crop", slug: "ultralight" },
+  { name: "Carbon Series", desc: "High-performance carbon fiber rods", image: "https://images.unsplash.com/photo-1624218656926-da680b8127c9?w=600&h=400&fit=crop", href: "/category/spinning" },
+  { name: "Travel Rods", desc: "Compact, portable designs", image: "https://images.pexels.com/photos/14339529/pexels-photo-14339529.jpeg?auto=compress&w=600&h=400&fit=crop", href: "/category/travel" },
+  { name: "Heavy Duty Rods", desc: "Built for big catches", image: "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=600&h=400&fit=crop", href: "/category/casting" },
+  { name: "Ultralight Rods", desc: "Sensitivity meets finesse", image: "https://images.unsplash.com/photo-1525134055640-f42ef8a7032d?w=600&h=400&fit=crop", href: "/rods/category" },
 ];
 
 export default function RodCollections() {
@@ -14,8 +14,8 @@ export default function RodCollections() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {collections.map((col) => (
             <a
-              key={col.slug}
-              href={`#${col.slug}`}
+              key={col.href}
+              href={col.href}
               className="group block overflow-hidden rounded-xl border border-gray-200 bg-white hover:shadow-xl hover:border-gray-400 transition-all duration-300"
             >
               <div className="aspect-[4/3] overflow-hidden">
@@ -29,13 +29,8 @@ export default function RodCollections() {
                 />
               </div>
               <div className="p-5 bg-white">
-                <h3 className="font-bold text-gray-900 group-hover:text-black transition">
-                  {col.name}
-                </h3>
+                <h3 className="font-bold text-gray-900 group-hover:text-black transition">{col.name}</h3>
                 <p className="mt-1 text-sm text-gray-500">{col.desc}</p>
-                <span className="mt-2 inline-block text-sm font-bold text-gray-900 group-hover:underline">
-                  Explore →
-                </span>
               </div>
             </a>
           ))}

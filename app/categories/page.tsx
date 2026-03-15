@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { categories, getProductsByCategory } from "@/lib/categoryProducts";
+import { CATEGORY_IMAGE_URLS } from "@/lib/categoryImages";
 import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -8,15 +9,6 @@ export const metadata: Metadata = {
   description: "Browse spinning, casting, telescopic, surf, ice fishing, travel rods. 200+ SKUs. Wholesale prices.",
   openGraph: buildOpenGraph("All Categories | RodsHub", "Spinning, casting, telescopic, surf, ice, travel rods.", "/categories"),
   alternates: { canonical: absoluteUrl("/categories") },
-};
-
-const CATEGORY_IMAGES: Record<string, string> = {
-  spinning: "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=400&h=300&fit=crop",
-  casting: "https://images.unsplash.com/photo-1624218656926-da680b8127c9?w=400&h=300&fit=crop",
-  telescopic: "https://images.unsplash.com/photo-1525134055640-f42ef8a7032d?w=400&h=300&fit=crop",
-  surf: "https://images.unsplash.com/photo-1689618601755-ef7ce1230bea?w=400&h=300&fit=crop",
-  ice: "https://images.unsplash.com/photo-1537872384762-e785271d14f8?w=400&h=300&fit=crop",
-  travel: "https://images.pexels.com/photos/14339529/pexels-photo-14339529.jpeg?auto=compress&w=400&h=300&fit=crop",
 };
 
 export default function CategoriesPage() {
@@ -50,7 +42,7 @@ export default function CategoriesPage() {
                 <div className="aspect-square overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={CATEGORY_IMAGES[cat.slug] ?? CATEGORY_IMAGES.spinning}
+                    src={CATEGORY_IMAGE_URLS[cat.slug] ?? CATEGORY_IMAGE_URLS.spinning}
                     alt={cat.name}
                     loading="lazy"
                     decoding="async"
