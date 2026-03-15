@@ -181,8 +181,8 @@ export default function ProductImageGallery({
                 key={i}
                 type="button"
                 onClick={() => setActiveIndex(i)}
-                className={`relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded border overflow-hidden bg-white transition snap-center ${
-                  i === activeIndex ? "border-black ring-2 ring-black ring-offset-1" : "border-gray-200 hover:border-gray-400"
+                className={`relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded overflow-hidden bg-white transition snap-center ring-0 focus:ring-0 focus:outline-none ${
+                  i === activeIndex ? "border-2 border-black" : "border-2 border-transparent hover:border-gray-300"
                 }`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -16,6 +16,43 @@ export interface SkuRow {
 /** 标题最大长度（详情页展示） */
 const TITLE_MAX_LEN = 50;
 
+/** 产品短标题：精简提炼，保证完全可见（≤35 字符） */
+const SHORT_TITLES: Record<string, string> = {
+  TSG01: "Silvery Carbon Travel Rod",
+  TSG02: "Travel Carbon Spinning Rod",
+  TSG03: "Carbon Casting Rod",
+  TSG04: "Carbon Lure Rod Wood Handle",
+  TSG05: "White Fiberglass Casting Rod",
+  TSG06: "Travel Lure Rod",
+  TSG07: "Fiberglass Spinning Rod",
+  TSG08: "Fiberglass Casting Rod",
+  TSG09: "Green Carbon Casting Rod",
+  TSG10: "Black & Gold Carbon Rod",
+  TSG11: "Carbon Rod & Reel Set",
+  TSG12: "Durable Spinning Rod",
+  TSG13: "Telescopic Fiberglass Rod",
+  TSG14: "Carbon Fiber Lure Rod",
+  TSG15: "Travel Carbon Spinning Rod",
+  TSG16: "Colored Carbon Fiber Rod",
+  TSG17: "High-Carbon Lure Rod",
+  TSG18: "Red ML Tone Lure Rod",
+  TSG19: "UL Tone Carbon Casting Rod",
+  TSG20: "Camo Casting Rod",
+  TSG21: "Camo Casting Rod",
+  TSG22: "Green Carbon Fiber Rod",
+  TSG23: "Black M-Tone Casting Rod",
+  TSG24: "White Carbon Rod C&S",
+  TSG25: "M Tone Carbon Lure Rod",
+  TSG26: "Long Casting Carbon Rod",
+  TSG27: "Silver-Black Carbon Rod",
+  TSG28: "Ultra-Light Carbon Lure Rod",
+  TSG29: "Blue/Orange Carbon Lure Rod",
+  SSG01: "Telescopic Surf Rod",
+  DJG01: "4-Section Mini Lure Rod",
+  DGL: "Sea Rod & Reel Set",
+  YGT01: "55-Pc Telescopic Lure Set",
+};
+
 /** 去掉 1PC/180cm/70.86inch 等尺寸描述，提升 B2B 文案质感 */
 function sanitizeTitle(s: string): string {
   return s
@@ -37,6 +74,13 @@ function truncateTitle(s: string): string {
   const t = sanitizeTitle(s);
   if (t.length <= TITLE_MAX_LEN) return t;
   return t.slice(0, TITLE_MAX_LEN).trimEnd() + "…";
+}
+
+function getProductTitle(rows: SkuRow[], parentSku: string): string {
+  const short = SHORT_TITLES[parentSku];
+  if (short) return short;
+  const firstWithTitle = rows.find((r) => r.parentSku === parentSku && r.title);
+  return firstWithTitle ? truncateTitle(firstWithTitle.title) : `${parentSku} Rod`;
 }
 
 /** 解析自 SKU内容.csv，标题已去除 1PC/180cm 等尺寸描述，优化为 B2B 专业文案 */
@@ -113,9 +157,10 @@ export const SKU_ROWS: SkuRow[] = [
   { parentSku: "YGT01", subSku: "无", type: "Spinning", lengthInch: 70.86, collapsedDimensions: "20.08*1.18*1.18", weightG: 150, title: "55-Piece Telescopic Lure Portable Set - Soft Bait Carp Combo" },
 ];
 
-function getProductTitle(rows: SkuRow[], parentSku: string): string {
-  const firstWithTitle = rows.find((r) => r.parentSku === parentSku && r.title);
-  return firstWithTitle ? truncateTitle(firstWithTitle.title) : `${parentSku} Rod`;
+/** 返回产品的原始完整标题（用于提取 Key Features） */
+export function getOriginalProductTitle(parentSku: string): string {
+  const row = SKU_ROWS.find((r) => r.parentSku === parentSku && r.title?.trim());
+  return row?.title?.trim() ?? "";
 }
 
 export function buildProductsFromSkuRows(): Array<{ parentSku: string; title: string; rows: SkuRow[] }> {

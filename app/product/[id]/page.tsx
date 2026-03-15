@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProductById, getAllProductIds, getRelatedProducts, getRealProduct, isVariantSku } from "@/lib/productRegistry";
+import { filterDetailPageImages } from "@/lib/realProducts";
 import { getProductDetail } from "@/lib/productDetail";
 import ProductDetailContent from "@/components/ProductDetailContent";
 import JsonLd from "@/components/JsonLd";
@@ -22,7 +23,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = `${product.name} | B2B Wholesale`;
   const desc = `${product.name} - ${product.price}. ${product.material || ""} ${product.length || ""} ${product.power || ""}. RodsHub B2B fishing rod sourcing.`;
   const path = `/product/${id}`;
-  const image = (product.images?.[0] || product.image) as string;
+  const rawImgs = (product.images && product.images.length > 0 ? product.images : [product.image]) as string[];
+  const filtered = getRealProduct(id) ? filterDetailPageImages(product.id, rawImgs) : rawImgs;
+  const image = (filtered[0] || product.image) as string;
 
   return {
     title,
@@ -40,7 +43,8 @@ export default async function ProductPage({ params }: PageProps) {
   if (!product) notFound();
 
   const detail = getProductDetail(product);
-  const imgList = (product.images && product.images.length > 0 ? product.images : [product.image]) as string[];
+  const rawImgs = (product.images && product.images.length > 0 ? product.images : [product.image]) as string[];
+  const imgList = getRealProduct(id) ? filterDetailPageImages(product.id, rawImgs) : rawImgs;
   const related = getRelatedProducts(id, 16);
 
   const productSchema = {

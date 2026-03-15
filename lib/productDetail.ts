@@ -16,6 +16,51 @@ export function extractKeyFeaturesFromTitle(title: string): string[] {
   });
 }
 
+/** 合并标题提炼卖点 + 规格卖点 + B2B 通用卖点，使 Key Features 更充实 */
+export function getKeyFeaturesForProduct(opts: {
+  originalTitle?: string;
+  displayName?: string;
+  variant?: import("./realProducts").ProductVariant;
+  detailFeatures?: string[];
+}): string[] {
+  const { originalTitle, displayName, variant, detailFeatures = [] } = opts;
+  const fromTitle = extractKeyFeaturesFromTitle(originalTitle || displayName || "");
+  const seen = new Set<string>();
+  const result: string[] = [];
+  for (const f of fromTitle) {
+    if (!seen.has(f)) {
+      seen.add(f);
+      result.push(f);
+    }
+  }
+  if (variant) {
+    const typeFeature = `${variant.type} type for versatile casting & retrieval`;
+    if (!seen.has(typeFeature)) {
+      seen.add(typeFeature);
+      result.push(typeFeature);
+    }
+    const weightFeature = `Lightweight at ${variant.weight} for comfortable handling`;
+    if (!seen.has(weightFeature)) {
+      seen.add(weightFeature);
+      result.push(weightFeature);
+    }
+  }
+  const b2bFeatures = ["Ceramic/Fuji guides for smooth line flow", "OEM/custom branding available", "Export-ready packaging"];
+  for (const f of b2bFeatures) {
+    if (!seen.has(f)) {
+      seen.add(f);
+      result.push(f);
+    }
+  }
+  for (const f of detailFeatures) {
+    if (f && !seen.has(f)) {
+      seen.add(f);
+      result.push(f);
+    }
+  }
+  return result;
+}
+
 export interface ProductDetail {
   description: string;
   specifications: { label: string; value: string }[];

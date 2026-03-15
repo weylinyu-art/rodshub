@@ -7,7 +7,8 @@ import { t } from "@/lib/i18n";
 import { getProductName } from "@/lib/products-i18n";
 import ProductImageGallery from "@/components/ProductImageGallery";
 import ProductDetailRecommend from "@/components/ProductDetailRecommend";
-import { getProductDetailForVariant, extractKeyFeaturesFromTitle } from "@/lib/productDetail";
+import { getProductDetailForVariant, getKeyFeaturesForProduct } from "@/lib/productDetail";
+import { getOriginalProductTitle } from "@/lib/skuData";
 import type { Product } from "@/lib/products";
 import type { ProductDetail } from "@/lib/productDetail";
 import type { RealProduct, ProductVariant } from "@/lib/realProducts";
@@ -124,10 +125,15 @@ export default function ProductDetailContent({
   });
 
   const effectiveVariant = selectedVariant ?? variants[0];
-  const titleFeatures = extractKeyFeaturesFromTitle(displayName);
   const effectiveDetail = effectiveVariant
     ? getProductDetailForVariant(effectiveVariant)
     : detail;
+  const keyFeatures = getKeyFeaturesForProduct({
+    originalTitle: realProduct ? getOriginalProductTitle(realProduct.id) : undefined,
+    displayName,
+    variant: effectiveVariant ?? undefined,
+    detailFeatures: effectiveVariant ? [] : detail.features,
+  });
   const displayPrice = effectiveVariant?.price ?? product.price;
   const displaySpecs = effectiveVariant
     ? { length: effectiveVariant.dimensions, material: effectiveVariant.type, power: effectiveVariant.type }
@@ -317,7 +323,7 @@ export default function ProductDetailContent({
         <section className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
           <h2 className="text-lg font-bold text-gray-900 mb-4">{t("keyFeatures", lang)}</h2>
           <ul className="space-y-2">
-            {(titleFeatures.length > 0 ? titleFeatures : effectiveDetail.features).map((f, i) => (
+            {keyFeatures.map((f, i) => (
               <li key={i} className="flex items-start gap-2 text-gray-600">
                 <span className="text-emerald-600 mt-1">•</span>
                 <span>{f}</span>

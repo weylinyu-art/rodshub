@@ -107,6 +107,23 @@ export const HOME_IMAGE_INDEX_OVERRIDE: Record<string, number> = {
   TSG02: 1, // 首图为参数图含 L/UL 文字，用第二张
 };
 
+/** 详情页排除图片索引（0-based）：含尺寸/参数文字的图及重复图不展示 */
+export const DETAIL_PAGE_EXCLUDED_IMAGE_INDICES: Record<string, number[]> = {
+  TSG01: [0, 4, 5], // 首图及第 5、6 张含 180cm/70.86inch、M Tonality 等尺寸信息
+  TSG14: [0, 4, 5], // 首图及第 5、6 张含 Contraction/Stretched Length 等尺寸信息
+};
+
+/** 过滤详情页图片：排除含尺寸信息的图、重复图，保证去重后至少保留 1 张 */
+export function filterDetailPageImages(productId: string, images: string[]): string[] {
+  if (!images?.length) return images ?? [];
+  const excluded = DETAIL_PAGE_EXCLUDED_IMAGE_INDICES[productId];
+  const filtered = excluded?.length
+    ? images.filter((_, i) => !excluded.includes(i))
+    : images;
+  const deduped = Array.from(new Set(filtered));
+  return deduped.length > 0 ? deduped : [images[0]];
+}
+
 /** 从 skuData 构建 RealProduct，标题替换为 CSV 标题，有子 SKU 时以伸展长作为 variant 维度 */
 export const REAL_PRODUCTS: RealProduct[] = buildProductsFromSkuRows().map(({ parentSku, title, rows }) => {
   const style = inferFishingStyle(parentSku);
