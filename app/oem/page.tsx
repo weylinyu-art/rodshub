@@ -7,7 +7,7 @@ import { absoluteUrl, buildOpenGraph, buildTwitter, howToOEMSchema, SITE_URL } f
 export const metadata: Metadata = {
   title: "OEM Fishing Rod Customization | RodsHub",
   description:
-    "Create your own fishing rod brand. OEM customization: logo, packaging, custom specs. 4-step process, samples in 7–14 days.",
+    "Build your rod brand: OEM logo, packaging, specs. 4-step process · Samples in 7–14 days · Global shipping. RodsHub.",
   keywords: ["OEM fishing rod", "custom rod branding", "fishing rod manufacturing", "private label rods"],
   openGraph: buildOpenGraph(
     "OEM Fishing Rod Customization | RodsHub",

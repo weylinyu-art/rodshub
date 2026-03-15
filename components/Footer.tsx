@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 import ShareCurrentPage from "@/components/ShareCurrentPage";
@@ -23,13 +24,15 @@ const CopyIcon = () => (
 );
 
 export default function Footer() {
+  const pathname = usePathname();
   const { lang } = useLanguage();
-  const [copied, setCopied] = useState(false);
-  const handleCopy = async () => {
+  const [copiedWhatsapp, setCopiedWhatsapp] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
+  const handleCopy = async (text: string, setter: (v: boolean) => void) => {
     try {
-      await navigator.clipboard.writeText(WHATSAPP);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      await navigator.clipboard.writeText(text);
+      setter(true);
+      setTimeout(() => setter(false), 2000);
     } catch {
       /* ignore */
     }
@@ -44,12 +47,28 @@ export default function Footer() {
           </div>
           <div>
             <h3 className="font-bold text-white mb-4">{t("contactUs", lang)}</h3>
-            <a href={`mailto:${EMAIL}`} className="flex items-center gap-2 text-sm hover:text-white transition">
-              <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              {EMAIL}
-            </a>
+            <div className="flex items-center gap-2 flex-wrap">
+              <a href={`mailto:${EMAIL}`} className="flex items-center gap-2 text-sm hover:text-white transition">
+                <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                {EMAIL}
+              </a>
+              <button
+                type="button"
+                onClick={() => handleCopy(EMAIL, setCopiedEmail)}
+                className="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded border border-gray-600 hover:border-gray-500 hover:text-white transition"
+              >
+                {copiedEmail ? (
+                  <span className="text-emerald-400">{t("copied", lang)}</span>
+                ) : (
+                  <>
+                    <CopyIcon />
+                    <span>{t("copy", lang)}</span>
+                  </>
+                )}
+              </button>
+            </div>
             <div className="flex items-center gap-2 mt-2 flex-wrap">
               <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm hover:text-white transition">
                 <WhatsAppIcon />
@@ -57,10 +76,10 @@ export default function Footer() {
               </a>
               <button
                 type="button"
-                onClick={handleCopy}
+                onClick={() => handleCopy(WHATSAPP, setCopiedWhatsapp)}
                 className="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded border border-gray-600 hover:border-gray-500 hover:text-white transition"
               >
-                {copied ? (
+                {copiedWhatsapp ? (
                   <span className="text-emerald-400">{t("copied", lang)}</span>
                 ) : (
                   <>
@@ -82,7 +101,10 @@ export default function Footer() {
             <Link href="/faq" className="block text-sm mt-2 hover:text-white transition">{t("faq", lang)}</Link>
           </div>
           <div>
-            <h3 className="font-bold text-white mb-4">{t("share", lang)}</h3>
+            <h3 className="font-bold text-white mb-4">
+              {pathname === "/" ? t("shareRodsHub", lang) : t("shareThisPage", lang)}
+            </h3>
+            <p className="text-sm text-gray-400 mb-3">{t("shareWithNetwork", lang)}</p>
             <ShareCurrentPage />
           </div>
         </div>

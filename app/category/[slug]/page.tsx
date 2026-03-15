@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!category) return { title: "Category Not Found" };
 
   const title = `${category.name} Wholesale | RodsHub`;
-  const desc = `Source ${category.name.toLowerCase()} at wholesale prices. 30+ SKUs, MOQ from 30 pcs. RodsHub B2B fishing rod marketplace.`;
+  const desc = `${category.name} wholesale: quality rods at $8-18. MOQ from 30 pcs, 24h quote. RodsHub B2B.`;
   const path = `/category/${slug}`;
 
   return {
