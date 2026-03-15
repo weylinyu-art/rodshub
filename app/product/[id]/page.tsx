@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProductById, getAllProductIds, getRelatedProducts, getRealProduct, isVariantSku } from "@/lib/productRegistry";
-import { filterDetailPageImages } from "@/lib/realProducts";
+import { filterDetailPageImages, applyListImageOverride } from "@/lib/realProducts";
 import { getProductDetail } from "@/lib/productDetail";
 import ProductDetailContent from "@/components/ProductDetailContent";
 import JsonLd from "@/components/JsonLd";
@@ -45,7 +45,7 @@ export default async function ProductPage({ params }: PageProps) {
   const detail = getProductDetail(product);
   const rawImgs = (product.images && product.images.length > 0 ? product.images : [product.image]) as string[];
   const imgList = getRealProduct(id) ? filterDetailPageImages(product.id, rawImgs) : rawImgs;
-  const related = getRelatedProducts(id, 16);
+  const related = getRelatedProducts(id, 16).map(applyListImageOverride);
 
   const productSchema = {
     "@context": "https://schema.org" as const,

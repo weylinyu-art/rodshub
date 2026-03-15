@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t, type LangCode } from "@/lib/i18n";
 import { getProductName } from "@/lib/products-i18n";
+import { getDisplayPrice } from "@/lib/realProducts";
 import type { Product } from "@/lib/products";
 
 const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=500&h=500&fit=crop";
@@ -29,7 +30,7 @@ function RecommendCard({
   const displayName = getProductName(p, lang);
   const imgSrc = p.images?.[0] ?? p.image ?? "";
   const effectiveSrc = imgFailed || !imgSrc ? FALLBACK_IMAGE : imgSrc;
-  const showPrice = p.price && !/^(Inquiry|詢價|询价)$/i.test(String(p.price).trim());
+  const displayPrice = getDisplayPrice(p.price, p.fishingStyle, p.id);
 
   const handleError = () => {
     setImgFailed(true);
@@ -37,26 +38,33 @@ function RecommendCard({
   };
 
   return (
-    <Link
-      href={`/product/${p.id}`}
-      className="group block rounded-lg border border-gray-200 overflow-hidden hover:border-gray-400 hover:shadow-md transition min-w-0"
-    >
-      <div className="aspect-square overflow-hidden bg-gray-100">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={effectiveSrc}
-          alt={displayName}
-          loading="lazy"
-          decoding="async"
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-          onError={handleError}
-        />
+    <div className="group flex flex-col rounded-lg border border-gray-200 overflow-hidden hover:border-gray-400 hover:shadow-md transition min-w-0">
+      <Link href={`/product/${p.id}`} className="block flex-shrink-0">
+        <div className="aspect-square overflow-hidden bg-gray-100">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={effectiveSrc}
+            alt={displayName}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+            onError={handleError}
+          />
+        </div>
+      </Link>
+      <div className="p-3 flex-1 flex flex-col">
+        <Link href={`/product/${p.id}`} className="shrink-0">
+          <h3 className="font-medium text-gray-900 text-sm line-clamp-2 group-hover:text-black">{displayName}</h3>
+        </Link>
+        <p className="mt-1 font-bold text-gray-900 text-sm">{displayPrice}</p>
+        <Link
+          href="/inquiry"
+          className="mt-2 inline-flex justify-center items-center w-full py-2 px-3 bg-black text-white text-xs font-semibold rounded-lg hover:bg-gray-800 transition-colors"
+        >
+          {t("inquiry", lang)}
+        </Link>
       </div>
-      <div className="p-3">
-        <h3 className="font-medium text-gray-900 text-sm line-clamp-2 group-hover:text-black">{displayName}</h3>
-        {showPrice && <p className="mt-1 font-bold text-gray-900 text-sm">{p.price}</p>}
-      </div>
-    </Link>
+    </div>
   );
 }
 

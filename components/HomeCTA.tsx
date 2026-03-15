@@ -7,7 +7,7 @@ import { t } from "@/lib/i18n";
 export default function HomeCTA() {
   const { lang } = useLanguage();
   return (
-    <section className="py-16 sm:py-24 bg-white">
+    <section className="py-12 sm:py-16 lg:py-20 bg-white">
       <div className="max-w-2xl mx-auto text-center px-4">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">{t("readyToSource", lang)}</h2>
         <p className="text-gray-600 mb-6">{t("sendInquiryPrompt", lang)}</p>

@@ -6,6 +6,8 @@ import { t } from "@/lib/i18n";
 import { getInsightByLang } from "@/lib/insights-i18n";
 import InsightContentRenderer from "@/components/InsightContentRenderer";
 import ArticleProductRecommendation from "@/components/ArticleProductRecommendation";
+import ShareButtons from "@/components/ShareButtons";
+import { absoluteUrl } from "@/lib/seo";
 import type { Product } from "@/lib/products";
 
 interface Props {
@@ -31,7 +33,16 @@ export default function InsightArticleContent({ slug, recommendedProducts }: Pro
       </nav>
 
       <article className="insight-speakable bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">{block.title}</h1>
+        <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 flex-1 min-w-0">{block.title}</h1>
+          <ShareButtons
+            url={absoluteUrl(`/insights/${slug}`)}
+            title={`${block.title} | RodsHub Insights`}
+            description="Fishing industry insights & B2B sourcing guides"
+            variant="compact"
+            className="shrink-0"
+          />
+        </div>
 
         <InsightContentRenderer
           content={block.content}

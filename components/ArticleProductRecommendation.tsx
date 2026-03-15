@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/i18n";
 import { getProductName } from "@/lib/products-i18n";
+import { getDisplayPrice } from "@/lib/realProducts";
 import type { Product } from "@/lib/products";
 
 const FALLBACK_IMAGE =
@@ -12,34 +14,41 @@ interface ArticleProductRecommendationProps {
   products: (Product & { id: string })[];
 }
 
-/** 文章内商品推荐：单图、名称、价格，无轮播无 Inquiry 按钮 */
+/** 文章内商品推荐：图片、名称、价格、Inquiry 按钮 */
 function ArticleProductCard({ product }: { product: Product & { id: string } }) {
   const { lang } = useLanguage();
   const displayName = getProductName({ id: product.id, name: product.name }, lang);
   const img = (product.images?.[0] ?? product.image) || FALLBACK_IMAGE;
   const href = product.id ? `/product/${product.id}` : "/#inquiry";
+  const displayPrice = getDisplayPrice(product.price, product.fishingStyle, product.id);
 
   return (
-    <Link
-      href={href}
-      className="group block bg-white rounded-lg border border-gray-200 overflow-hidden hover:border-gray-400 hover:shadow-md transition-all"
-    >
-      <div className="aspect-square overflow-hidden bg-gray-100">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={img}
-          alt={displayName}
-          loading="lazy"
-          decoding="async"
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
+    <div className="group flex flex-col bg-white rounded-lg border border-gray-200 overflow-hidden hover:border-gray-400 hover:shadow-md transition-all">
+      <Link href={href} className="block flex-shrink-0">
+        <div className="aspect-square overflow-hidden bg-gray-100">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={img}
+            alt={displayName}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+      </Link>
+      <div className="p-3 flex-1 flex flex-col">
+        <Link href={href} className="shrink-0">
+          <h4 className="font-medium text-gray-900 text-sm line-clamp-2 group-hover:text-black">{displayName}</h4>
+        </Link>
+        <p className="mt-1 font-bold text-gray-900 text-sm">{displayPrice}</p>
+        <Link
+          href="/inquiry"
+          className="mt-2 inline-flex justify-center items-center w-full py-2 px-3 bg-black text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors"
+        >
+          {t("inquiry", lang)}
+        </Link>
       </div>
-      <div className="p-3">
-        <h4 className="font-medium text-gray-900 text-sm line-clamp-2 group-hover:text-black">
-          {displayName}
-        </h4>
-      </div>
-    </Link>
+    </div>
   );
 }
 

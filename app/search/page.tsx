@@ -6,6 +6,7 @@ import ProductCard from "@/components/ProductCard";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t, tFormat } from "@/lib/i18n";
 import { getAllProducts } from "@/lib/productRegistry";
+import { applyListImageOverride } from "@/lib/realProducts";
 
 export default function SearchPage() {
   const { lang } = useLanguage();
@@ -71,7 +72,7 @@ export default function SearchPage() {
         ) : results.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
             {results.map((rod) => (
-              <ProductCard key={rod.id} {...rod} variant="trending" />
+              <ProductCard key={rod.id} {...applyListImageOverride(rod)} variant="trending" />
             ))}
           </div>
         ) : (

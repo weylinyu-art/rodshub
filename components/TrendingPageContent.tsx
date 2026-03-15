@@ -5,7 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 import ProductCard from "@/components/ProductCard";
 import { trendingRods } from "@/lib/products";
-import { REAL_PRODUCTS, realProductToDisplayProduct } from "@/lib/realProducts";
+import { REAL_PRODUCTS, realProductToDisplayProduct, applyListImageOverride } from "@/lib/realProducts";
 
 const realDisplay = REAL_PRODUCTS.map(realProductToDisplayProduct);
 const trendingProducts = [...realDisplay, ...trendingRods];
@@ -29,7 +29,7 @@ export default function TrendingPageContent() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
           {trendingProducts.map((rod) => (
-            <ProductCard key={rod.id} {...rod} variant="trending" />
+            <ProductCard key={rod.id} {...applyListImageOverride(rod)} variant="trending" />
           ))}
         </div>
 

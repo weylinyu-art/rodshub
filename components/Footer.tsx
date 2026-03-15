@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
+import ShareCurrentPage from "@/components/ShareCurrentPage";
 
 const EMAIL = "hello@rodshub.com";
 const WHATSAPP = "+86 19957106387";
@@ -79,6 +80,10 @@ export default function Footer() {
             <h3 className="font-bold text-white mb-4">{t("legal", lang)}</h3>
             <Link href="/privacy" className="block text-sm hover:text-white transition">{t("privacyPolicy", lang)}</Link>
             <Link href="/faq" className="block text-sm mt-2 hover:text-white transition">{t("faq", lang)}</Link>
+          </div>
+          <div>
+            <h3 className="font-bold text-white mb-4">{t("share", lang)}</h3>
+            <ShareCurrentPage />
           </div>
         </div>
         <div className="mt-12 pt-8 border-t border-gray-700 text-center text-sm text-gray-500">

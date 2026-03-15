@@ -18,7 +18,7 @@ export default function ShopByCategory() {
   const { lang } = useLanguage();
   const c = shopByCategory[lang] ?? shopByCategory.en;
   return (
-    <section id="categories" className="py-12 sm:py-16 bg-white border-b border-gray-100">
+    <section id="categories" className="py-12 sm:py-16 lg:py-20 bg-white border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{c.title}</h2>
         <p className="text-gray-500 mb-8">{c.subtitle}</p>

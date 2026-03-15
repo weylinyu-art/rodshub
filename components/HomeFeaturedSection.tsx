@@ -8,27 +8,22 @@ import { trendingRods, wholesalePicks } from "@/lib/products";
 import {
   REAL_PRODUCTS,
   realProductToDisplayProduct,
-  HOME_FEATURED_PRICES,
   HOME_IMAGE_INDEX_OVERRIDE,
 } from "@/lib/realProducts";
 
-/** 首页精选：真实产品排前，再补足 trending；wholesale 单独展示 */
+/** 首页精选：真实产品排前，再补足 trending；wholesale 单独展示；价格与列表/详情页统一，不再单独覆盖 */
 const realDisplay = REAL_PRODUCTS.map(realProductToDisplayProduct);
 
 function prepareFeaturedForHome(rod: (typeof realDisplay)[0]) {
-  let price = rod.price;
   let image = rod.image;
   let images = rod.images;
-  if (HOME_FEATURED_PRICES[rod.id]) {
-    price = HOME_FEATURED_PRICES[rod.id];
-  }
   const imgIdx = HOME_IMAGE_INDEX_OVERRIDE[rod.id];
   if (imgIdx != null && rod.images?.length && rod.images.length > imgIdx) {
     const preferred = rod.images[imgIdx];
     image = preferred;
     images = [preferred, ...rod.images.filter((_, i) => i !== imgIdx)];
   }
-  return { ...rod, price, image, images };
+  return { ...rod, image, images };
 }
 
 export default function HomeFeaturedSection() {
@@ -39,7 +34,7 @@ export default function HomeFeaturedSection() {
   );
   const wholesale = wholesalePicks.slice(0, 4);
   return (
-    <section className="py-12 sm:py-16 bg-white">
+    <section className="py-12 sm:py-16 lg:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">{t("featuredRods", lang)}</h2>

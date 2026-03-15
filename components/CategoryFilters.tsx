@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import type { Product } from "@/lib/products";
+import { applyListImageOverride } from "@/lib/realProducts";
 
 const PAGE_SIZE = 30;
 
@@ -237,7 +238,7 @@ export default function CategoryFilters({
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
           {paginatedProducts.map((p, i) => (
             <div key={p.id ?? i} className="min-w-0">
-              <ProductCard {...p} variant="default" />
+              <ProductCard {...applyListImageOverride(p as Product & { id: string })} variant="default" />
             </div>
           ))}
         </div>

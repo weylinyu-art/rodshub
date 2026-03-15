@@ -48,7 +48,7 @@ export default function CompanyIntro() {
   const { lang } = useLanguage();
   const c = companyIntro[lang] ?? companyIntro.en;
   return (
-    <section className="py-8 sm:py-12 lg:py-16 bg-gray-900 text-white overflow-x-hidden">
+    <section className="py-10 sm:py-14 lg:py-16 bg-gray-900 text-white overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           <div className="lg:col-span-1 flex flex-col justify-center">

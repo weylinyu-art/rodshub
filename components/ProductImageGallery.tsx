@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import { dedupeImagesByBase } from "@/lib/imageUtils";
 
 /** 图片加载失败时的占位图（渔竿图） */
 const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=500&h=500&fit=crop";
@@ -26,8 +27,8 @@ export default function ProductImageGallery({
   const touchEndX = useRef<number>(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  /** 按 URL 去重，仅当有超过 1 张不同图时才显示轮播控件 */
-  const uniqueImages = Array.from(new Set(images));
+  /** 按 base URL 去重：同一张图的不同裁剪视为重复，仅当有超过 1 张不同图时才显示轮播控件 */
+  const uniqueImages = dedupeImagesByBase(images);
   const total = uniqueImages.length;
   const hasMultiple = total > 1;
 
@@ -182,7 +183,7 @@ export default function ProductImageGallery({
                 type="button"
                 onClick={() => setActiveIndex(i)}
                 className={`relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded overflow-hidden bg-white transition snap-center ring-0 focus:ring-0 focus:outline-none ${
-                  i === activeIndex ? "border-2 border-black" : "border-2 border-transparent hover:border-gray-300"
+                  i === activeIndex ? "ring-1 ring-gray-400 ring-inset" : "border border-transparent hover:border-gray-300"
                 }`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}

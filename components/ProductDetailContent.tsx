@@ -7,7 +7,10 @@ import { t } from "@/lib/i18n";
 import { getProductName } from "@/lib/products-i18n";
 import ProductImageGallery from "@/components/ProductImageGallery";
 import ProductDetailRecommend from "@/components/ProductDetailRecommend";
+import ShareButtons from "@/components/ShareButtons";
+import { absoluteUrl } from "@/lib/seo";
 import { getProductDetailForVariant, getKeyFeaturesForProduct } from "@/lib/productDetail";
+import { getDisplayPrice } from "@/lib/realProducts";
 import { getOriginalProductTitle } from "@/lib/skuData";
 import type { Product } from "@/lib/products";
 import type { ProductDetail } from "@/lib/productDetail";
@@ -141,10 +144,19 @@ export default function ProductDetailContent({
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-        <Link href="/" className="hover:text-black transition">{t("home", lang)}</Link>
-        <span>/</span>
-        <span className="text-gray-900 font-medium truncate" title={displayName}>{displayNameShort}</span>
+      <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6 flex-wrap items-center justify-between gap-4">
+        <div className="flex items-center gap-2">
+          <Link href="/" className="hover:text-black transition">{t("home", lang)}</Link>
+          <span>/</span>
+          <span className="text-gray-900 font-medium truncate" title={displayName}>{displayNameShort}</span>
+        </div>
+        <ShareButtons
+          url={absoluteUrl(`/product/${product.id}`)}
+          title={`${displayName} | RodsHub B2B`}
+          description={`${product.price} · ${product.fishingStyle || ""} · Wholesale fishing rods`}
+          variant="compact"
+          className="shrink-0"
+        />
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
@@ -204,9 +216,9 @@ export default function ProductDetailContent({
             </div>
           )}
 
-          {displayPrice && !/^(Inquiry|詢價|询价)$/i.test(String(displayPrice).trim()) && (
-            <p className="text-xl font-bold text-gray-900">{displayPrice}</p>
-          )}
+          <p className="text-xl font-bold text-gray-900">
+            {getDisplayPrice(displayPrice, product.fishingStyle, product.id)}
+          </p>
 
           <dl className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
             {displaySpecs.length && (

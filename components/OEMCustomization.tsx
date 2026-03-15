@@ -14,7 +14,7 @@ export default function OEMCustomization() {
   const { lang } = useLanguage();
   const c = oemCustomization[lang] ?? oemCustomization.en;
   return (
-    <section id="oem" className="py-16 sm:py-24 bg-white">
+    <section id="oem" className="py-12 sm:py-16 lg:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold text-gray-900 mb-2">{c.title}</h2>
         <p className="text-gray-600 mb-12">{c.subtitle}</p>

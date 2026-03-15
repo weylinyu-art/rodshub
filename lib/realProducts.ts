@@ -46,6 +46,45 @@ function buildImageUrls(folder: string, files: string[]): string[] {
   return files.map((f) => `${R2_BASE}/products/${folder}/${f}`);
 }
 
+/** 列表页无价格时按 fishingStyle 使用 $8-18 区间（B2B 参考价） */
+const DEFAULT_LIST_PRICE_BY_STYLE: Record<string, string> = {
+  Travel: "$10.00 - $15.00",
+  Surf: "$12.00 - $18.00",
+  Casting: "$9.00 - $14.00",
+  Spinning: "$8.00 - $14.00",
+  Telescopic: "$9.00 - $14.00",
+  Ice: "$8.00 - $12.00",
+};
+
+/** 从价格区间解析最小数值用于筛选 */
+function parsePriceMinFromRange(s: string): number {
+  const m = s.match(/\$?([\d.]+)/);
+  return m ? parseFloat(m[1]) : 8;
+}
+
+/** 全站统一价格源：产品 ID → 展示价，与 DEFAULT_LIST_PRICE_BY_STYLE 一起保证同一产品在各处展示一致 */
+const PRODUCT_DISPLAY_PRICES: Record<string, string> = {
+  TSG01: "$14.50/pc",
+  TSG02: "$13.99/pc",
+  TSG03: "$15.00/pc",
+  TSG04: "$14.00/pc",
+  TSG05: "$11.50/pc",
+  TSG06: "$12.99/pc",
+  TSG07: "$9.80/pc",
+  TSG08: "$10.50/pc",
+};
+
+/** 详情页/列表页展示用价格：有有效价格则用，否则按 productId→fishingStyle 顺序取统一价 */
+export function getDisplayPrice(
+  price: string | undefined,
+  fishingStyle?: string,
+  productId?: string
+): string {
+  if (price && !/^(Inquiry|詢價|询价)$/i.test(String(price).trim())) return price;
+  if (productId && PRODUCT_DISPLAY_PRICES[productId]) return PRODUCT_DISPLAY_PRICES[productId];
+  return DEFAULT_LIST_PRICE_BY_STYLE[fishingStyle ?? ""] ?? "$8.00 - $18.00";
+}
+
 /** 将 RealProduct 转成列表展示用的 Product */
 export function realProductToDisplayProduct(p: RealProduct): import("./products").Product & { id: string } {
   const imgs = buildImageUrls(p.imageFolder, p.imageFiles);
@@ -55,16 +94,22 @@ export function realProductToDisplayProduct(p: RealProduct): import("./products"
   }).filter((n) => n > 0);
   const minPrice = prices.length ? Math.min(...prices) : 0;
   const maxPrice = prices.length ? Math.max(...prices) : 0;
-  const priceStr =
+  let priceStr =
     minPrice && maxPrice && minPrice !== maxPrice
       ? `$${minPrice.toFixed(2)} - $${maxPrice.toFixed(2)}`
       : p.variants[0]?.price ?? `$${minPrice.toFixed(2)}`;
+
+  if (!priceStr || /^(Inquiry|詢價|询价)$/i.test(String(priceStr).trim())) {
+    priceStr = PRODUCT_DISPLAY_PRICES[p.id] ?? DEFAULT_LIST_PRICE_BY_STYLE[p.fishingStyle] ?? "$8.00 - $18.00";
+  }
+
+  const priceMinForFilter = minPrice > 0 ? minPrice : parsePriceMinFromRange(priceStr);
 
   return {
     id: p.id,
     name: p.name,
     price: priceStr,
-    priceMin: minPrice || undefined,
+    priceMin: priceMinForFilter,
     moq: p.moq,
     image: imgs[0] ?? "",
     images: imgs,
@@ -90,22 +135,27 @@ function defaultImageFiles(sku: string, count = 6): string[] {
 
 import { buildProductsFromSkuRows } from "./skuData";
 
-/** 首页 Featured 首行展示价：$X.XX/pc 格式，与第二行 wholesale 样式一致 */
-export const HOME_FEATURED_PRICES: Record<string, string> = {
-  TSG01: "$14.50/pc",
-  TSG02: "$13.99/pc",
-  TSG03: "$15.00/pc",
-  TSG04: "$14.00/pc",
-  TSG05: "$11.50/pc",
-  TSG06: "$12.99/pc",
-  TSG07: "$9.80/pc",
-  TSG08: "$10.50/pc",
-};
+/** @deprecated 已合并入 PRODUCT_DISPLAY_PRICES，保留以兼容旧引用 */
+export const HOME_FEATURED_PRICES = PRODUCT_DISPLAY_PRICES;
 
-/** 首页图片筛选：首图含文字时改用备用图（索引），避免展示带文字的图 */
+/** 首页/列表页图片筛选：首图为参数图（无产品图、以文字为主）时改用备用图索引，避免轮播到首页 */
 export const HOME_IMAGE_INDEX_OVERRIDE: Record<string, number> = {
   TSG02: 1, // 首图为参数图含 L/UL 文字，用第二张
 };
+
+/** 对产品应用首图覆盖：列表/首页展示时优先使用非参数图 */
+export function applyListImageOverride<T extends { id: string; image?: string; images?: string[] }>(
+  rod: T
+): T {
+  const imgIdx = HOME_IMAGE_INDEX_OVERRIDE[rod.id];
+  if (imgIdx == null || !rod.images?.length || rod.images.length <= imgIdx) return rod;
+  const preferred = rod.images[imgIdx];
+  return {
+    ...rod,
+    image: preferred,
+    images: [preferred, ...rod.images.filter((_, i) => i !== imgIdx)],
+  };
+}
 
 /** 详情页排除图片索引（0-based）：含尺寸/参数文字的图及重复图不展示 */
 export const DETAIL_PAGE_EXCLUDED_IMAGE_INDICES: Record<string, number[]> = {
