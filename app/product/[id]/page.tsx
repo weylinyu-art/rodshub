@@ -7,6 +7,8 @@ import ProductDetailContent from "@/components/ProductDetailContent";
 import JsonLd from "@/components/JsonLd";
 import { SITE_URL, absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
 
+const SITE_URL_IMPORT = SITE_URL;
+
 interface PageProps {
   params: Promise<{ id: string }>;
 }
@@ -47,6 +49,8 @@ export default async function ProductPage({ params }: PageProps) {
   const imgList = getRealProduct(id) ? filterDetailPageImages(product.id, rawImgs) : rawImgs;
   const related = getRelatedProducts(id, 16).map(applyListImageOverride);
 
+  const priceMatch = product.price?.match(/\$?([\d.]+)/);
+  const priceNum = priceMatch ? parseFloat(priceMatch[1]) : undefined;
   const productSchema = {
     "@context": "https://schema.org" as const,
     "@type": "Product" as const,
@@ -55,15 +59,20 @@ export default async function ProductPage({ params }: PageProps) {
     image: imgList,
     brand: { "@type": "Brand" as const, name: "RodsHub" },
     sku: product.id,
+    itemCondition: "https://schema.org/NewCondition" as const,
+    category: product.fishingStyle || "Fishing Rods",
     offers: {
       "@type": "Offer" as const,
-      price: product.price,
+      price: priceNum ?? product.price,
       priceCurrency: "USD" as const,
       availability: "https://schema.org/InStock" as const,
       url: absoluteUrl(`/product/${id}`),
+      priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10),
+      seller: { "@id": `${SITE_URL}/#organization` },
     },
     ...(product.material && { material: product.material }),
     ...(product.length && { size: product.length }),
+    ...(product.power && { additionalProperty: [{ "@type": "PropertyValue" as const, name: "Power", value: product.power }] }),
   };
 
   const breadcrumbSchema = {

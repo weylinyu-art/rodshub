@@ -86,16 +86,19 @@ export const twitterCard = buildTwitter(
   DEFAULT_OG_IMAGE
 );
 
-/** Organization schema - for knowledge panel & brand identity */
+/** Organization schema - for knowledge panel & brand identity, AEO */
 export const organizationSchema = {
   "@context": "https://schema.org" as const,
   "@type": "Organization" as const,
   "@id": `${SITE_URL}/#organization`,
   name: SITE_NAME,
   url: SITE_URL,
-  logo: `${SITE_URL}/favicon.svg`,
+  logo: { "@type": "ImageObject" as const, url: `${SITE_URL}/favicon.svg` },
+  image: DEFAULT_OG_IMAGE,
   description: SITE_DESCRIPTION,
   foundingDate: "2024" as const,
+  slogan: "The Global Marketplace for Fishing Rod Sourcing",
+  knowsAbout: ["fishing rods", "B2B wholesale", "OEM manufacturing", "spinning rods", "casting rods", "telescopic rods", "surf rods", "ice fishing rods", "travel rods"],
   contactPoint: {
     "@type": "ContactPoint" as const,
     contactType: "customer service",
@@ -104,6 +107,8 @@ export const organizationSchema = {
     areaServed: "Worldwide",
     availableLanguage: ["English", "Spanish", "French", "German", "Arabic", "Russian", "Japanese", "Korean", "Portuguese"],
     hoursAvailable: { "@type": "HoursSpecification" as const, dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "18:00" },
+    contactOption: "TollFree",
+    responseTime: "PT24H",
   },
 };
 
@@ -128,11 +133,27 @@ export const howToOrderSchema = {
   "@context": "https://schema.org" as const,
   "@type": "HowTo" as const,
   name: "How to Order Fishing Rods from RodsHub",
-  description: "Step-by-step guide to sourcing fishing rods wholesale from RodsHub B2B marketplace.",
+  description: "Step-by-step guide to sourcing fishing rods wholesale from RodsHub B2B marketplace. MOQ from 30 pcs, 24h reply.",
+  totalTime: "P1D",
+  estimatedCost: { "@type": "MonetaryAmount" as const, currency: "USD", value: "8-18" },
   step: [
-    { "@type": "HowToStep" as const, name: "Browse catalog", text: "Explore spinning, casting, telescopic, surf, ice and travel rods." },
-    { "@type": "HowToStep" as const, name: "Submit inquiry", text: "Use the inquiry form with product details, MOQ and shipping destination." },
-    { "@type": "HowToStep" as const, name: "Receive quote", text: "Get a quotation within 24 hours with pricing and lead times." },
-    { "@type": "HowToStep" as const, name: "Confirm order", text: "Review and confirm. OEM customization available." },
+    { "@type": "HowToStep" as const, position: 1, name: "Browse catalog", text: "Explore spinning, casting, telescopic, surf, ice and travel rods by category or fishing scenario." },
+    { "@type": "HowToStep" as const, position: 2, name: "Submit inquiry", text: "Use the inquiry form with product details, MOQ and shipping destination." },
+    { "@type": "HowToStep" as const, position: 3, name: "Receive quote", text: "Get a quotation within 24 hours with pricing and lead times." },
+    { "@type": "HowToStep" as const, position: 4, name: "Confirm order", text: "Review and confirm. OEM customization available for custom branding." },
+  ],
+};
+
+/** HowTo schema for AEO - OEM customization */
+export const howToOEMSchema = {
+  "@context": "https://schema.org" as const,
+  "@type": "HowTo" as const,
+  name: "How to Get OEM Fishing Rod Customization at RodsHub",
+  description: "4-step process to create your own fishing rod brand: submit brief, design & sample, production, shipping.",
+  step: [
+    { "@type": "HowToStep" as const, position: 1, name: "Submit your brief", text: "Share your specs, target market and quantity via the OEM inquiry form." },
+    { "@type": "HowToStep" as const, position: 2, name: "Design & sample", text: "We create prototypes for your approval. Samples typically ready in 7–14 days." },
+    { "@type": "HowToStep" as const, position: 3, name: "Production", text: "Bulk manufacturing with quality control at each stage." },
+    { "@type": "HowToStep" as const, position: 4, name: "Shipping", text: "Global logistics with branded packaging." },
   ],
 };

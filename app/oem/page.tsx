@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import OEMInquiryForm from "@/components/OEMInquiryForm";
-import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
+import { absoluteUrl, buildOpenGraph, buildTwitter, howToOEMSchema, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "OEM Fishing Rod Customization | RodsHub",
@@ -25,8 +26,18 @@ const steps = [
 ];
 
 export default function OEMPage() {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org" as const,
+    "@type": "BreadcrumbList" as const,
+    itemListElement: [
+      { "@type": "ListItem" as const, position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem" as const, position: 2, name: "OEM Customization", item: absoluteUrl("/oem") },
+    ],
+  };
+
   return (
     <main className="min-h-screen bg-gray-50">
+      <JsonLd data={[howToOEMSchema, breadcrumbSchema]} />
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <nav className="flex items-center gap-2 text-sm text-gray-500 mb-2">

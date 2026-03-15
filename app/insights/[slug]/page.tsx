@@ -9,7 +9,7 @@ import {
   getFirstParagraphText,
   getArticleBodyText,
 } from "@/lib/insights";
-import { absoluteUrl, buildOpenGraph, buildTwitter, SITE_URL } from "@/lib/seo";
+import { absoluteUrl, buildOpenGraph, buildTwitter, DEFAULT_OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -27,9 +27,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = `${block.title} | RodsHub Insights`;
   const desc = getFirstParagraphText(block.content).slice(0, 155) || block.title;
 
+  const insightKeywords = [
+    "fishing rod",
+    "rod buying guide",
+    block.title.toLowerCase(),
+    ...(block.title.includes("Spinning") ? ["spinning rod"] : []),
+    ...(block.title.includes("Casting") ? ["casting rod"] : []),
+  ];
+
   return {
     title,
     description: desc,
+    keywords: insightKeywords,
     openGraph: buildOpenGraph(title, desc, `/insights/${slug}`),
     twitter: buildTwitter(title, desc),
     alternates: { canonical: absoluteUrl(`/insights/${slug}`) },
@@ -44,13 +53,17 @@ export default async function InsightArticlePage({ params }: PageProps) {
   const allProducts = getAllProducts();
   const recommendedProducts = allProducts.slice(0, 3);
 
+  const articleUrl = absoluteUrl(`/insights/${slug}`);
   const articleSchema = {
     "@context": "https://schema.org" as const,
     "@type": "Article" as const,
+    "@id": `${articleUrl}#article`,
     headline: block.title,
     description: getFirstParagraphText(block.content).slice(0, 160),
     articleBody: getArticleBodyText(block.content),
-    url: `${SITE_URL}/insights/${slug}`,
+    url: articleUrl,
+    mainEntityOfPage: { "@type": "WebPage" as const, "@id": articleUrl },
+    image: DEFAULT_OG_IMAGE,
     datePublished: "2024-01-01",
     dateModified: "2024-06-01",
     author: { "@type": "Organization" as const, name: "RodsHub", url: SITE_URL },
