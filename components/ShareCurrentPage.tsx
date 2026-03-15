@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import ShareButtons from "./ShareButtons";
-import { SITE_URL, SHARE_RECOMMENDED_COPIES } from "@/lib/seo";
+import { SITE_URL } from "@/lib/seo";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 
@@ -37,11 +37,8 @@ function usePageMeta() {
   return meta;
 }
 
-/** 获取具吸引力的社交分享文案：中文优先，否则按语言 */
+/** 获取具吸引力的社交分享文案：与用户当前使用的站点语言保持一致 */
 function getSocialShareMessage(lang: string): string {
-  if (typeof navigator !== "undefined" && navigator.language?.startsWith("zh")) {
-    return SHARE_RECOMMENDED_COPIES.zh;
-  }
   return t("shareRecommendedCopy", lang as "en");
 }
 

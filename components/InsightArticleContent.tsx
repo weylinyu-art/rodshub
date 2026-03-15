@@ -39,6 +39,7 @@ export default function InsightArticleContent({ slug, recommendedProducts }: Pro
             url={absoluteUrl(`/insights/${slug}`)}
             title={`${block.title} | RodsHub Insights`}
             description="Fishing industry insights & B2B sourcing guides"
+            socialShareMessage={t("shareRecommendedCopy", lang)}
             variant="compact"
             className="shrink-0"
           />

@@ -155,6 +155,7 @@ export default function ProductDetailContent({
           url={absoluteUrl(`/product/${product.id}`)}
           title={`${displayName} | RodsHub B2B`}
           description={`${product.price} · ${product.fishingStyle || ""} · Wholesale fishing rods`}
+          socialShareMessage={t("shareRecommendedCopy", lang)}
           variant="compact"
           className="shrink-0"
         />

@@ -148,7 +148,7 @@ export default function ShareButtons({
         </button>
         <button
           type="button"
-          onClick={() => handleCopy(shareUrl, () => setCopied(true))}
+          onClick={() => handleCopy(`${effectiveShareText} ${shareUrl}`, () => setCopied(true))}
           className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900 transition-colors"
           title="Copy link"
           aria-label="Copy link"
