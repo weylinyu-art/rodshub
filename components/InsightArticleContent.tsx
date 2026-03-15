@@ -33,12 +33,14 @@ export default function InsightArticleContent({ slug, recommendedProducts }: Pro
       <article className="insight-speakable bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">{block.title}</h1>
 
-        <InsightContentRenderer content={block.content} />
-
-        {/* Product Recommendation - in article */}
-        <section className="mt-10 pt-8 border-t border-gray-200">
-          <ArticleProductRecommendation products={recommendedProducts} />
-        </section>
+        <InsightContentRenderer
+          content={block.content}
+          embeddedAfter={
+            recommendedProducts.length > 0
+              ? { index: 4, component: <ArticleProductRecommendation products={recommendedProducts} /> }
+              : undefined
+          }
+        />
       </article>
 
       {/* CTA - end of article */}

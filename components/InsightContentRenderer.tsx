@@ -1,16 +1,29 @@
+import type { ReactNode } from "react";
 import type { InsightContentItem } from "@/lib/insights";
 
 interface InsightContentRendererProps {
   content: InsightContentItem[];
+  /** 在正文第 N 个内容块后嵌入的组件（如产品推荐），避免文尾广告感 */
+  embeddedAfter?: { index: number; component: ReactNode };
 }
 
 export default function InsightContentRenderer({
   content,
+  embeddedAfter,
 }: InsightContentRendererProps) {
+  const embedIndex = embeddedAfter?.index ?? -1;
+
   return (
     <div className="space-y-4 text-gray-600 leading-relaxed">
       {content.map((item, i) => (
-        <ContentBlock key={i} item={item} />
+        <div key={i} className="space-y-4">
+          <ContentBlock item={item} />
+          {embeddedAfter && i === embedIndex && (
+            <div className="my-8">
+              {embeddedAfter.component}
+            </div>
+          )}
+        </div>
       ))}
     </div>
   );

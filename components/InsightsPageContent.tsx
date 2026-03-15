@@ -134,29 +134,25 @@ export default function InsightsPageContent() {
                   const blockData = getInsightByLang(block.id, lang);
                   const excerpt = blockData ? getFirstParagraphText(blockData.content) : "";
                   return (
-                    <article
+                    <Link
                       key={block.id}
+                      href={`/insights/${block.id}`}
                       id={block.id}
-                      className={`group bg-white rounded-xl border border-gray-200 border-l-4 ${borderCls} p-5 sm:p-6 hover:shadow-lg hover:border-gray-300 transition-all duration-200`}
+                      aria-label={`${t("readArticle", lang)}: ${blockData?.title ?? block.title}`}
+                      className={`group block bg-white rounded-xl border border-gray-200 border-l-4 ${borderCls} p-5 sm:p-6 hover:shadow-lg hover:border-gray-300 transition-all duration-200`}
                     >
                       <h3 className="text-base font-bold text-gray-900 mb-3 group-hover:text-black">
-                        <Link href={`/insights/${block.id}`} className="hover:underline underline-offset-2">
-                          {blockData?.title ?? block.title}
-                        </Link>
+                        {blockData?.title ?? block.title}
                       </h3>
                       <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2">
                         {excerpt}
                       </p>
-                      <Link
-                        href={`/insights/${block.id}`}
-                        className="mt-1 inline-flex w-full items-center justify-end text-sm text-gray-400 hover:text-gray-900"
-                      >
-                        <span className="sr-only">{t("readArticle", lang)}</span>
+                      <span className="inline-flex w-full items-center justify-end text-sm text-gray-400 group-hover:text-gray-900">
                         <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-gray-200 bg-gray-50 text-xs group-hover:bg-gray-900 group-hover:text-white transition">
                           →
                         </span>
-                      </Link>
-                    </article>
+                      </span>
+                    </Link>
                   );
                 })}
               </div>

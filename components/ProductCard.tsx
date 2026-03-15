@@ -32,7 +32,10 @@ export default function ProductCard({
   const displayName = getProductName({ id, name }, lang);
   const showSpecs = variant === "trending" && (length || material || power);
   const showInquiryButton = variant === "trending";
-  const imgList = (images && images.length > 0 ? images : [image]) as string[];
+  /** 按 URL 去重，单图时不显示轮播点和悬停切换 */
+  const rawList = (images && images.length > 0 ? images : [image]) as string[];
+  const imgList = Array.from(new Set(rawList));
+  const hasMultipleImages = imgList.length > 1;
   const [activeIndex, setActiveIndex] = useState(0);
   const [failedUrls, setFailedUrls] = useState<Set<string>>(new Set());
   const href = id ? `/product/${id}` : inquiryHref;
@@ -44,7 +47,7 @@ export default function ProductCard({
     >
       <div
         className="relative aspect-square overflow-hidden bg-gray-100"
-        onMouseEnter={() => imgList.length > 1 && setActiveIndex((i) => (i + 1) % imgList.length)}
+        onMouseEnter={() => hasMultipleImages && setActiveIndex((i) => (i + 1) % imgList.length)}
       >
         {imgList.map((src, i) => {
           const effectiveSrc = failedUrls.has(src) ? FALLBACK_IMAGE : src;
@@ -67,7 +70,7 @@ export default function ProductCard({
             {badge}
           </span>
         )}
-        {imgList.length > 1 && (
+        {hasMultipleImages && (
           <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1 z-10">
             {imgList.map((_, i) => (
               <span
@@ -90,13 +93,9 @@ export default function ProductCard({
           </div>
         )}
         <p className="mt-1 font-bold text-gray-900">{price}</p>
-        {showInquiryButton ? (
+        {showInquiryButton && (
           <span className="mt-2 inline-flex justify-center px-3 py-1.5 bg-black text-white text-xs font-medium rounded hover:bg-gray-800 transition w-full pointer-events-none">
             {t("sendInquiry", lang)}
-          </span>
-        ) : (
-          <span className="mt-1.5 text-xs text-gray-600 font-medium opacity-0 group-hover:opacity-100 transition">
-            {t("inquiry", lang)} →
           </span>
         )}
       </div>

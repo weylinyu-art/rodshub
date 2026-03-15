@@ -19,9 +19,9 @@ const LENGTHS = ["1.5m", "1.8m", "2.0m", "2.1m", "2.4m", "2.7m", "3.0m", "3.6m",
 const MATERIALS = ["Carbon", "Graphite", "Fiberglass", "Composite", "IM6", "IM8"];
 const POWERS = ["Ultralight", "Light", "Medium", "Medium-Heavy", "Heavy", "Extra Heavy"];
 const PRICE_RANGES: { price: string; min: number }[] = [
-  { price: "$6.50 - $12.00", min: 6.5 }, { price: "$8.00 - $15.00", min: 8 }, { price: "$12.00 - $22.00", min: 12 },
-  { price: "$18.00 - $32.00", min: 18 }, { price: "$25.00 - $45.00", min: 25 }, { price: "$35.00 - $65.00", min: 35 },
-  { price: "$9.90 - $18.00", min: 9.9 }, { price: "$14.50 - $28.00", min: 14.5 },
+  { price: "$8.00 - $12.00", min: 8 }, { price: "$8.50 - $15.00", min: 8.5 }, { price: "$9.00 - $14.00", min: 9 },
+  { price: "$10.00 - $15.00", min: 10 }, { price: "$11.00 - $15.00", min: 11 }, { price: "$12.00 - $15.00", min: 12 },
+  { price: "$8.00 - $14.00", min: 8 }, { price: "$9.50 - $15.00", min: 9.5 },
 ];
 const MOQS = ["30 pcs", "50 pcs", "80 pcs", "100 pcs", "150 pcs", "200 pcs", "300 pcs", "500 pcs"];
 const FISHING_STYLES: Record<CategorySlug, string> = {

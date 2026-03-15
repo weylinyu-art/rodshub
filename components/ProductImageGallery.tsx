@@ -26,7 +26,9 @@ export default function ProductImageGallery({
   const touchEndX = useRef<number>(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const total = images.length;
+  /** 按 URL 去重，仅当有超过 1 张不同图时才显示轮播控件 */
+  const uniqueImages = Array.from(new Set(images));
+  const total = uniqueImages.length;
   const hasMultiple = total > 1;
 
   const handleImageError = useCallback((src: string) => {
@@ -103,7 +105,7 @@ export default function ProductImageGallery({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {images.map((src, i) => {
+        {uniqueImages.map((src, i) => {
           const effectiveSrc = failedUrls.has(src) ? fallbackImage : src;
           return (
             <div
@@ -154,7 +156,7 @@ export default function ProductImageGallery({
         {/* 指示点 - 多图时显示 */}
         {hasMultiple && total <= 12 && (
           <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-20">
-            {images.map((_, i) => (
+            {uniqueImages.map((_, i) => (
               <button
                 key={i}
                 type="button"
@@ -172,7 +174,7 @@ export default function ProductImageGallery({
       {/* 缩略图条 - 支持横向滚动，多图时显示 */}
       {hasMultiple && (
         <div className="mt-3 flex gap-2 overflow-x-auto pb-1 -mb-1 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-          {images.map((src, i) => {
+          {uniqueImages.map((src, i) => {
             const effectiveSrc = failedUrls.has(src) ? fallbackImage : src;
             return (
               <button

@@ -72,7 +72,6 @@ export default function Header() {
               </div>
               <div className="space-y-1 pt-2 border-t border-gray-100">
                 <Link href="/trending" onClick={() => setMobileOpen(false)} className="block py-3 font-medium text-gray-900">{t("trending", lang)}</Link>
-                <Link href="/wholesale" onClick={() => setMobileOpen(false)} className="block py-3 font-medium text-gray-900">{t("wholesale", lang)}</Link>
                 <Link href="/insights" onClick={() => setMobileOpen(false)} className="block py-3 font-medium text-gray-900">{t("insights", lang)}</Link>
               </div>
             </div>
@@ -272,9 +271,6 @@ export default function Header() {
             </div>
             <Link href="/trending" className="px-4 py-2 text-gray-700 hover:text-black font-medium transition">
               {t("trending", lang)}
-            </Link>
-            <Link href="/wholesale" className="px-4 py-2 text-gray-700 hover:text-black font-medium transition">
-              {t("wholesale", lang)}
             </Link>
             <Link href="/insights" className="px-4 py-2 text-gray-700 hover:text-black font-medium transition">
               {t("insights", lang)}

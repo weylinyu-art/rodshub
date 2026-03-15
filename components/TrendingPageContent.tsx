@@ -35,10 +35,10 @@ export default function TrendingPageContent() {
 
         <div className="mt-12 text-center">
           <Link
-            href="/wholesale"
+            href="/rods/category"
             className="inline-flex items-center px-6 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition"
           >
-            {t("viewWholesalePicks", lang)}
+            {t("browseAll", lang)}
           </Link>
         </div>
       </div>
