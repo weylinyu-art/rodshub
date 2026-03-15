@@ -69,27 +69,3 @@ export function getClickCount(key: string): number {
 export function getAllClickCounts(): Record<string, number> {
   return safeGet();
 }
-
-/** 生成分类 tab 的追踪 key */
-export function catTabKey(slug: string): string {
-  return slug === "all" ? "" : `cat:${slug}`;
-}
-
-/** 生成场景 tab 的追踪 key */
-export function scenTabKey(slug: string): string {
-  return slug === "all" ? "" : `scen:${slug}`;
-}
-
-/** 按点击量降序排序（点击多的靠前），点击量相同时保持原顺序 */
-export function sortByClickCount<T>(
-  items: T[],
-  getKey: (item: T) => string,
-  counts: Record<string, number>
-): T[] {
-  return [...items].sort((a, b) => {
-    const ca = counts[getKey(a)] ?? 0;
-    const cb = counts[getKey(b)] ?? 0;
-    if (cb !== ca) return cb - ca;
-    return 0;
-  });
-}

@@ -6,7 +6,7 @@ import { t } from "@/lib/i18n";
 import ProductCard from "@/components/ProductCard";
 import { useMemo } from "react";
 import { trendingRods } from "@/lib/products";
-import { sortProductsByPriceThenClicks } from "@/lib/categoryProducts";
+import { sortProductsByClicksThenPrice } from "@/lib/categoryProducts";
 import { useClickCounts } from "@/contexts/ClickCountsContext";
 import { REAL_PRODUCTS, realProductToDisplayProduct, applyListImageOverride } from "@/lib/realProducts";
 
@@ -17,7 +17,7 @@ export default function TrendingPageContent() {
   const { lang } = useLanguage();
   const counts = useClickCounts();
   const trendingProducts = useMemo(
-    () => sortProductsByPriceThenClicks([...baseProducts], counts),
+    () => sortProductsByClicksThenPrice([...baseProducts], counts),
     [counts]
   );
 

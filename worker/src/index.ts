@@ -44,12 +44,16 @@ export default {
 
     if (path === "/counts" && request.method === "GET") {
       try {
-        const list = await env.COUNTS.list();
         const counts: Record<string, number> = {};
-        for (const k of list.keys) {
-          const v = await env.COUNTS.get(k.name);
-          counts[k.name] = parseInt(v ?? "0", 10);
-        }
+        let cursor: string | undefined;
+        do {
+          const list = await env.COUNTS.list({ limit: 1000, cursor });
+          for (const k of list.keys) {
+            const v = await env.COUNTS.get(k.name);
+            counts[k.name] = parseInt(v ?? "0", 10);
+          }
+          cursor = list.list_complete ? undefined : list.cursor;
+        } while (cursor);
         return jsonResponse(counts);
       } catch (e) {
         return jsonResponse({ error: String(e) }, 500);

@@ -4,14 +4,13 @@ import { useEffect, useMemo, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import type { Product } from "@/lib/products";
 import { applyListImageOverride } from "@/lib/realProducts";
-import { useClickCounts } from "@/contexts/ClickCountsContext";
 import {
-  sortProductsByCategoryThenClicks,
-  sortProductsByPriceThenClicks,
-  sortProductsByPriceDescThenClicks,
+  sortProductsByCategory,
+  sortProductsByPriceAsc,
+  sortProductsByPriceDesc,
   extractPriceMin,
 } from "@/lib/categoryProducts";
-import { sortProductsByScenarioThenClicks } from "@/lib/scenarios";
+import { sortProductsByScenario } from "@/lib/scenarios";
 
 const PAGE_SIZE = 30;
 
@@ -30,7 +29,6 @@ export default function CategoryFilters({
   categoryName: string;
   sortMode?: "category" | "scenario";
 }) {
-  const counts = useClickCounts();
   const [material, setMaterial] = useState<Set<string>>(new Set());
   const [power, setPower] = useState<Set<string>>(new Set());
   const [length, setLength] = useState<Set<string>>(new Set());
@@ -85,16 +83,16 @@ export default function CategoryFilters({
 
     if (sort === "default") {
       list = sortMode === "category"
-        ? sortProductsByCategoryThenClicks(list, counts)
-        : sortProductsByScenarioThenClicks(list, counts);
+        ? sortProductsByCategory(list)
+        : sortProductsByScenario(list);
     } else if (sort === "price-asc") {
-      list = sortProductsByPriceThenClicks(list, counts);
+      list = sortProductsByPriceAsc(list);
     } else {
-      list = sortProductsByPriceDescThenClicks(list, counts);
+      list = sortProductsByPriceDesc(list);
     }
 
     return list;
-  }, [products, material, power, length, fishingStyle, priceMin, priceMax, sort, sortMode, counts]);
+  }, [products, material, power, length, fishingStyle, priceMin, priceMax, sort, sortMode]);
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE) || 1;
   const paginatedProducts = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);

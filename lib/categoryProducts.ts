@@ -1,6 +1,7 @@
 import type { Product } from "@/lib/products";
 import { getProductImages } from "@/lib/products";
 import { REAL_PRODUCTS, realProductToDisplayProduct } from "@/lib/realProducts";
+import { dailyRotateScore } from "@/lib/clickSortUtils";
 
 export const CATEGORIES = [
   { name: "Spinning Rods", slug: "spinning" },
@@ -112,53 +113,27 @@ function extractPriceMin(p: Product): number {
   return m ? parseFloat(m[1]) : 0;
 }
 
-/** Trending 页默认排序：按价格从低到高（hot deals / 超值好价角度） */
+/** 按价格从低到高 */
 export function sortProductsByPriceAsc<T extends Product>(products: T[]): T[] {
   return [...products].sort((a, b) => extractPriceMin(a) - extractPriceMin(b));
 }
 
-/** Categories 页：主序=rod type，次序=点击量（同类目下点击多的靠前） */
-export function sortProductsByCategoryThenClicks<T extends Product>(
-  products: T[],
-  counts: Record<string, number>
-): T[] {
-  return [...products].sort((a, b) => {
-    const ia = getCategoryIndex(a);
-    const ib = getCategoryIndex(b);
-    if (ia !== ib) return ia - ib;
-    const ca = counts[(a as Product & { id?: string }).id ?? ""] ?? 0;
-    const cb = counts[(b as Product & { id?: string }).id ?? ""] ?? 0;
-    return cb - ca;
-  });
+/** 按价格从高到低 */
+export function sortProductsByPriceDesc<T extends Product>(products: T[]): T[] {
+  return [...products].sort((a, b) => extractPriceMin(b) - extractPriceMin(a));
 }
 
-/** 按价格+点击量排序（主序=价格升序，次序=点击量降序） */
-export function sortProductsByPriceThenClicks<T extends Product>(
+/** Trending 页：主序=点击量降序，次序=价格升序，0 点击产品按日级轮换 */
+export function sortProductsByClicksThenPrice<T extends Product>(
   products: T[],
   counts: Record<string, number>
 ): T[] {
   return [...products].sort((a, b) => {
-    const pa = extractPriceMin(a);
-    const pb = extractPriceMin(b);
-    if (pa !== pb) return pa - pb;
     const ca = counts[(a as Product & { id?: string }).id ?? ""] ?? 0;
     const cb = counts[(b as Product & { id?: string }).id ?? ""] ?? 0;
-    return cb - ca;
-  });
-}
-
-/** 按价格降序+点击量排序（主序=价格降序，次序=点击量降序） */
-export function sortProductsByPriceDescThenClicks<T extends Product>(
-  products: T[],
-  counts: Record<string, number>
-): T[] {
-  return [...products].sort((a, b) => {
-    const pa = extractPriceMin(a);
-    const pb = extractPriceMin(b);
-    if (pa !== pb) return pb - pa;
-    const ca = counts[(a as Product & { id?: string }).id ?? ""] ?? 0;
-    const cb = counts[(b as Product & { id?: string }).id ?? ""] ?? 0;
-    return cb - ca;
+    if (ca !== cb) return cb - ca;
+    if (ca === 0) return dailyRotateScore((a as Product & { id?: string }).id ?? "") - dailyRotateScore((b as Product & { id?: string }).id ?? "");
+    return extractPriceMin(a) - extractPriceMin(b);
   });
 }
 
