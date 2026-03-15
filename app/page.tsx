@@ -9,7 +9,6 @@ import JsonLd from "@/components/JsonLd";
 import { absoluteUrl, buildOpenGraph, buildTwitter, howToOrderSchema } from "@/lib/seo";
 
 const CompanyIntro = dynamic(() => import("@/components/CompanyIntro"), { ssr: true });
-const RodCollections = dynamic(() => import("@/components/RodCollections"), { ssr: true });
 const OEMCustomization = dynamic(() => import("@/components/OEMCustomization"), { ssr: true });
 const WhyRodsHub = dynamic(() => import("@/components/WhyRodsHub"), { ssr: true });
 const Testimonials = dynamic(() => import("@/components/Testimonials"), { ssr: true });
@@ -54,12 +53,10 @@ export default function Home() {
       <ShopByFishingStyle />
       {/* 精选入口 - 4 个 Trending + 4 个 Wholesale 预览 */}
       <HomeFeaturedSection />
+      {/* 新品预览 + Insights 入口（前置以增加内容感） */}
+      <HomeInsightsSection />
       {/* 公司介绍 + 数据卡片 */}
       <CompanyIntro />
-      {/* 精选系列 */}
-      <RodCollections />
-      {/* 新品预览 + Insights 入口 */}
-      <HomeInsightsSection />
       {/* OEM */}
       <OEMCustomization />
       {/* Why RodsHub */}
