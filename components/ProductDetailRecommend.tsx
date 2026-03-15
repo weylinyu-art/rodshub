@@ -55,7 +55,7 @@ function RecommendCard({
       </Link>
       <div className="p-3 flex-1 flex flex-col">
         <Link href={`/product/${p.id}`} className="shrink-0">
-          <h3 className="font-medium text-gray-900 text-sm line-clamp-2 min-h-[2.5rem] whitespace-pre-line group-hover:text-black">{listDisplayName}</h3>
+          <h3 className="font-medium text-gray-900 text-sm line-clamp-2 min-h-[2.5rem] group-hover:text-black">{listDisplayName}</h3>
         </Link>
         <p className="mt-1 font-bold text-gray-900 text-sm">{displayPrice}</p>
         <Link

@@ -39,7 +39,7 @@ function ArticleProductCard({ product }: { product: Product & { id: string } }) 
       </Link>
       <div className="p-3 flex-1 flex flex-col">
         <Link href={href} className="shrink-0">
-          <h4 className="font-medium text-gray-900 text-sm line-clamp-2 min-h-[2.5rem] whitespace-pre-line group-hover:text-black">{displayName}</h4>
+          <h4 className="font-medium text-gray-900 text-sm line-clamp-2 min-h-[2.5rem] group-hover:text-black">{displayName}</h4>
         </Link>
         <p className="mt-1 font-bold text-gray-900 text-sm">{displayPrice}</p>
         <Link

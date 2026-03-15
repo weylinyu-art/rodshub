@@ -92,7 +92,7 @@ export default function ProductCard({
       </Link>
       <div className="p-3 flex-1 flex flex-col min-h-0">
         <Link href={href} className="shrink-0 block min-h-[2.5rem]">
-          <h3 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-black transition text-sm whitespace-pre-line">
+          <h3 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-black transition text-sm">
             {listDisplayName}
           </h3>
         </Link>

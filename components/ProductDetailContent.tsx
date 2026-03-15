@@ -169,7 +169,7 @@ export default function ProductDetailContent({
               {product.badge}
             </span>
           )}
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight whitespace-pre-line" title={displayName}>{detailTitle}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight line-clamp-2 whitespace-pre-line" title={displayName}>{detailTitle}</h1>
 
           {variants.length > 1 && (
             <div>
