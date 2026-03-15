@@ -29,14 +29,6 @@ export default function OEMCustomization() {
             </div>
           ))}
         </div>
-        <div className="text-center">
-          <a
-            href="/oem"
-            className="inline-flex items-center justify-center px-8 py-4 bg-gray-900 text-white font-bold rounded-lg hover:bg-black transition"
-          >
-            {c.cta}
-          </a>
-        </div>
       </div>
     </section>
   );
