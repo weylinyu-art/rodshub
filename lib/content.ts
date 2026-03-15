@@ -439,7 +439,7 @@ export const testimonials: Record<
   en: {
     title: "What Our Buyers Say",
     subtitle: "Thousands of wholesalers have grown their rod business with RodsHub",
-    shareLink: "Share your success story →",
+    shareLink: "Start your success story →",
     items: [
       {
         quote: "First year partnering with RodsHub. Their catalog and OEM support helped us launch a private-label line. Reply within 24 hours every time. Highly recommend for B2B rod sourcing.",
@@ -476,7 +476,7 @@ export const testimonials: Record<
   es: {
     title: "Lo que dicen nuestros compradores",
     subtitle: "Miles de mayoristas han crecido con RodsHub",
-    shareLink: "Comparta su historia →",
+    shareLink: "Comience su historia de éxito →",
     items: [
       { quote: "Primer año con RodsHub. Catálogo y soporte OEM nos ayudaron a lanzar línea propia. Respuesta en 24h siempre. Muy recomendable.", author: "Socio minorista, Norteamérica", tags: ["Ventas +180%", "Margen +215%"] },
       { quote: "Proveedor fiable para surf y casting. Calidad y plazos cumplidos. Embalaje listo para exportar.", author: "Comprador mayorista, Europa", tags: ["Calidad", "A tiempo"] },
@@ -489,7 +489,7 @@ export const testimonials: Record<
   fr: {
     title: "Ce que disent nos acheteurs",
     subtitle: "Des milliers de grossistes ont grandi avec RodsHub",
-    shareLink: "Partagez votre succès →",
+    shareLink: "Commencez votre histoire de succès →",
     items: [
       { quote: "Première année avec RodsHub. Catalogue et support OEM pour lancer une ligne private label. Réponse 24h. Très recommandé.", author: "Partenaire détaillant, Amérique du Nord", tags: ["Ventes +180%", "Marge +215%"] },
       { quote: "Fournisseur fiable pour surf et casting. Qualité et délais tenus. Emballage export prêt.", author: "Acheteur gros, Europe", tags: ["Qualité", "À temps"] },
@@ -502,7 +502,7 @@ export const testimonials: Record<
   de: {
     title: "Was unsere Käufer sagen",
     subtitle: "Tausende Großhändler sind mit RodsHub gewachsen",
-    shareLink: "Teilen Sie Ihre Erfolgsgeschichte →",
+    shareLink: "Starten Sie Ihre Erfolgsgeschichte →",
     items: [
       { quote: "Erstes Jahr mit RodsHub. Katalog und OEM-Support halfen uns, eine Eigenmarke zu starten. Antwort in 24h. Sehr empfehlenswert.", author: "Einzelhandelspartner, Nordamerika", tags: ["Umsatz +180%", "Marge +215%"] },
       { quote: "Zuverlässiger Lieferant für Surf- und Castingruten. Qualität und Lieferzeit erfüllt. Exportfertige Verpackung.", author: "Großhändler, Europa", tags: ["Qualität", "Pünktlich"] },
@@ -515,7 +515,7 @@ export const testimonials: Record<
   ar: {
     title: "ماذا يقول مشترونا",
     subtitle: "آلاف الجملة نموا مع RodsHub",
-    shareLink: "شارك قصتك →",
+    shareLink: "ابدأ قصتك الناجحة →",
     items: [
       { quote: "السنة الأولى مع RodsHub. الكتالوج ودعم OEM ساعدانا على إطلاق خط خاص. رد في 24 ساعة. موصى به بشدة.", author: "شريك تجزئة، أمريكا الشمالية", tags: ["مبيعات +180%", "هامش +215%"] },
       { quote: "مورد موثوق لسيرف وكاستينغ. الجودة والمواعيد محققة. التغليف جاهز للتصدير.", author: "مشتري جملة، أوروبا", tags: ["جودة", "في الوقت"] },
@@ -528,7 +528,7 @@ export const testimonials: Record<
   ru: {
     title: "Отзывы наших покупателей",
     subtitle: "Тысячи оптовиков выросли с RodsHub",
-    shareLink: "Поделитесь историей успеха →",
+    shareLink: "Начните вашу историю успеха →",
     items: [
       { quote: "Первый год с RodsHub. Каталог и OEM-поддержка помогли запустить private-label. Ответ за 24ч. Рекомендую.", author: "Розничный партнер, Северная Америка", tags: ["Продажи +180%", "Маржа +215%"] },
       { quote: "Надежный поставщик серфовых и кастинговых удилищ. Качество и сроки соблюдены. Упаковка готова к экспорту.", author: "Оптовый покупатель, Европа", tags: ["Качество", "В срок"] },
@@ -541,7 +541,7 @@ export const testimonials: Record<
   ja: {
     title: "バイヤーの声",
     subtitle: "多くの卸業者がRodsHubと成長",
-    shareLink: "成功事例を共有 →",
+    shareLink: "成功の物語を始めましょう →",
     items: [
       { quote: "RodsHubと1年目。カタログとOEMサポートでプライベートブランドを立ち上げ。24時間以内返信。強く推奨。", author: "小売パートナー、北米", tags: ["売上+180%", "利益率+215%"] },
       { quote: "サーフ・キャスティングの信頼できるサプライヤー。品質と納期を達成。輸出対応パッケージ。", author: "卸買い手、欧州", tags: ["品質", "納期遵守"] },
@@ -554,7 +554,7 @@ export const testimonials: Record<
   ko: {
     title: "바이어들의 후기",
     subtitle: "수천 명의 도매상이 RodsHub와 함께 성장",
-    shareLink: "성공 사례 공유하기 →",
+    shareLink: "성공 스토리 시작하기 →",
     items: [
       { quote: "RodsHub와 첫 해. 카탈로그와 OEM 지원으로 프라이빗 라벨 런칭. 24시간 내 답변. 강력 추천.", author: "소매 파트너, 북미", tags: ["매출 +180%", "마진 +215%"] },
       { quote: "서프·캐스팅 신뢰할 수 있는 공급업체. 품질과 납기 준수. 수출용 패키징.", author: "도매 구매자, 유럽", tags: ["품질", "정시"] },
@@ -567,7 +567,7 @@ export const testimonials: Record<
   pt: {
     title: "O que nossos compradores dizem",
     subtitle: "Milhares de atacadistas cresceram com RodsHub",
-    shareLink: "Compartilhe sua história →",
+    shareLink: "Comece sua história de sucesso →",
     items: [
       { quote: "Primeiro ano com RodsHub. Catálogo e suporte OEM ajudaram a lançar linha própria. Resposta em 24h. Muito recomendado.", author: "Parceiro varejista, América do Norte", tags: ["Vendas +180%", "Margem +215%"] },
       { quote: "Fornecedor confiável para surf e casting. Qualidade e prazo cumpridos. Embalagem pronta para exportação.", author: "Comprador atacado, Europa", tags: ["Qualidade", "No prazo"] },

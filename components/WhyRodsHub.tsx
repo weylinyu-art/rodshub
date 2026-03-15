@@ -13,7 +13,7 @@ export default function WhyRodsHub() {
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-12 text-center">
           {c.title}
         </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-x-6 lg:gap-y-12">
           <div className="bg-gray-50 rounded-xl p-8 border border-gray-200">
             <h3 className="text-xl font-semibold text-gray-900 mb-4">{c.block1Title}</h3>
             <p className="text-gray-600 leading-relaxed mb-6">{c.block1Desc}</p>
