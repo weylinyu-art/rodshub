@@ -54,6 +54,8 @@ export function buildTwitter(
   const img = image || DEFAULT_OG_IMAGE;
   return {
     card: "summary_large_image" as const,
+    site: "@rodshub",
+    creator: "@rodshub",
     title,
     description,
     images: [img],
@@ -102,7 +104,7 @@ export const organizationSchema = {
   logo: { "@type": "ImageObject" as const, url: `${SITE_URL}/favicon.svg` },
   image: DEFAULT_OG_IMAGE,
   description: SITE_DESCRIPTION,
-  foundingDate: "2024" as const,
+  foundingDate: "2024-01-01",
   slogan: "The Global Marketplace for Fishing Rod Sourcing",
   knowsAbout: ["fishing rods", "B2B wholesale", "OEM manufacturing", "spinning rods", "casting rods", "telescopic rods", "surf rods", "ice fishing rods", "travel rods"],
   contactPoint: {
@@ -113,7 +115,6 @@ export const organizationSchema = {
     areaServed: "Worldwide",
     availableLanguage: ["English", "Spanish", "French", "German", "Arabic", "Russian", "Japanese", "Korean", "Portuguese"],
     hoursAvailable: { "@type": "HoursSpecification" as const, dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "18:00" },
-    contactOption: "TollFree",
     responseTime: "PT24H",
   },
 };

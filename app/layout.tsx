@@ -6,6 +6,8 @@ import MobileBottomNav from "@/components/MobileBottomNav";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ClickCountsProvider } from "@/contexts/ClickCountsContext";
 import JsonLd from "@/components/JsonLd";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
+import ScrollDepthTracker from "@/components/ScrollDepthTracker";
 import {
   SITE_URL,
   defaultTitle,
@@ -68,6 +70,8 @@ export default function RootLayout({
         <link rel="preload" href="/hero-banner.jpeg" as="image" />
       </head>
       <body className="antialiased overflow-x-hidden">
+        <GoogleAnalytics />
+        <ScrollDepthTracker />
         <JsonLd data={[organizationSchema, websiteSchema]} />
         <LanguageProvider>
           <ClickCountsProvider>

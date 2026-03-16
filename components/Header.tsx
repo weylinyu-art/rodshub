@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LANGUAGES, t } from "@/lib/i18n";
+import { gtagEvent } from "@/lib/gtag";
 
 const CATEGORIES = [
   { key: "catSpinning" as const, slug: "spinning" },
@@ -200,7 +201,7 @@ export default function Header() {
 
           {/* Row 2: Tab 导航 - 与 LOGO 左对齐 */}
           <nav className="hidden lg:flex items-center gap-1 border-t border-gray-100 py-3 -mb-px">
-            <Link href="/" className={`pl-0 pr-4 py-2 font-medium transition ${pathname === "/" ? "text-black" : "text-gray-700 hover:text-black"}`}>
+            <Link href="/" onClick={() => gtagEvent("nav_click", { label: "home", location: "header_tab" })} className={`pl-0 pr-4 py-2 font-medium transition ${pathname === "/" ? "text-black" : "text-gray-700 hover:text-black"}`}>
               {t("home", lang)}
             </Link>
             <div
@@ -210,6 +211,7 @@ export default function Header() {
             >
               <Link
                 href="/rods/category"
+                onClick={() => gtagEvent("nav_click", { label: "categories", location: "header_tab" })}
                 className="px-4 py-2 text-gray-700 hover:text-black font-medium transition inline-block"
               >
                 {t("categories", lang)}
@@ -269,13 +271,13 @@ export default function Header() {
                 </div>
               )}
             </div>
-            <Link href="/trending" className="px-4 py-2 text-gray-700 hover:text-black font-medium transition">
+            <Link href="/trending" onClick={() => gtagEvent("nav_click", { label: "trending", location: "header_tab" })} className="px-4 py-2 text-gray-700 hover:text-black font-medium transition">
               {t("trending", lang)}
             </Link>
-            <Link href="/insights" className="px-4 py-2 text-gray-700 hover:text-black font-medium transition">
+            <Link href="/insights" onClick={() => gtagEvent("nav_click", { label: "insights", location: "header_tab" })} className="px-4 py-2 text-gray-700 hover:text-black font-medium transition">
               {t("insights", lang)}
             </Link>
-            <Link href="/inquiry" className="px-4 py-2 text-gray-700 hover:text-black font-medium transition">
+            <Link href="/inquiry" onClick={() => gtagEvent("nav_click", { label: "inquiry", location: "header_tab" })} className="px-4 py-2 text-gray-700 hover:text-black font-medium transition">
               {t("inquiry", lang)}
             </Link>
           </nav>

@@ -4,9 +4,10 @@ import JsonLd from "@/components/JsonLd";
 import { absoluteUrl, buildOpenGraph, buildTwitter, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Contact Us | RodsHub",
+  title: "Contact RodsHub | B2B Fishing Rod Sourcing Inquiries",
   description:
-    "Contact RodsHub: email, WhatsApp. 24-hour reply. B2B fishing rod sourcing, wholesale, OEM inquiries.",
+    "Contact RodsHub via email or WhatsApp for wholesale and OEM fishing rod inquiries. 24-hour reply, Monday–Friday. hello@rodshub.com.",
+  keywords: ["contact RodsHub", "fishing rod wholesale inquiry", "OEM fishing rod contact", "B2B sourcing inquiry", "fishing rod supplier contact"],
   openGraph: buildOpenGraph(
     "Contact RodsHub | B2B Fishing Rod Sourcing",
     "Email, WhatsApp. 24-hour reply. B2B fishing rod sourcing.",

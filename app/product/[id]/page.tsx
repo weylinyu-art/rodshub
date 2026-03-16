@@ -76,12 +76,20 @@ export default async function ProductPage({ params }: PageProps) {
     ...(product.power && { additionalProperty: [{ "@type": "PropertyValue" as const, name: "Power", value: product.power }] }),
   };
 
+  // 面包屑：Home → Category → Product（三级结构，Rich Results 更完整）
+  const categorySlug = (product.fishingStyle ?? "").toLowerCase().replace(/\s+/g, "-") || null;
+  const categoryName = categorySlug
+    ? categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1) + " Rods"
+    : null;
   const breadcrumbSchema = {
     "@context": "https://schema.org" as const,
     "@type": "BreadcrumbList" as const,
     itemListElement: [
       { "@type": "ListItem" as const, position: 1, name: "Home", item: SITE_URL },
-      { "@type": "ListItem" as const, position: 2, name: product.name, item: absoluteUrl(`/product/${id}`) },
+      ...(categorySlug && categoryName
+        ? [{ "@type": "ListItem" as const, position: 2, name: categoryName, item: absoluteUrl(`/category/${categorySlug}`) }]
+        : []),
+      { "@type": "ListItem" as const, position: categorySlug ? 3 : 2, name: product.name, item: absoluteUrl(`/product/${id}`) },
     ],
   };
 

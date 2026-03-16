@@ -64,8 +64,8 @@ export default async function InsightArticlePage({ params }: PageProps) {
     url: articleUrl,
     mainEntityOfPage: { "@type": "WebPage" as const, "@id": articleUrl },
     image: DEFAULT_OG_IMAGE,
-    datePublished: "2024-01-01",
-    dateModified: "2024-06-01",
+    datePublished: block.datePublished ?? "2024-01-01",
+    dateModified: block.dateModified ?? new Date().toISOString().slice(0, 10),
     author: { "@type": "Organization" as const, name: "RodsHub", url: SITE_URL },
     publisher: { "@id": `${SITE_URL}/#organization` },
     speakable: {

@@ -4,20 +4,35 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { inquiryForm } from "@/lib/content";
+import { gtagEvent } from "@/lib/gtag";
 
 const INQUIRY_EMAIL = "hello@rodshub.com";
 
 function buildMailto(data: Record<string, string>): string {
+  const nl = "\r\n"; // CRLF：兼容 Gmail / Outlook / Apple Mail
+  const pad = (label: string) => label.padEnd(9);
   const body = [
-    `Name: ${data.name || ""}`,
-    `Email: ${data.email || ""}`,
-    `Company: ${data.company || ""}`,
-    `Country: ${data.country || ""}`,
-    `Product: ${data.product || ""}`,
-    `Message: ${data.message || ""}`,
-  ].join("\n");
-  const truncated = body.length > 1500 ? body.slice(0, 1500) + "..." : body;
-  return `mailto:${INQUIRY_EMAIL}?subject=${encodeURIComponent("RodsHub Inquiry from " + (data.name || ""))}&body=${encodeURIComponent(truncated)}`;
+    "Hi RodsHub Team,",
+    "",
+    "[ CONTACT ]",
+    `  ${pad("Name")} : ${data.name || "-"}`,
+    `  ${pad("Email")} : ${data.email || "-"}`,
+    `  ${pad("Company")} : ${data.company || "-"}`,
+    `  ${pad("Country")} : ${data.country || "-"}`,
+    "",
+    "[ PRODUCT INTEREST ]",
+    `  ${data.product || "(not specified)"}`,
+    "",
+    "[ MESSAGE ]",
+    `  ${(data.message || "(no message)").replace(/\n/g, `${nl}  `)}`,
+    "",
+    "--",
+    "Sent via rodshub.com inquiry form",
+  ].join(nl);
+  // 保持总 URL 在 1800 字符以内（CRLF 编码后每个换行占 6 字符）
+  const safeBody = body.length > 650 ? body.slice(0, 650) + `${nl}...(truncated)` : body;
+  const subject = `RodsHub Inquiry - ${data.name || "New Inquiry"}`;
+  return `mailto:${INQUIRY_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(safeBody)}`;
 }
 
 export default function QuickInquiryForm() {
@@ -39,6 +54,18 @@ export default function QuickInquiryForm() {
     const data = Object.fromEntries(formData) as Record<string, string>;
     setLastData(data);
     setSubmitted(true);
+    // GA4 事件（异步发出，不阻塞）—— mailto 不会离开页面，事件能正常发送
+    gtagEvent("inquiry_submit", {
+      method: "email_form",
+      has_product: Boolean(data.product),
+      country: data.country || "unknown",
+    });
+    // 在用户手势同步上下文中触发，确保浏览器允许唤起邮箱客户端
+    try {
+      window.location.href = buildMailto(data);
+    } catch {
+      // 若浏览器拦截则无操作，用户可点击备用按钮
+    }
   };
 
   const handleCopy = (data: Record<string, string>) => {
@@ -74,19 +101,27 @@ export default function QuickInquiryForm() {
             </div>
             <h3 className="text-xl font-semibold text-gray-900 text-center">{c.successTitle}</h3>
             <p className="mt-2 text-gray-600 text-center">{c.successDesc}</p>
-            <p className="mt-6 text-sm text-gray-700 font-medium text-center">{c.chooseMethod}</p>
-            <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center">
+            <p className="mt-6 text-sm text-gray-500 text-center">
+              Your email client should have opened automatically. If not:
+            </p>
+            <div className="mt-3 flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href={mailto}
-                className="inline-flex items-center justify-center px-6 py-4 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 border border-gray-300 text-sm text-gray-700 font-medium rounded-lg hover:border-gray-500 hover:text-black transition"
               >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
                 {c.openEmailBtn}
               </a>
               <button
                 type="button"
                 onClick={() => handleCopy(data)}
-                className="inline-flex items-center justify-center px-6 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-black hover:text-black transition"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 border border-gray-300 text-sm text-gray-700 font-medium rounded-lg hover:border-gray-500 hover:text-black transition"
               >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                </svg>
                 {copied ? c.copied : c.copyContent}
               </button>
             </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
@@ -12,6 +12,7 @@ import { absoluteUrl } from "@/lib/seo";
 import { getProductDetailForVariant, getKeyFeaturesForProduct } from "@/lib/productDetail";
 import { getDisplayPrice, inferMaterialFromTitle, inferPowerFromTitle } from "@/lib/realProducts";
 import { getOriginalProductTitle } from "@/lib/skuData";
+import { gtagEvent } from "@/lib/gtag";
 import type { Product } from "@/lib/products";
 import type { ProductDetail } from "@/lib/productDetail";
 import type { RealProduct, ProductVariant } from "@/lib/realProducts";
@@ -119,6 +120,26 @@ export default function ProductDetailContent({
 }: ProductDetailContentProps) {
   const { lang } = useLanguage();
   const displayName = getProductName(product, lang);
+
+  useEffect(() => {
+    gtagEvent("product_view", {
+      product_id: product.id,
+      product_name: displayName,
+      category: product.fishingStyle ?? "unknown",
+      price: product.price ?? "",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product.id]);
+
+  useEffect(() => {
+    gtagEvent("product_view", {
+      product_id: product.id,
+      product_name: displayName,
+      category: product.fishingStyle ?? "unknown",
+      price: product.price ?? "",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product.id]);
   const detailTitle = getDetailDisplayName(product, lang, realProduct ? getOriginalProductTitle(realProduct.id) : undefined);
   const displayNameShort = displayName.length > 52 ? displayName.slice(0, 49).trimEnd() + "…" : displayName;
 
@@ -263,6 +284,14 @@ export default function ProductDetailContent({
 
           <Link
             href="/inquiry"
+            onClick={() =>
+              gtagEvent("inquiry_click", {
+                source: "product_detail",
+                product_id: product.id,
+                product_name: displayName,
+                category: product.fishingStyle ?? "unknown",
+              })
+            }
             className="inline-flex items-center justify-center w-full sm:w-auto px-10 py-3.5 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition"
           >
             {t("inquiryNow", lang)}

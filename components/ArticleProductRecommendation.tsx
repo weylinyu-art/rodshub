@@ -6,6 +6,7 @@ import { t } from "@/lib/i18n";
 import { getProductName, getListDisplayName } from "@/lib/products-i18n";
 import { getDisplayPrice } from "@/lib/realProducts";
 import type { Product } from "@/lib/products";
+import { gtagEvent } from "@/lib/gtag";
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=400&h=400&fit=crop";
@@ -44,6 +45,7 @@ function ArticleProductCard({ product }: { product: Product & { id: string } }) 
         <p className="mt-1 font-bold text-gray-900 text-sm">{displayPrice}</p>
         <Link
           href="/inquiry"
+          onClick={() => gtagEvent("inquiry_click", { source: "article_product" })}
           className="mt-2 inline-flex justify-center items-center w-full py-2 px-3 bg-black text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors"
         >
           {t("inquiry", lang)}

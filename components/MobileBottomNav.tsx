@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
+import { gtagEvent } from "@/lib/gtag";
 
 const ITEMS = [
   { href: "/", label: "home", icon: HomeIcon },
@@ -60,6 +61,7 @@ export default function MobileBottomNav() {
             <Link
               key={href}
               href={href}
+              onClick={() => gtagEvent("nav_click", { label: label, location: "mobile_bottom_nav" })}
               className="flex flex-col items-center justify-center min-w-[64px] min-h-[44px] px-4 py-2 text-xs font-medium transition-colors"
               style={{ color: active ? "#111" : "#6b7280" }}
             >

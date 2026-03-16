@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 import ShareCurrentPage from "@/components/ShareCurrentPage";
+import { gtagEvent } from "@/lib/gtag";
 
 const EMAIL = "hello@rodshub.com";
 const WHATSAPP = "+86 19957106387";
@@ -48,7 +49,7 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-white mb-4">{t("contactUs", lang)}</h3>
             <div className="flex items-center gap-2 flex-wrap">
-              <a href={`mailto:${EMAIL}`} className="flex items-center gap-2 text-sm hover:text-white transition">
+              <a href={`mailto:${EMAIL}`} onClick={() => gtagEvent("contact_email_click", { location: "footer" })} className="flex items-center gap-2 text-sm hover:text-white transition">
                 <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
@@ -70,7 +71,7 @@ export default function Footer() {
               </button>
             </div>
             <div className="flex items-center gap-2 mt-2 flex-wrap">
-              <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm hover:text-white transition">
+              <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" onClick={() => gtagEvent("contact_whatsapp_click", { location: "footer" })} className="inline-flex items-center gap-2 text-sm hover:text-white transition">
                 <WhatsAppIcon />
                 <span>{WHATSAPP}</span>
               </a>

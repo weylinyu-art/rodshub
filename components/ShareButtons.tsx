@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 import { SITE_URL } from "@/lib/seo";
+import { gtagEvent } from "@/lib/gtag";
 
 /** 社交媒体平台 */
 const PLATFORMS = [
@@ -126,6 +127,7 @@ export default function ShareButtons({
             }
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => gtagEvent("share", { platform: p.id, url: shareUrl })}
             className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900 transition-colors"
             title={p.name}
             aria-label={`Share on ${p.name}`}
@@ -135,7 +137,7 @@ export default function ShareButtons({
         ))}
         <button
           type="button"
-          onClick={handleInstagramShare}
+          onClick={() => { gtagEvent("share", { platform: "instagram", url: shareUrl }); handleInstagramShare(); }}
           className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900 transition-colors"
           title="Share to Instagram"
           aria-label="Share to Instagram"
@@ -148,7 +150,7 @@ export default function ShareButtons({
         </button>
         <button
           type="button"
-          onClick={() => handleCopy(`${effectiveShareText} ${shareUrl}`, () => setCopied(true))}
+          onClick={() => { gtagEvent("share", { platform: "copy_link", url: shareUrl }); handleCopy(`${effectiveShareText} ${shareUrl}`, () => setCopied(true)); }}
           className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900 transition-colors"
           title="Copy link"
           aria-label="Copy link"

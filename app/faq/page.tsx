@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
+import InquiryButton from "@/components/InquiryButton";
 import { absoluteUrl, buildOpenGraph, buildTwitter, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -103,9 +104,7 @@ export default function FAQPage() {
         </div>
         <div className="mt-12 text-center">
           <p className="text-gray-600 mb-4">Still have questions?</p>
-          <Link href="/inquiry" className="inline-flex items-center px-8 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition">
-            Send Inquiry
-          </Link>
+          <InquiryButton source="faq_page" label="Send Inquiry" />
         </div>
       </div>
     </main>

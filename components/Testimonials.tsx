@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { testimonials } from "@/lib/content";
+import { gtagEvent } from "@/lib/gtag";
 
 export default function Testimonials() {
   const { lang } = useLanguage();
@@ -35,7 +36,7 @@ export default function Testimonials() {
           ))}
         </div>
         <div className="mt-12 text-center">
-          <Link href="/inquiry" className="inline-flex items-center px-6 py-2 text-sm font-semibold text-gray-900 hover:text-black">
+          <Link href="/inquiry" onClick={() => gtagEvent("inquiry_click", { source: "testimonials" })} className="inline-flex items-center px-6 py-2 text-sm font-semibold text-gray-900 hover:text-black">
             {c.shareLink}
           </Link>
         </div>

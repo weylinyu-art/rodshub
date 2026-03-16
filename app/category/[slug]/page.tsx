@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import CategoryFilters from "@/components/CategoryFilters";
 import CategoryPageHeader from "@/components/CategoryPageHeader";
 import JsonLd from "@/components/JsonLd";
+import InquiryButton from "@/components/InquiryButton";
 import {
   categories,
   getProductsByCategory,
@@ -80,12 +81,7 @@ export default async function CategoryPage({ params }: PageProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
           <p className="text-gray-600 mb-4">Can&apos;t find what you need?</p>
-          <Link
-            href="/#inquiry"
-            className="inline-flex items-center justify-center px-8 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition"
-          >
-            Send Inquiry
-          </Link>
+          <InquiryButton source="category_page" label="Send Inquiry" />
         </div>
       </div>
     </main>

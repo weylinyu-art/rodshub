@@ -8,6 +8,7 @@ import { getProductName, getListDisplayName } from "@/lib/products-i18n";
 import { dedupeImagesByBase } from "@/lib/imageUtils";
 import { getDisplayPrice } from "@/lib/realProducts";
 import { recordProductClick } from "@/lib/clickTracking";
+import { gtagEvent } from "@/lib/gtag";
 import type { Product } from "@/lib/products";
 
 interface ProductCardProps extends Product {
@@ -101,6 +102,7 @@ export default function ProductCard({
         <p className="mt-1 font-bold text-gray-900 text-sm">{displayPrice}</p>
         <Link
           href="/inquiry"
+          onClick={() => gtagEvent("inquiry_click", { source: "product_card" })}
           className="mt-2 inline-flex justify-center items-center w-full py-2 px-4 bg-black text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors"
         >
           {t("inquiry", lang)}

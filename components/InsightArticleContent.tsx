@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
+import { gtagEvent } from "@/lib/gtag";
 import { getInsightByLang } from "@/lib/insights-i18n";
 import InsightContentRenderer from "@/components/InsightContentRenderer";
 import ArticleProductRecommendation from "@/components/ArticleProductRecommendation";
@@ -61,6 +62,7 @@ export default function InsightArticleContent({ slug, recommendedProducts }: Pro
         <p className="text-gray-600 mb-4">{t("sendInquiryPrompt", lang)}</p>
         <Link
           href="/inquiry"
+          onClick={() => gtagEvent("inquiry_click", { source: "insight_article" })}
           className="inline-flex items-center justify-center px-8 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition"
         >
           {t("sendInquiry", lang)}

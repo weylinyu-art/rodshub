@@ -10,6 +10,9 @@ lerna-debug.log*
 node_modules
 .next
 out
+output
+output
+output
 dist
 dist-ssr
 *.local
@@ -28,3 +31,6 @@ dist-ssr
 # Next.js
 .next
 out
+
+# 采集脚本下载的图片
+output

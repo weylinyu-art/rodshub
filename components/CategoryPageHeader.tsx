@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 import { categoryNames } from "@/lib/content";
+import { gtagEvent } from "@/lib/gtag";
 
 interface Props {
   slug: string;
@@ -13,6 +15,11 @@ interface Props {
 export default function CategoryPageHeader({ slug }: Props) {
   const { lang } = useLanguage();
   const name = categoryNames[slug]?.[lang] ?? categoryNames[slug]?.en ?? slug;
+
+  useEffect(() => {
+    gtagEvent("category_view", { category: slug, category_name: name });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug]);
 
   return (
     <div className="bg-white border-b border-gray-200">

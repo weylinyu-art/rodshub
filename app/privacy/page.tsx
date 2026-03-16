@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | RodsHub",
-  description: "RodsHub privacy policy. How we collect, use, and protect your data.",
+  description: "RodsHub privacy policy. How we collect, use, and protect your data when you use our B2B fishing rod sourcing platform.",
+  openGraph: buildOpenGraph("Privacy Policy | RodsHub", "How RodsHub collects, uses, and protects your data.", "/privacy"),
+  twitter: buildTwitter("Privacy Policy | RodsHub", "How RodsHub collects, uses, and protects your data."),
   alternates: { canonical: absoluteUrl("/privacy") },
   robots: { index: true, follow: true },
 };

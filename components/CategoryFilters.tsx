@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import type { Product } from "@/lib/products";
 import { applyListImageOverride } from "@/lib/realProducts";
+import { gtagEvent } from "@/lib/gtag";
 import {
   sortProductsByCategory,
   sortProductsByPriceAsc,
@@ -26,6 +27,14 @@ export default function CategoryFilters({
 }) {
   const [sort, setSort] = useState<SortOption>("default");
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    gtagEvent("category_view", {
+      category_name: categoryName,
+      product_count: products.length,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoryName]);
 
   useEffect(() => {
     setCurrentPage(1);

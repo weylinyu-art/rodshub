@@ -5,9 +5,11 @@ import { CATEGORY_IMAGE_URLS } from "@/lib/categoryImages";
 import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "All Categories | Fishing Rods | RodsHub",
-  description: "Browse spinning, casting, telescopic, surf, ice fishing, travel rods. 2000+ SKUs. Wholesale prices.",
-  openGraph: buildOpenGraph("All Categories | RodsHub", "Spinning, casting, telescopic, surf, ice, travel rods.", "/categories"),
+  title: "All Fishing Rod Categories | Wholesale B2B | RodsHub",
+  description: "Browse all fishing rod categories: spinning, casting, telescopic, surf, ice fishing, and travel rods. 2,000+ wholesale SKUs from $8/pc. MOQ 30 pcs, OEM available.",
+  keywords: ["fishing rod categories", "spinning rod wholesale", "casting rod bulk", "telescopic rod supplier", "surf rod manufacturer", "ice fishing rod wholesale", "travel rod OEM"],
+  openGraph: buildOpenGraph("All Fishing Rod Categories | RodsHub B2B", "2,000+ wholesale fishing rods by category. Spinning, casting, telescopic, surf, ice, travel. B2B pricing.", "/categories"),
+  twitter: buildTwitter("All Fishing Rod Categories | RodsHub B2B", "2,000+ wholesale rods by category. MOQ 30 pcs, OEM available."),
   alternates: { canonical: absoluteUrl("/categories") },
 };
 

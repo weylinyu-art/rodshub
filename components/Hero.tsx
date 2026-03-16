@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
+import { gtagEvent } from "@/lib/gtag";
 
 export default function Hero() {
   const { lang } = useLanguage();
@@ -59,6 +60,7 @@ export default function Hero() {
           </a>
           <a
             href="/inquiry"
+            onClick={() => gtagEvent("inquiry_click", { source: "hero" })}
             className="inline-flex items-center justify-center px-6 py-3 border-2 border-white text-white text-base font-semibold hover:bg-white hover:text-black transition"
           >
             {t("sendInquiry", lang)}

@@ -6,6 +6,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { t, type LangCode } from "@/lib/i18n";
 import { getProductName, getListDisplayName } from "@/lib/products-i18n";
 import { getDisplayPrice } from "@/lib/realProducts";
+import { gtagEvent } from "@/lib/gtag";
 import type { Product } from "@/lib/products";
 
 const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=500&h=500&fit=crop";
@@ -60,6 +61,7 @@ function RecommendCard({
         <p className="mt-1 font-bold text-gray-900 text-sm">{displayPrice}</p>
         <Link
           href="/inquiry"
+          onClick={() => gtagEvent("inquiry_click", { source: "product_recommend" })}
           className="mt-2 inline-flex justify-center items-center w-full py-2 px-3 bg-black text-white text-xs font-semibold rounded-lg hover:bg-gray-800 transition-colors"
         >
           {t("inquiry", lang)}

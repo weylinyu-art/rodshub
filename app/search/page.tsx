@@ -7,6 +7,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 import { getAllProducts } from "@/lib/productRegistry";
 import { applyListImageOverride } from "@/lib/realProducts";
+import { gtagEvent } from "@/lib/gtag";
 
 function getQueryFromUrl(): string {
   if (typeof window === "undefined") return "";
@@ -33,6 +34,7 @@ export default function SearchPage() {
           (p.power ?? "").toLowerCase().includes(term)
       );
       setResults(filtered);
+      gtagEvent("search", { search_term: query, result_count: filtered.length });
     } else {
       setResults([]);
     }
@@ -46,7 +48,9 @@ export default function SearchPage() {
       if (query) {
         const term = query.toLowerCase();
         const all = getAllProducts();
-        setResults(all.filter((p) => p.name.toLowerCase().includes(term) || (p.material ?? "").toLowerCase().includes(term) || (p.fishingStyle ?? "").toLowerCase().includes(term) || (p.power ?? "").toLowerCase().includes(term)));
+        const filtered = all.filter((p) => p.name.toLowerCase().includes(term) || (p.material ?? "").toLowerCase().includes(term) || (p.fishingStyle ?? "").toLowerCase().includes(term) || (p.power ?? "").toLowerCase().includes(term));
+        setResults(filtered);
+        gtagEvent("search", { search_term: query, result_count: filtered.length });
       } else setResults([]);
     };
     window.addEventListener("popstate", onPopState);
