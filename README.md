@@ -23,6 +23,14 @@ npm run build
 npm run generate:insight-hot-topics
 ```
 
+说明：
+- 该命令为 append-only（只新增，不覆盖已有文章种子）
+- 默认每次每个分类新增 5 篇，可用环境变量调整，例如：
+
+```bash
+INSIGHT_APPEND_PER_SECTION=10 npm run generate:insight-hot-topics
+```
+
 ## GitHub + Cloudflare Pages 部署
 
 ### 方式一：Cloudflare Git 集成（推荐）

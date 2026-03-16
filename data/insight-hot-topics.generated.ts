@@ -13,7 +13,7 @@ export type GeneratedHotTopicSeed = {
 export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> = {
   "rod-guides": [
     {
-      "id": "guide-hot-01-spinning-rod-setup",
+      "id": "guide-hot-01",
       "title": "spinning rod setup: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"spinning rod setup\"",
       "buyerIntent": "buyers searching practical decisions based on \"spinning rod setup\"",
@@ -25,7 +25,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-02-casting-rod-action",
+      "id": "guide-hot-02",
       "title": "casting rod action: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"casting rod action\"",
       "buyerIntent": "buyers searching practical decisions based on \"casting rod action\"",
@@ -37,7 +37,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-03-bass-finesse-rig",
+      "id": "guide-hot-03",
       "title": "bass finesse rig: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"bass finesse rig\"",
       "buyerIntent": "buyers searching practical decisions based on \"bass finesse rig\"",
@@ -49,7 +49,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-04-crankbait-rod",
+      "id": "guide-hot-04",
       "title": "crankbait rod: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"crankbait rod\"",
       "buyerIntent": "buyers searching practical decisions based on \"crankbait rod\"",
@@ -61,7 +61,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-05-travel-rod-choice",
+      "id": "guide-hot-05",
       "title": "travel rod choice: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"travel rod choice\"",
       "buyerIntent": "buyers searching practical decisions based on \"travel rod choice\"",
@@ -73,7 +73,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-06-surf-rod-weight",
+      "id": "guide-hot-06",
       "title": "surf rod weight: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"surf rod weight\"",
       "buyerIntent": "buyers searching practical decisions based on \"surf rod weight\"",
@@ -85,7 +85,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-07-guide-insert-durability",
+      "id": "guide-hot-07",
       "title": "guide insert durability: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"guide insert durability\"",
       "buyerIntent": "buyers searching practical decisions based on \"guide insert durability\"",
@@ -97,7 +97,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-08-oem-rod-branding",
+      "id": "guide-hot-08",
       "title": "oem rod branding: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"oem rod branding\"",
       "buyerIntent": "buyers searching practical decisions based on \"oem rod branding\"",
@@ -109,7 +109,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-09-moq-negotiation",
+      "id": "guide-hot-09",
       "title": "moq negotiation: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"moq negotiation\"",
       "buyerIntent": "buyers searching practical decisions based on \"moq negotiation\"",
@@ -121,7 +121,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-10-supplier-quality-control",
+      "id": "guide-hot-10",
       "title": "supplier quality control: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"supplier quality control\"",
       "buyerIntent": "buyers searching practical decisions based on \"supplier quality control\"",
@@ -133,7 +133,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-11-inventory-planning",
+      "id": "guide-hot-11",
       "title": "inventory planning: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"inventory planning\"",
       "buyerIntent": "buyers searching practical decisions based on \"inventory planning\"",
@@ -145,7 +145,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-12-wholesale-pricing",
+      "id": "guide-hot-12",
       "title": "wholesale pricing: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"wholesale pricing\"",
       "buyerIntent": "buyers searching practical decisions based on \"wholesale pricing\"",
@@ -157,7 +157,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-13-line-and-lure-matching",
+      "id": "guide-hot-13",
       "title": "line and lure matching: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"line and lure matching\"",
       "buyerIntent": "buyers searching practical decisions based on \"line and lure matching\"",
@@ -169,7 +169,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-14-winter-rod-demand",
+      "id": "guide-hot-14",
       "title": "winter rod demand: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"winter rod demand\"",
       "buyerIntent": "buyers searching practical decisions based on \"winter rod demand\"",
@@ -181,7 +181,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-15-topwater-setup",
+      "id": "guide-hot-15",
       "title": "topwater setup: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"topwater setup\"",
       "buyerIntent": "buyers searching practical decisions based on \"topwater setup\"",
@@ -193,7 +193,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-16-drop-shot-tuning",
+      "id": "guide-hot-16",
       "title": "drop shot tuning: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"drop shot tuning\"",
       "buyerIntent": "buyers searching practical decisions based on \"drop shot tuning\"",
@@ -205,7 +205,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-17-warranty-claim-handling",
+      "id": "guide-hot-17",
       "title": "warranty claim handling: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"warranty claim handling\"",
       "buyerIntent": "buyers searching practical decisions based on \"warranty claim handling\"",
@@ -217,7 +217,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-18-sample-evaluation",
+      "id": "guide-hot-18",
       "title": "sample evaluation: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"sample evaluation\"",
       "buyerIntent": "buyers searching practical decisions based on \"sample evaluation\"",
@@ -229,7 +229,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-19-category-mix-strategy",
+      "id": "guide-hot-19",
       "title": "category mix strategy: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"category mix strategy\"",
       "buyerIntent": "buyers searching practical decisions based on \"category mix strategy\"",
@@ -241,7 +241,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "guide-hot-20-regional-assortment",
+      "id": "guide-hot-20",
       "title": "regional assortment: Rod Guide for Buyers",
       "angle": "reworked from live trend signals around \"regional assortment\"",
       "buyerIntent": "buyers searching practical decisions based on \"regional assortment\"",
@@ -251,11 +251,71 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
         "connect guide to category and product pages",
         "use \"regional assortment\" in FAQ-style comparison blocks"
       ]
+    },
+    {
+      "id": "guide-hot-21",
+      "title": "spinning rod setup: Rod Guide for Buyers",
+      "angle": "reworked from live trend signals around \"spinning rod setup\"",
+      "buyerIntent": "buyers searching practical decisions based on \"spinning rod setup\"",
+      "checklist": [
+        "map topic to rod length/power/action range",
+        "define beginner and advanced SKU options",
+        "connect guide to category and product pages",
+        "use \"spinning rod setup\" in FAQ-style comparison blocks"
+      ]
+    },
+    {
+      "id": "guide-hot-22",
+      "title": "casting rod action: Rod Guide for Buyers",
+      "angle": "reworked from live trend signals around \"casting rod action\"",
+      "buyerIntent": "buyers searching practical decisions based on \"casting rod action\"",
+      "checklist": [
+        "map topic to rod length/power/action range",
+        "define beginner and advanced SKU options",
+        "connect guide to category and product pages",
+        "use \"casting rod action\" in FAQ-style comparison blocks"
+      ]
+    },
+    {
+      "id": "guide-hot-23",
+      "title": "bass finesse rig: Rod Guide for Buyers",
+      "angle": "reworked from live trend signals around \"bass finesse rig\"",
+      "buyerIntent": "buyers searching practical decisions based on \"bass finesse rig\"",
+      "checklist": [
+        "map topic to rod length/power/action range",
+        "define beginner and advanced SKU options",
+        "connect guide to category and product pages",
+        "use \"bass finesse rig\" in FAQ-style comparison blocks"
+      ]
+    },
+    {
+      "id": "guide-hot-24",
+      "title": "crankbait rod: Rod Guide for Buyers",
+      "angle": "reworked from live trend signals around \"crankbait rod\"",
+      "buyerIntent": "buyers searching practical decisions based on \"crankbait rod\"",
+      "checklist": [
+        "map topic to rod length/power/action range",
+        "define beginner and advanced SKU options",
+        "connect guide to category and product pages",
+        "use \"crankbait rod\" in FAQ-style comparison blocks"
+      ]
+    },
+    {
+      "id": "guide-hot-25",
+      "title": "travel rod choice: Rod Guide for Buyers",
+      "angle": "reworked from live trend signals around \"travel rod choice\"",
+      "buyerIntent": "buyers searching practical decisions based on \"travel rod choice\"",
+      "checklist": [
+        "map topic to rod length/power/action range",
+        "define beginner and advanced SKU options",
+        "connect guide to category and product pages",
+        "use \"travel rod choice\" in FAQ-style comparison blocks"
+      ]
     }
   ],
   "techniques": [
     {
-      "id": "tech-hot-01-spinning-rod-setup",
+      "id": "tech-hot-01",
       "title": "spinning rod setup: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"spinning rod setup\"",
       "buyerIntent": "buyers searching practical decisions based on \"spinning rod setup\"",
@@ -267,7 +327,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-02-casting-rod-action",
+      "id": "tech-hot-02",
       "title": "casting rod action: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"casting rod action\"",
       "buyerIntent": "buyers searching practical decisions based on \"casting rod action\"",
@@ -279,7 +339,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-03-bass-finesse-rig",
+      "id": "tech-hot-03",
       "title": "bass finesse rig: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"bass finesse rig\"",
       "buyerIntent": "buyers searching practical decisions based on \"bass finesse rig\"",
@@ -291,7 +351,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-04-crankbait-rod",
+      "id": "tech-hot-04",
       "title": "crankbait rod: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"crankbait rod\"",
       "buyerIntent": "buyers searching practical decisions based on \"crankbait rod\"",
@@ -303,7 +363,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-05-travel-rod-choice",
+      "id": "tech-hot-05",
       "title": "travel rod choice: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"travel rod choice\"",
       "buyerIntent": "buyers searching practical decisions based on \"travel rod choice\"",
@@ -315,7 +375,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-06-surf-rod-weight",
+      "id": "tech-hot-06",
       "title": "surf rod weight: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"surf rod weight\"",
       "buyerIntent": "buyers searching practical decisions based on \"surf rod weight\"",
@@ -327,7 +387,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-07-guide-insert-durability",
+      "id": "tech-hot-07",
       "title": "guide insert durability: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"guide insert durability\"",
       "buyerIntent": "buyers searching practical decisions based on \"guide insert durability\"",
@@ -339,7 +399,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-08-oem-rod-branding",
+      "id": "tech-hot-08",
       "title": "oem rod branding: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"oem rod branding\"",
       "buyerIntent": "buyers searching practical decisions based on \"oem rod branding\"",
@@ -351,7 +411,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-09-moq-negotiation",
+      "id": "tech-hot-09",
       "title": "moq negotiation: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"moq negotiation\"",
       "buyerIntent": "buyers searching practical decisions based on \"moq negotiation\"",
@@ -363,7 +423,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-10-supplier-quality-control",
+      "id": "tech-hot-10",
       "title": "supplier quality control: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"supplier quality control\"",
       "buyerIntent": "buyers searching practical decisions based on \"supplier quality control\"",
@@ -375,7 +435,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-11-inventory-planning",
+      "id": "tech-hot-11",
       "title": "inventory planning: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"inventory planning\"",
       "buyerIntent": "buyers searching practical decisions based on \"inventory planning\"",
@@ -387,7 +447,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-12-wholesale-pricing",
+      "id": "tech-hot-12",
       "title": "wholesale pricing: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"wholesale pricing\"",
       "buyerIntent": "buyers searching practical decisions based on \"wholesale pricing\"",
@@ -399,7 +459,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-13-line-and-lure-matching",
+      "id": "tech-hot-13",
       "title": "line and lure matching: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"line and lure matching\"",
       "buyerIntent": "buyers searching practical decisions based on \"line and lure matching\"",
@@ -411,7 +471,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-14-winter-rod-demand",
+      "id": "tech-hot-14",
       "title": "winter rod demand: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"winter rod demand\"",
       "buyerIntent": "buyers searching practical decisions based on \"winter rod demand\"",
@@ -423,7 +483,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-15-topwater-setup",
+      "id": "tech-hot-15",
       "title": "topwater setup: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"topwater setup\"",
       "buyerIntent": "buyers searching practical decisions based on \"topwater setup\"",
@@ -435,7 +495,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-16-drop-shot-tuning",
+      "id": "tech-hot-16",
       "title": "drop shot tuning: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"drop shot tuning\"",
       "buyerIntent": "buyers searching practical decisions based on \"drop shot tuning\"",
@@ -447,7 +507,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-17-warranty-claim-handling",
+      "id": "tech-hot-17",
       "title": "warranty claim handling: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"warranty claim handling\"",
       "buyerIntent": "buyers searching practical decisions based on \"warranty claim handling\"",
@@ -459,7 +519,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-18-sample-evaluation",
+      "id": "tech-hot-18",
       "title": "sample evaluation: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"sample evaluation\"",
       "buyerIntent": "buyers searching practical decisions based on \"sample evaluation\"",
@@ -471,7 +531,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-19-category-mix-strategy",
+      "id": "tech-hot-19",
       "title": "category mix strategy: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"category mix strategy\"",
       "buyerIntent": "buyers searching practical decisions based on \"category mix strategy\"",
@@ -483,7 +543,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "tech-hot-20-regional-assortment",
+      "id": "tech-hot-20",
       "title": "regional assortment: Technique Setup and Rod Pairing",
       "angle": "reworked from live trend signals around \"regional assortment\"",
       "buyerIntent": "buyers searching practical decisions based on \"regional assortment\"",
@@ -493,11 +553,71 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
         "add scenario-based setup examples",
         "build internal links around \"regional assortment\" use cases"
       ]
+    },
+    {
+      "id": "tech-hot-21",
+      "title": "spinning rod setup: Technique Setup and Rod Pairing",
+      "angle": "reworked from live trend signals around \"spinning rod setup\"",
+      "buyerIntent": "buyers searching practical decisions based on \"spinning rod setup\"",
+      "checklist": [
+        "pair technique with line and lure ranges",
+        "specify rod action for hook-up consistency",
+        "add scenario-based setup examples",
+        "build internal links around \"spinning rod setup\" use cases"
+      ]
+    },
+    {
+      "id": "tech-hot-22",
+      "title": "casting rod action: Technique Setup and Rod Pairing",
+      "angle": "reworked from live trend signals around \"casting rod action\"",
+      "buyerIntent": "buyers searching practical decisions based on \"casting rod action\"",
+      "checklist": [
+        "pair technique with line and lure ranges",
+        "specify rod action for hook-up consistency",
+        "add scenario-based setup examples",
+        "build internal links around \"casting rod action\" use cases"
+      ]
+    },
+    {
+      "id": "tech-hot-23",
+      "title": "bass finesse rig: Technique Setup and Rod Pairing",
+      "angle": "reworked from live trend signals around \"bass finesse rig\"",
+      "buyerIntent": "buyers searching practical decisions based on \"bass finesse rig\"",
+      "checklist": [
+        "pair technique with line and lure ranges",
+        "specify rod action for hook-up consistency",
+        "add scenario-based setup examples",
+        "build internal links around \"bass finesse rig\" use cases"
+      ]
+    },
+    {
+      "id": "tech-hot-24",
+      "title": "crankbait rod: Technique Setup and Rod Pairing",
+      "angle": "reworked from live trend signals around \"crankbait rod\"",
+      "buyerIntent": "buyers searching practical decisions based on \"crankbait rod\"",
+      "checklist": [
+        "pair technique with line and lure ranges",
+        "specify rod action for hook-up consistency",
+        "add scenario-based setup examples",
+        "build internal links around \"crankbait rod\" use cases"
+      ]
+    },
+    {
+      "id": "tech-hot-25",
+      "title": "travel rod choice: Technique Setup and Rod Pairing",
+      "angle": "reworked from live trend signals around \"travel rod choice\"",
+      "buyerIntent": "buyers searching practical decisions based on \"travel rod choice\"",
+      "checklist": [
+        "pair technique with line and lure ranges",
+        "specify rod action for hook-up consistency",
+        "add scenario-based setup examples",
+        "build internal links around \"travel rod choice\" use cases"
+      ]
     }
   ],
   "product-knowledge": [
     {
-      "id": "pk-hot-01-spinning-rod-setup",
+      "id": "pk-hot-01",
       "title": "spinning rod setup: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"spinning rod setup\"",
       "buyerIntent": "buyers searching practical decisions based on \"spinning rod setup\"",
@@ -509,7 +629,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-02-casting-rod-action",
+      "id": "pk-hot-02",
       "title": "casting rod action: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"casting rod action\"",
       "buyerIntent": "buyers searching practical decisions based on \"casting rod action\"",
@@ -521,7 +641,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-03-bass-finesse-rig",
+      "id": "pk-hot-03",
       "title": "bass finesse rig: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"bass finesse rig\"",
       "buyerIntent": "buyers searching practical decisions based on \"bass finesse rig\"",
@@ -533,7 +653,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-04-crankbait-rod",
+      "id": "pk-hot-04",
       "title": "crankbait rod: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"crankbait rod\"",
       "buyerIntent": "buyers searching practical decisions based on \"crankbait rod\"",
@@ -545,7 +665,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-05-travel-rod-choice",
+      "id": "pk-hot-05",
       "title": "travel rod choice: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"travel rod choice\"",
       "buyerIntent": "buyers searching practical decisions based on \"travel rod choice\"",
@@ -557,7 +677,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-06-surf-rod-weight",
+      "id": "pk-hot-06",
       "title": "surf rod weight: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"surf rod weight\"",
       "buyerIntent": "buyers searching practical decisions based on \"surf rod weight\"",
@@ -569,7 +689,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-07-guide-insert-durability",
+      "id": "pk-hot-07",
       "title": "guide insert durability: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"guide insert durability\"",
       "buyerIntent": "buyers searching practical decisions based on \"guide insert durability\"",
@@ -581,7 +701,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-08-oem-rod-branding",
+      "id": "pk-hot-08",
       "title": "oem rod branding: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"oem rod branding\"",
       "buyerIntent": "buyers searching practical decisions based on \"oem rod branding\"",
@@ -593,7 +713,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-09-moq-negotiation",
+      "id": "pk-hot-09",
       "title": "moq negotiation: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"moq negotiation\"",
       "buyerIntent": "buyers searching practical decisions based on \"moq negotiation\"",
@@ -605,7 +725,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-10-supplier-quality-control",
+      "id": "pk-hot-10",
       "title": "supplier quality control: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"supplier quality control\"",
       "buyerIntent": "buyers searching practical decisions based on \"supplier quality control\"",
@@ -617,7 +737,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-11-inventory-planning",
+      "id": "pk-hot-11",
       "title": "inventory planning: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"inventory planning\"",
       "buyerIntent": "buyers searching practical decisions based on \"inventory planning\"",
@@ -629,7 +749,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-12-wholesale-pricing",
+      "id": "pk-hot-12",
       "title": "wholesale pricing: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"wholesale pricing\"",
       "buyerIntent": "buyers searching practical decisions based on \"wholesale pricing\"",
@@ -641,7 +761,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-13-line-and-lure-matching",
+      "id": "pk-hot-13",
       "title": "line and lure matching: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"line and lure matching\"",
       "buyerIntent": "buyers searching practical decisions based on \"line and lure matching\"",
@@ -653,7 +773,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-14-winter-rod-demand",
+      "id": "pk-hot-14",
       "title": "winter rod demand: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"winter rod demand\"",
       "buyerIntent": "buyers searching practical decisions based on \"winter rod demand\"",
@@ -665,7 +785,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-15-topwater-setup",
+      "id": "pk-hot-15",
       "title": "topwater setup: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"topwater setup\"",
       "buyerIntent": "buyers searching practical decisions based on \"topwater setup\"",
@@ -677,7 +797,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-16-drop-shot-tuning",
+      "id": "pk-hot-16",
       "title": "drop shot tuning: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"drop shot tuning\"",
       "buyerIntent": "buyers searching practical decisions based on \"drop shot tuning\"",
@@ -689,7 +809,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-17-warranty-claim-handling",
+      "id": "pk-hot-17",
       "title": "warranty claim handling: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"warranty claim handling\"",
       "buyerIntent": "buyers searching practical decisions based on \"warranty claim handling\"",
@@ -701,7 +821,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-18-sample-evaluation",
+      "id": "pk-hot-18",
       "title": "sample evaluation: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"sample evaluation\"",
       "buyerIntent": "buyers searching practical decisions based on \"sample evaluation\"",
@@ -713,7 +833,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-19-category-mix-strategy",
+      "id": "pk-hot-19",
       "title": "category mix strategy: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"category mix strategy\"",
       "buyerIntent": "buyers searching practical decisions based on \"category mix strategy\"",
@@ -725,7 +845,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "pk-hot-20-regional-assortment",
+      "id": "pk-hot-20",
       "title": "regional assortment: Product Quality and Spec Insight",
       "angle": "reworked from live trend signals around \"regional assortment\"",
       "buyerIntent": "buyers searching practical decisions based on \"regional assortment\"",
@@ -735,11 +855,71 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
         "define component tiering by price band",
         "show how \"regional assortment\" affects durability and conversion"
       ]
+    },
+    {
+      "id": "pk-hot-21",
+      "title": "spinning rod setup: Product Quality and Spec Insight",
+      "angle": "reworked from live trend signals around \"spinning rod setup\"",
+      "buyerIntent": "buyers searching practical decisions based on \"spinning rod setup\"",
+      "checklist": [
+        "translate specs to buyer-friendly language",
+        "highlight QC checkpoints and return risks",
+        "define component tiering by price band",
+        "show how \"spinning rod setup\" affects durability and conversion"
+      ]
+    },
+    {
+      "id": "pk-hot-22",
+      "title": "casting rod action: Product Quality and Spec Insight",
+      "angle": "reworked from live trend signals around \"casting rod action\"",
+      "buyerIntent": "buyers searching practical decisions based on \"casting rod action\"",
+      "checklist": [
+        "translate specs to buyer-friendly language",
+        "highlight QC checkpoints and return risks",
+        "define component tiering by price band",
+        "show how \"casting rod action\" affects durability and conversion"
+      ]
+    },
+    {
+      "id": "pk-hot-23",
+      "title": "bass finesse rig: Product Quality and Spec Insight",
+      "angle": "reworked from live trend signals around \"bass finesse rig\"",
+      "buyerIntent": "buyers searching practical decisions based on \"bass finesse rig\"",
+      "checklist": [
+        "translate specs to buyer-friendly language",
+        "highlight QC checkpoints and return risks",
+        "define component tiering by price band",
+        "show how \"bass finesse rig\" affects durability and conversion"
+      ]
+    },
+    {
+      "id": "pk-hot-24",
+      "title": "crankbait rod: Product Quality and Spec Insight",
+      "angle": "reworked from live trend signals around \"crankbait rod\"",
+      "buyerIntent": "buyers searching practical decisions based on \"crankbait rod\"",
+      "checklist": [
+        "translate specs to buyer-friendly language",
+        "highlight QC checkpoints and return risks",
+        "define component tiering by price band",
+        "show how \"crankbait rod\" affects durability and conversion"
+      ]
+    },
+    {
+      "id": "pk-hot-25",
+      "title": "travel rod choice: Product Quality and Spec Insight",
+      "angle": "reworked from live trend signals around \"travel rod choice\"",
+      "buyerIntent": "buyers searching practical decisions based on \"travel rod choice\"",
+      "checklist": [
+        "translate specs to buyer-friendly language",
+        "highlight QC checkpoints and return risks",
+        "define component tiering by price band",
+        "show how \"travel rod choice\" affects durability and conversion"
+      ]
     }
   ],
   "community-favorites": [
     {
-      "id": "cf-hot-01-spinning-rod-setup",
+      "id": "cf-hot-01",
       "title": "spinning rod setup: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"spinning rod setup\"",
       "buyerIntent": "buyers searching practical decisions based on \"spinning rod setup\"",
@@ -751,7 +931,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-02-casting-rod-action",
+      "id": "cf-hot-02",
       "title": "casting rod action: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"casting rod action\"",
       "buyerIntent": "buyers searching practical decisions based on \"casting rod action\"",
@@ -763,7 +943,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-03-bass-finesse-rig",
+      "id": "cf-hot-03",
       "title": "bass finesse rig: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"bass finesse rig\"",
       "buyerIntent": "buyers searching practical decisions based on \"bass finesse rig\"",
@@ -775,7 +955,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-04-crankbait-rod",
+      "id": "cf-hot-04",
       "title": "crankbait rod: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"crankbait rod\"",
       "buyerIntent": "buyers searching practical decisions based on \"crankbait rod\"",
@@ -787,7 +967,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-05-travel-rod-choice",
+      "id": "cf-hot-05",
       "title": "travel rod choice: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"travel rod choice\"",
       "buyerIntent": "buyers searching practical decisions based on \"travel rod choice\"",
@@ -799,7 +979,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-06-surf-rod-weight",
+      "id": "cf-hot-06",
       "title": "surf rod weight: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"surf rod weight\"",
       "buyerIntent": "buyers searching practical decisions based on \"surf rod weight\"",
@@ -811,7 +991,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-07-guide-insert-durability",
+      "id": "cf-hot-07",
       "title": "guide insert durability: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"guide insert durability\"",
       "buyerIntent": "buyers searching practical decisions based on \"guide insert durability\"",
@@ -823,7 +1003,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-08-oem-rod-branding",
+      "id": "cf-hot-08",
       "title": "oem rod branding: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"oem rod branding\"",
       "buyerIntent": "buyers searching practical decisions based on \"oem rod branding\"",
@@ -835,7 +1015,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-09-moq-negotiation",
+      "id": "cf-hot-09",
       "title": "moq negotiation: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"moq negotiation\"",
       "buyerIntent": "buyers searching practical decisions based on \"moq negotiation\"",
@@ -847,7 +1027,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-10-supplier-quality-control",
+      "id": "cf-hot-10",
       "title": "supplier quality control: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"supplier quality control\"",
       "buyerIntent": "buyers searching practical decisions based on \"supplier quality control\"",
@@ -859,7 +1039,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-11-inventory-planning",
+      "id": "cf-hot-11",
       "title": "inventory planning: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"inventory planning\"",
       "buyerIntent": "buyers searching practical decisions based on \"inventory planning\"",
@@ -871,7 +1051,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-12-wholesale-pricing",
+      "id": "cf-hot-12",
       "title": "wholesale pricing: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"wholesale pricing\"",
       "buyerIntent": "buyers searching practical decisions based on \"wholesale pricing\"",
@@ -883,7 +1063,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-13-line-and-lure-matching",
+      "id": "cf-hot-13",
       "title": "line and lure matching: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"line and lure matching\"",
       "buyerIntent": "buyers searching practical decisions based on \"line and lure matching\"",
@@ -895,7 +1075,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-14-winter-rod-demand",
+      "id": "cf-hot-14",
       "title": "winter rod demand: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"winter rod demand\"",
       "buyerIntent": "buyers searching practical decisions based on \"winter rod demand\"",
@@ -907,7 +1087,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-15-topwater-setup",
+      "id": "cf-hot-15",
       "title": "topwater setup: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"topwater setup\"",
       "buyerIntent": "buyers searching practical decisions based on \"topwater setup\"",
@@ -919,7 +1099,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-16-drop-shot-tuning",
+      "id": "cf-hot-16",
       "title": "drop shot tuning: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"drop shot tuning\"",
       "buyerIntent": "buyers searching practical decisions based on \"drop shot tuning\"",
@@ -931,7 +1111,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-17-warranty-claim-handling",
+      "id": "cf-hot-17",
       "title": "warranty claim handling: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"warranty claim handling\"",
       "buyerIntent": "buyers searching practical decisions based on \"warranty claim handling\"",
@@ -943,7 +1123,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-18-sample-evaluation",
+      "id": "cf-hot-18",
       "title": "sample evaluation: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"sample evaluation\"",
       "buyerIntent": "buyers searching practical decisions based on \"sample evaluation\"",
@@ -955,7 +1135,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-19-category-mix-strategy",
+      "id": "cf-hot-19",
       "title": "category mix strategy: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"category mix strategy\"",
       "buyerIntent": "buyers searching practical decisions based on \"category mix strategy\"",
@@ -967,7 +1147,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "cf-hot-20-regional-assortment",
+      "id": "cf-hot-20",
       "title": "regional assortment: What Anglers Are Discussing",
       "angle": "reworked from live trend signals around \"regional assortment\"",
       "buyerIntent": "buyers searching practical decisions based on \"regional assortment\"",
@@ -977,11 +1157,71 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
         "attach seasonal and regional merchandising notes",
         "use \"regional assortment\" for short-form social-to-SEO loops"
       ]
+    },
+    {
+      "id": "cf-hot-21",
+      "title": "spinning rod setup: What Anglers Are Discussing",
+      "angle": "reworked from live trend signals around \"spinning rod setup\"",
+      "buyerIntent": "buyers searching practical decisions based on \"spinning rod setup\"",
+      "checklist": [
+        "summarize real discussion signals with buyer intent",
+        "turn hot threads into practical recommendation cards",
+        "attach seasonal and regional merchandising notes",
+        "use \"spinning rod setup\" for short-form social-to-SEO loops"
+      ]
+    },
+    {
+      "id": "cf-hot-22",
+      "title": "casting rod action: What Anglers Are Discussing",
+      "angle": "reworked from live trend signals around \"casting rod action\"",
+      "buyerIntent": "buyers searching practical decisions based on \"casting rod action\"",
+      "checklist": [
+        "summarize real discussion signals with buyer intent",
+        "turn hot threads into practical recommendation cards",
+        "attach seasonal and regional merchandising notes",
+        "use \"casting rod action\" for short-form social-to-SEO loops"
+      ]
+    },
+    {
+      "id": "cf-hot-23",
+      "title": "bass finesse rig: What Anglers Are Discussing",
+      "angle": "reworked from live trend signals around \"bass finesse rig\"",
+      "buyerIntent": "buyers searching practical decisions based on \"bass finesse rig\"",
+      "checklist": [
+        "summarize real discussion signals with buyer intent",
+        "turn hot threads into practical recommendation cards",
+        "attach seasonal and regional merchandising notes",
+        "use \"bass finesse rig\" for short-form social-to-SEO loops"
+      ]
+    },
+    {
+      "id": "cf-hot-24",
+      "title": "crankbait rod: What Anglers Are Discussing",
+      "angle": "reworked from live trend signals around \"crankbait rod\"",
+      "buyerIntent": "buyers searching practical decisions based on \"crankbait rod\"",
+      "checklist": [
+        "summarize real discussion signals with buyer intent",
+        "turn hot threads into practical recommendation cards",
+        "attach seasonal and regional merchandising notes",
+        "use \"crankbait rod\" for short-form social-to-SEO loops"
+      ]
+    },
+    {
+      "id": "cf-hot-25",
+      "title": "travel rod choice: What Anglers Are Discussing",
+      "angle": "reworked from live trend signals around \"travel rod choice\"",
+      "buyerIntent": "buyers searching practical decisions based on \"travel rod choice\"",
+      "checklist": [
+        "summarize real discussion signals with buyer intent",
+        "turn hot threads into practical recommendation cards",
+        "attach seasonal and regional merchandising notes",
+        "use \"travel rod choice\" for short-form social-to-SEO loops"
+      ]
     }
   ],
   "sourcing-industry": [
     {
-      "id": "si-hot-01-spinning-rod-setup",
+      "id": "si-hot-01",
       "title": "spinning rod setup: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"spinning rod setup\"",
       "buyerIntent": "buyers searching practical decisions based on \"spinning rod setup\"",
@@ -993,7 +1233,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-02-casting-rod-action",
+      "id": "si-hot-02",
       "title": "casting rod action: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"casting rod action\"",
       "buyerIntent": "buyers searching practical decisions based on \"casting rod action\"",
@@ -1005,7 +1245,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-03-bass-finesse-rig",
+      "id": "si-hot-03",
       "title": "bass finesse rig: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"bass finesse rig\"",
       "buyerIntent": "buyers searching practical decisions based on \"bass finesse rig\"",
@@ -1017,7 +1257,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-04-crankbait-rod",
+      "id": "si-hot-04",
       "title": "crankbait rod: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"crankbait rod\"",
       "buyerIntent": "buyers searching practical decisions based on \"crankbait rod\"",
@@ -1029,7 +1269,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-05-travel-rod-choice",
+      "id": "si-hot-05",
       "title": "travel rod choice: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"travel rod choice\"",
       "buyerIntent": "buyers searching practical decisions based on \"travel rod choice\"",
@@ -1041,7 +1281,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-06-surf-rod-weight",
+      "id": "si-hot-06",
       "title": "surf rod weight: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"surf rod weight\"",
       "buyerIntent": "buyers searching practical decisions based on \"surf rod weight\"",
@@ -1053,7 +1293,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-07-guide-insert-durability",
+      "id": "si-hot-07",
       "title": "guide insert durability: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"guide insert durability\"",
       "buyerIntent": "buyers searching practical decisions based on \"guide insert durability\"",
@@ -1065,7 +1305,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-08-oem-rod-branding",
+      "id": "si-hot-08",
       "title": "oem rod branding: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"oem rod branding\"",
       "buyerIntent": "buyers searching practical decisions based on \"oem rod branding\"",
@@ -1077,7 +1317,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-09-moq-negotiation",
+      "id": "si-hot-09",
       "title": "moq negotiation: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"moq negotiation\"",
       "buyerIntent": "buyers searching practical decisions based on \"moq negotiation\"",
@@ -1089,7 +1329,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-10-supplier-quality-control",
+      "id": "si-hot-10",
       "title": "supplier quality control: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"supplier quality control\"",
       "buyerIntent": "buyers searching practical decisions based on \"supplier quality control\"",
@@ -1101,7 +1341,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-11-inventory-planning",
+      "id": "si-hot-11",
       "title": "inventory planning: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"inventory planning\"",
       "buyerIntent": "buyers searching practical decisions based on \"inventory planning\"",
@@ -1113,7 +1353,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-12-wholesale-pricing",
+      "id": "si-hot-12",
       "title": "wholesale pricing: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"wholesale pricing\"",
       "buyerIntent": "buyers searching practical decisions based on \"wholesale pricing\"",
@@ -1125,7 +1365,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-13-line-and-lure-matching",
+      "id": "si-hot-13",
       "title": "line and lure matching: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"line and lure matching\"",
       "buyerIntent": "buyers searching practical decisions based on \"line and lure matching\"",
@@ -1137,7 +1377,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-14-winter-rod-demand",
+      "id": "si-hot-14",
       "title": "winter rod demand: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"winter rod demand\"",
       "buyerIntent": "buyers searching practical decisions based on \"winter rod demand\"",
@@ -1149,7 +1389,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-15-topwater-setup",
+      "id": "si-hot-15",
       "title": "topwater setup: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"topwater setup\"",
       "buyerIntent": "buyers searching practical decisions based on \"topwater setup\"",
@@ -1161,7 +1401,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-16-drop-shot-tuning",
+      "id": "si-hot-16",
       "title": "drop shot tuning: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"drop shot tuning\"",
       "buyerIntent": "buyers searching practical decisions based on \"drop shot tuning\"",
@@ -1173,7 +1413,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-17-warranty-claim-handling",
+      "id": "si-hot-17",
       "title": "warranty claim handling: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"warranty claim handling\"",
       "buyerIntent": "buyers searching practical decisions based on \"warranty claim handling\"",
@@ -1185,7 +1425,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-18-sample-evaluation",
+      "id": "si-hot-18",
       "title": "sample evaluation: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"sample evaluation\"",
       "buyerIntent": "buyers searching practical decisions based on \"sample evaluation\"",
@@ -1197,7 +1437,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-19-category-mix-strategy",
+      "id": "si-hot-19",
       "title": "category mix strategy: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"category mix strategy\"",
       "buyerIntent": "buyers searching practical decisions based on \"category mix strategy\"",
@@ -1209,7 +1449,7 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
       ]
     },
     {
-      "id": "si-hot-20-regional-assortment",
+      "id": "si-hot-20",
       "title": "regional assortment: B2B Sourcing Playbook",
       "angle": "reworked from live trend signals around \"regional assortment\"",
       "buyerIntent": "buyers searching practical decisions based on \"regional assortment\"",
@@ -1218,6 +1458,66 @@ export const GENERATED_HOT_TOPIC_SEEDS: Record<string, GeneratedHotTopicSeed[]> 
         "provide supplier and logistics decision checkpoints",
         "define launch and reorder timeline by demand season",
         "convert \"regional assortment\" traffic into inquiry-focused pages"
+      ]
+    },
+    {
+      "id": "si-hot-21",
+      "title": "spinning rod setup: B2B Sourcing Playbook",
+      "angle": "reworked from live trend signals around \"spinning rod setup\"",
+      "buyerIntent": "buyers searching practical decisions based on \"spinning rod setup\"",
+      "checklist": [
+        "align topic with MOQ, lead time, and cash-flow impact",
+        "provide supplier and logistics decision checkpoints",
+        "define launch and reorder timeline by demand season",
+        "convert \"spinning rod setup\" traffic into inquiry-focused pages"
+      ]
+    },
+    {
+      "id": "si-hot-22",
+      "title": "casting rod action: B2B Sourcing Playbook",
+      "angle": "reworked from live trend signals around \"casting rod action\"",
+      "buyerIntent": "buyers searching practical decisions based on \"casting rod action\"",
+      "checklist": [
+        "align topic with MOQ, lead time, and cash-flow impact",
+        "provide supplier and logistics decision checkpoints",
+        "define launch and reorder timeline by demand season",
+        "convert \"casting rod action\" traffic into inquiry-focused pages"
+      ]
+    },
+    {
+      "id": "si-hot-23",
+      "title": "bass finesse rig: B2B Sourcing Playbook",
+      "angle": "reworked from live trend signals around \"bass finesse rig\"",
+      "buyerIntent": "buyers searching practical decisions based on \"bass finesse rig\"",
+      "checklist": [
+        "align topic with MOQ, lead time, and cash-flow impact",
+        "provide supplier and logistics decision checkpoints",
+        "define launch and reorder timeline by demand season",
+        "convert \"bass finesse rig\" traffic into inquiry-focused pages"
+      ]
+    },
+    {
+      "id": "si-hot-24",
+      "title": "crankbait rod: B2B Sourcing Playbook",
+      "angle": "reworked from live trend signals around \"crankbait rod\"",
+      "buyerIntent": "buyers searching practical decisions based on \"crankbait rod\"",
+      "checklist": [
+        "align topic with MOQ, lead time, and cash-flow impact",
+        "provide supplier and logistics decision checkpoints",
+        "define launch and reorder timeline by demand season",
+        "convert \"crankbait rod\" traffic into inquiry-focused pages"
+      ]
+    },
+    {
+      "id": "si-hot-25",
+      "title": "travel rod choice: B2B Sourcing Playbook",
+      "angle": "reworked from live trend signals around \"travel rod choice\"",
+      "buyerIntent": "buyers searching practical decisions based on \"travel rod choice\"",
+      "checklist": [
+        "align topic with MOQ, lead time, and cash-flow impact",
+        "provide supplier and logistics decision checkpoints",
+        "define launch and reorder timeline by demand season",
+        "convert \"travel rod choice\" traffic into inquiry-focused pages"
       ]
     }
   ]
