@@ -12,8 +12,8 @@ export const DEFAULT_OG_IMAGE = `${SITE_URL}/hero-banner.jpeg`;
 
 /** 分享时的推荐文案（具吸引力、引发点击欲） */
 export const SHARE_RECOMMENDED_COPIES: Record<string, string> = {
-  en: "I found a professional B2B fishing rod marketplace – 2000+ SKUs, wholesale $5-12, 24h reply, OEM available. Tackle businesses, don't miss this! 👉",
-  zh: "我发现了一个非常专业且有趣的网站，能一站式采购2000+款渔竿，批发价$5-12起，24小时极速回复，还支持OEM定制。做渔具批发生意的朋友千万别错过！👉",
+  en: "I found a professional B2B fishing rod marketplace – 2000+ SKUs, 24h reply, OEM available. Tackle businesses, don't miss this! 👉",
+  zh: "我发现了一个非常专业且有趣的网站，能一站式采购2000+款渔竿，24小时极速回复，还支持OEM定制。做渔具批发生意的朋友千万别错过！👉",
 };
 
 export function absoluteUrl(path: string): string {

@@ -9,7 +9,7 @@ import { t } from "@/lib/i18n";
 
 /** 首页/默认分享文案 */
 const DEFAULT_TITLE = "RodsHub – B2B Fishing Rod Marketplace";
-const DEFAULT_DESC = "2000+ SKUs, wholesale $5-12, 24h reply. OEM available. Source spinning, casting, telescopic, surf, ice & travel rods.";
+const DEFAULT_DESC = "2000+ SKUs, 24h reply. OEM available. Source spinning, casting, telescopic, surf, ice & travel rods.";
 
 /** 从 DOM 读取当前页面的 meta 信息，用于分享时展示当前页亮点 */
 function usePageMeta() {
