@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!category) return { title: "Category Not Found" };
 
   const title = `${category.name} Wholesale | RodsHub`;
-  const desc = `${category.name} wholesale: quality rods at $8-18. MOQ from 30 pcs, 24h quote. RodsHub B2B.`;
+  const desc = `${category.name} wholesale: quality rods at $5-12. MOQ from 30 pcs, 24h quote. RodsHub B2B.`;
   const path = `/category/${slug}`;
 
   return {

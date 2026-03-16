@@ -12,8 +12,8 @@ export const DEFAULT_OG_IMAGE = `${SITE_URL}/hero-banner.jpeg`;
 
 /** 分享时的推荐文案（具吸引力、引发点击欲） */
 export const SHARE_RECOMMENDED_COPIES: Record<string, string> = {
-  en: "I found a professional B2B fishing rod marketplace – 2000+ SKUs, wholesale $8-18, 24h reply, OEM available. Tackle businesses, don't miss this! 👉",
-  zh: "我发现了一个非常专业且有趣的网站，能一站式采购2000+款渔竿，批发价$8-18起，24小时极速回复，还支持OEM定制。做渔具批发生意的朋友千万别错过！👉",
+  en: "I found a professional B2B fishing rod marketplace – 2000+ SKUs, wholesale $5-12, 24h reply, OEM available. Tackle businesses, don't miss this! 👉",
+  zh: "我发现了一个非常专业且有趣的网站，能一站式采购2000+款渔竿，批发价$5-12起，24小时极速回复，还支持OEM定制。做渔具批发生意的朋友千万别错过！👉",
 };
 
 export function absoluteUrl(path: string): string {
@@ -142,7 +142,7 @@ export const howToOrderSchema = {
   name: "How to Order Fishing Rods from RodsHub",
   description: "Step-by-step guide to sourcing fishing rods wholesale from RodsHub B2B marketplace. MOQ from 30 pcs, 24h reply.",
   totalTime: "P1D",
-  estimatedCost: { "@type": "MonetaryAmount" as const, currency: "USD", value: "8-18" },
+  estimatedCost: { "@type": "MonetaryAmount" as const, currency: "USD", value: "5-12" },
   step: [
     { "@type": "HowToStep" as const, position: 1, name: "Browse catalog", text: "Explore spinning, casting, telescopic, surf, ice and travel rods by category or fishing scenario." },
     { "@type": "HowToStep" as const, position: 2, name: "Submit inquiry", text: "Use the inquiry form with product details, MOQ and shipping destination." },

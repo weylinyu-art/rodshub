@@ -19,7 +19,7 @@ const HomeCTA = dynamic(() => import("@/components/HomeCTA"), { ssr: true });
 export const metadata: Metadata = {
   title: "RodsHub | B2B Fishing Rod Wholesale & OEM Marketplace",
   description:
-    "One hub for all fishing rods. 2000+ SKUs · $8-18 wholesale · MOQ from 30 pcs · 24h reply · OEM custom branding. Spinning, casting, telescopic, surf, ice & travel.",
+    "One hub for all fishing rods. 2000+ SKUs · $5-12 wholesale · MOQ from 30 pcs · 24h reply · OEM custom branding. Spinning, casting, telescopic, surf, ice & travel.",
   keywords: [
     "fishing rod wholesale",
     "B2B fishing rods",
