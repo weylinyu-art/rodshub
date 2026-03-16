@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node scripts/csv-to-products.mjs && next dev",
-    "prebuild": "node scripts/csv-to-products.mjs && node scripts/generate-insight-hot-topics.mjs",
+    "prebuild": "node scripts/csv-to-products.mjs",
     "build": "npm run prebuild && next build",
     "start": "next start",
     "lint": "next lint",

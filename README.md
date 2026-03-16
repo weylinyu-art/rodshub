@@ -15,7 +15,7 @@ npm run dev
 npm run build
 ```
 
-> `build` 前会自动执行热点抓取脚本：`scripts/generate-insight-hot-topics.mjs`，实时拉取社区/趋势话题并生成 `data/insight-hot-topics.generated.ts`，用于 `insights` 批量文章扩展。
+> `build` 不会自动刷新热点文章种子，线上内容保持固定。只有你手动执行命令时才会更新 `data/insight-hot-topics.generated.ts`。
 
 手动刷新热点文章种子：
 
