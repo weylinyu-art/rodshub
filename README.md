@@ -15,6 +15,14 @@ npm run dev
 npm run build
 ```
 
+> `build` 前会自动执行热点抓取脚本：`scripts/generate-insight-hot-topics.mjs`，实时拉取社区/趋势话题并生成 `data/insight-hot-topics.generated.ts`，用于 `insights` 批量文章扩展。
+
+手动刷新热点文章种子：
+
+```bash
+npm run generate:insight-hot-topics
+```
+
 ## GitHub + Cloudflare Pages 部署
 
 ### 方式一：Cloudflare Git 集成（推荐）

@@ -4,12 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "node scripts/csv-to-products.mjs && next dev",
+    "prebuild": "node scripts/csv-to-products.mjs && node scripts/generate-insight-hot-topics.mjs",
+    "build": "npm run prebuild && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate:insight-hot-topics": "node scripts/generate-insight-hot-topics.mjs",
+    "scrape": "node scripts/scrape-product.mjs",
+    "append": "node scripts/append-products.mjs"
   },
   "dependencies": {
+    "csv-parse": "^6.1.0",
     "next": "^15.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

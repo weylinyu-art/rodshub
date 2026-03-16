@@ -1,3 +1,5 @@
+import { GENERATED_HOT_TOPIC_SEEDS } from "@/data/insight-hot-topics.generated";
+
 /** Rich content block types for structured articles */
 export type InsightContentItem =
   | string
@@ -13,6 +15,10 @@ export interface InsightBlock {
   id: string;
   title: string;
   content: InsightContentItem[];
+  /** ISO date string, e.g. "2024-03-01" */
+  datePublished?: string;
+  /** ISO date string, e.g. "2025-01-15" */
+  dateModified?: string;
 }
 
 /** Extract plain text from content for JSON-LD and metadata */
@@ -1543,6 +1549,176 @@ export const INSIGHT_SECTIONS: InsightSection[] = [
     ],
   },
 ];
+
+type HotTopicSeed = {
+  id: string;
+  title: string;
+  angle: string;
+  buyerIntent: string;
+  checklist: [string, string, string, string];
+};
+
+const HOT_TOPIC_SEEDS: Record<string, HotTopicSeed[]> = {
+  "rod-guides": [
+    { id: "guide-spinning-setup", title: "Best Spinning Rod Setup for New Buyers", angle: "entry spinning setup trends from tackle communities", buyerIntent: "buyers comparing starter bundles for high turnover", checklist: ["6'6\"-7' medium-light/medium fast", "2500-size spinning reel pairing", "8-12 lb line + 1/8-1/2 oz lures", "focus on low return-rate SKUs"] },
+    { id: "guide-casting-setup", title: "Casting Rod Setup Guide for Growth Stores", angle: "popular bass forum recommendations for baitcaster combos", buyerIntent: "retailers expanding from spinning to casting segment", checklist: ["7' medium-heavy fast baseline", "1/4-3/4 oz lure sweet spot", "12-17 lb line compatibility", "include anti-backlash education"] },
+    { id: "guide-all-around-rod", title: "One All-Around Rod Spec That Sells", angle: "single-rod discussions from high-volume angler threads", buyerIntent: "small stores selecting one hero SKU", checklist: ["target mainstream freshwater species", "balanced power/action for versatility", "price tier at mid-volume band", "bundle with common terminal tackle"] },
+    { id: "guide-shore-rod-length", title: "Shore Fishing Rod Length: 6'6 vs 7' vs 7'6", angle: "shore angler debates on distance vs control", buyerIntent: "buyers deciding length mix by region", checklist: ["distance difference by length", "bank vegetation and transport constraints", "skill level fit", "regional stock split recommendation"] },
+    { id: "guide-kayak-rod", title: "Kayak Rod Specifications Buyers Actually Choose", angle: "kayak community preferences for compact control", buyerIntent: "distributors building kayak-focused catalogs", checklist: ["shorter rod for seated casting", "moderate handle length for clearance", "corrosion-resistant components", "multi-piece options for transport"] },
+    { id: "guide-finesse-spinning", title: "Finesse Spinning Rod Buyer Guide", angle: "finesse trend growth across pressured waters", buyerIntent: "buyers entering finesse niche with repeat demand", checklist: ["ML/M fast actions", "tip recovery speed", "micro-jig and drop-shot coverage", "leader-knot friendly guides"] },
+    { id: "guide-heavy-cover", title: "Heavy Cover Rods: What Retailers Should Stock", angle: "punching/flipping threads on heavy setup standards", buyerIntent: "shops serving heavy-cover bass fisheries", checklist: ["7'2\"-7'6\" heavy/extra-heavy", "high-drag reel compatibility", "durable guide frame design", "inventory by peak season"] },
+    { id: "guide-trout-lightline", title: "Light-Line Trout Rods for Specialty Stores", angle: "stream and ultralight discussion hotspots", buyerIntent: "retailers targeting trout and panfish communities", checklist: ["UL/L power range", "2-6 lb line performance", "small hardbait casting", "travel-friendly two-piece options"] },
+    { id: "guide-multi-piece-comeback", title: "Why Multi-Piece Rods Are Surging Again", angle: "travel anglers preferring packable high-performance rods", buyerIntent: "buyers testing compact SKUs with premium margin", checklist: ["ferrule stability checks", "pack length segmentation", "urban commuter demand", "premium vs budget positioning"] },
+    { id: "guide-crankbait-rods", title: "Crankbait Rod Specs That Reduce Lost Fish", angle: "treble-hook landing ratio conversations", buyerIntent: "buyers curating technique-specific shelves", checklist: ["moderate/mod-fast actions", "7'-7'6\" length bands", "line stretch management", "clear rod labeling by lure class"] },
+    { id: "guide-topwater-walking", title: "Topwater Walking Bait Rod Selection", angle: "summer topwater topic spikes", buyerIntent: "seasonal buyers planning topwater campaigns", checklist: ["short rear grip for cadence", "fast tip control", "mono/fluoro topwater pairing", "SKU timing before warm season"] },
+    { id: "guide-swimbait-entry", title: "Entry Swimbait Rods for Retail Expansion", angle: "big-bait communities seeking affordable first rods", buyerIntent: "stores moving into swimbait category safely", checklist: ["true lure-rating honesty", "longer heavy-power blanks", "handle durability under load", "starter price point strategy"] },
+    { id: "guide-ice-rod-basics", title: "Ice Rod Basics for Winter Inventory", angle: "ice fishing preseason recommendation lists", buyerIntent: "buyers preparing winter category early", checklist: ["short blank assortment", "UL to medium winter spread", "cold-weather guide materials", "order calendar planning"] },
+    { id: "guide-surf-entry", title: "Entry Surf Rod Range for Coastal Stores", angle: "coastal forum demand for versatile first surf rods", buyerIntent: "buyers building first surf shelf", checklist: ["12'-13' length core", "3-8 oz common casting weights", "salt-corrosion component upgrades", "bundle with starter terminal rigs"] },
+    { id: "guide-jigging-power", title: "Jigging Rod Power by Lure Weight Bands", angle: "jig anglers comparing hookset power needs", buyerIntent: "buyers reducing mismatch returns", checklist: ["match lure range to power", "tip stiffness vs hookup", "line class pairing chart", "labeling by technique"] },
+    { id: "guide-beginner-combos", title: "Beginner Combo Rod Specs That Convert", angle: "first-time buyer questions in social communities", buyerIntent: "retailers improving beginner conversion rate", checklist: ["forgiving action profile", "easy-to-manage length", "durable component priority", "clear in-store guidance copy"] },
+    { id: "guide-carbon-tiering", title: "How to Tier Carbon Rods by Customer Segment", angle: "modulus confusion in buyer communities", buyerIntent: "buyers building clean good-better-best ladders", checklist: ["IM6/IM7/IM8 messaging", "durability vs sensitivity claims", "price architecture", "warranty and return expectations"] },
+    { id: "guide-spec-translation", title: "Spec Translation: From Factory Terms to Shopper Language", angle: "retailer pain points on technical naming", buyerIntent: "buyers improving PDP clarity and SEO copy", checklist: ["convert technical terms to use-cases", "show lure/line examples", "technique tags on product cards", "FAQ blocks for novices"] },
+    { id: "guide-handle-material", title: "Cork vs EVA Handle Mix for Better Sell-Through", angle: "comfort and durability debates in product reviews", buyerIntent: "buyers deciding handle material assortment", checklist: ["price tier mapping", "climate and maintenance factors", "target audience preference", "bundle by usage scenario"] },
+    { id: "guide-rod-quiver-plan", title: "Three-Rod Quiver Plan for Retail Recommendations", angle: "anglers asking for minimal quiver systems", buyerIntent: "stores creating easy upsell pathways", checklist: ["finesse + all-around + power setup", "complementary lure classes", "incremental upgrade story", "cross-sell accessories"] },
+  ],
+  techniques: [
+    { id: "tech-drop-shot-depth", title: "Drop Shot Rod Tuning by Water Depth", angle: "depth-specific finesse discussions in bass communities", buyerIntent: "buyers merchandising finesse rods with clear scenarios", checklist: ["tip softness by weight", "line choice by clarity", "hook style compatibility", "depth-tagged product labels"] },
+    { id: "tech-ned-rig-rod", title: "Ned Rig Rod Setup for High Hookup Rates", angle: "Ned rig trend data from forum chatter", buyerIntent: "retailers adding confidence-based setup guides", checklist: ["ML/M fast spinning rod", "light jighead range", "braid-to-leader default", "bottom-contact sensitivity tips"] },
+    { id: "tech-jerkbait-rod", title: "Jerkbait Rod Action and Length Pairing", angle: "cold-water jerkbait spikes in seasonal threads", buyerIntent: "buyers creating seasonal jerkbait bundles", checklist: ["shorter length for cadence", "moderate-fast control", "line stretch balancing", "treble-hook landing optimization"] },
+    { id: "tech-frog-fishing-setup", title: "Frog Fishing Setup: Rod, Line, and Hookset Rhythm", angle: "frog bite conversations in heavy-vegetation regions", buyerIntent: "stores targeting summer heavy-cover demand", checklist: ["heavy/extra-heavy rod profile", "braid-first line strategy", "pause timing before hookset", "drag and knot checks"] },
+    { id: "tech-spinnerbait-speed", title: "Spinnerbait Retrieve Speed and Rod Choice", angle: "spinnerbait seasonal adjustment discussions", buyerIntent: "buyers teaching practical retrieve matching", checklist: ["medium-heavy fast baseline", "blade size and speed map", "wind and water color adaptation", "rod tip control guidance"] },
+    { id: "tech-chatterbait-setup", title: "Chatterbait Setup for Contact and Control", angle: "bladed-jig popularity in tournament circles", buyerIntent: "retailers bundling high-velocity categories", checklist: ["moderate-fast for vibration control", "line strength by cover", "trailer weight balancing", "hookset angle consistency"] },
+    { id: "tech-crank-depth-control", title: "Crankbait Depth Control With Correct Rod Bend", angle: "deep-crank technique debates on efficiency", buyerIntent: "buyers reducing user frustration and returns", checklist: ["rod bend vs diving depth", "line diameter effect", "retrieve cadence changes", "fatigue management for long sessions"] },
+    { id: "tech-wacky-rig", title: "Wacky Rig Rod and Line Choices by Cover", angle: "wacky rig consistency topics in finesse communities", buyerIntent: "stores improving finesse education content", checklist: ["open water vs docks setup", "hook size guidance", "fall-rate tuning options", "leader strength by abrasion"] },
+    { id: "tech-tokyo-rig", title: "Tokyo Rig Setup and Rod Recommendations", angle: "newer rig adoption trends", buyerIntent: "buyers introducing novelty techniques with clarity", checklist: ["rod power for hook penetration", "weight selection by bottom type", "line management under cover", "retail demo talking points"] },
+    { id: "tech-free-rig-seasonal", title: "Free Rig Seasonal Pattern and Tackle Tuning", angle: "free rig usage waves across regions", buyerIntent: "buyers timing inventory to technique spikes", checklist: ["cold vs warm season adjustments", "weight profile by wind", "leader length tuning", "rod sensitivity checkpoints"] },
+    { id: "tech-river-current", title: "River Current Techniques and Rod Control", angle: "river anglers discussing drift and control", buyerIntent: "regional stores stocking current-focused rods", checklist: ["faster action for current feel", "line bow control", "current seam targeting", "safety and durability considerations"] },
+    { id: "tech-shaky-head", title: "Shaky Head Rod Setup for Pressured Lakes", angle: "high-pressure fishery conversations", buyerIntent: "buyers building pressured-water assortments", checklist: ["ML/M sensitivity priorities", "stand-up head weight bands", "subtle bite detection habits", "drag calibration"] },
+    { id: "tech-carolina-rig", title: "Carolina Rig Rod Length and Leader Balance", angle: "offshore structure strategy threads", buyerIntent: "stores adding structure-fishing guidance", checklist: ["long rod leverage benefits", "leader length by clarity", "weight size by bottom hardness", "hookset distance technique"] },
+    { id: "tech-flipping-pitching", title: "Flipping vs Pitching: Rod Selection and Practice", angle: "skill progression discussions for baitcasters", buyerIntent: "buyers serving intermediate anglers", checklist: ["rod length by target cover", "lure entry quietness", "spool control drills", "practice progression"] },
+    { id: "tech-topwater-fall", title: "Topwater in Fall: Rod Action Adjustments", angle: "fall transition tips from active communities", buyerIntent: "retailers extending topwater season sales", checklist: ["bait profile by baitfish size", "rod tip cadence control", "line choice by surface condition", "timing windows"] },
+    { id: "tech-night-fishing", title: "Night Fishing Rod and Line Strategy", angle: "night bite tactics and safety discussions", buyerIntent: "buyers creating niche high-margin kits", checklist: ["rod sensitivity in low visibility", "line visibility and abrasion", "vibration-forward lure choices", "safe setup essentials"] },
+    { id: "tech-cold-front", title: "Cold Front Bite: Rod Tuning for Slower Strikes", angle: "post-front bite troubleshooting threads", buyerIntent: "stores improving retention with educational content", checklist: ["softer presentations", "line downsizing decisions", "bite-detection rhythm", "confidence lure pairing"] },
+    { id: "tech-wind-bank", title: "Fishing Wind-Blown Banks With Better Rod Control", angle: "wind strategy debates in freshwater forums", buyerIntent: "buyers helping anglers fish tough conditions", checklist: ["power bump for wind resistance", "line bow reduction", "casting angle choices", "safety and gear checks"] },
+    { id: "tech-bridge-pillar", title: "Bridge and Pillar Fishing: Precision Rod Setup", angle: "urban and structure fishing conversations", buyerIntent: "retailers targeting urban anglers", checklist: ["short-accurate casting setup", "abrasion-resistant leader", "hookset direction around structure", "landing control"] },
+    { id: "tech-finesse-kayak", title: "Kayak Finesse Tactics and Rod Ergonomics", angle: "kayak finesse hybrid trend in social groups", buyerIntent: "buyers building kayak-finesse subcategory", checklist: ["seated hookset mechanics", "compact rod handling", "storage-friendly length", "line control in drift"] },
+  ],
+  "product-knowledge": [
+    { id: "pk-guide-frame-material", title: "Guide Frame Materials and Corrosion Lifespan", angle: "saltwater users comparing guide durability", buyerIntent: "buyers reducing post-sale corrosion complaints", checklist: ["stainless grades explained", "coating longevity", "salt rinse maintenance", "warranty policy guidance"] },
+    { id: "pk-epoxy-quality", title: "Epoxy Wrap Quality: What to Inspect Before Buying", angle: "QC issues frequently reported in reviews", buyerIntent: "buyers enforcing stricter incoming QC", checklist: ["bubble and crack checks", "guide foot coverage", "cure consistency", "batch inspection sampling"] },
+    { id: "pk-reel-seat-fit", title: "Reel Seat Fit Standards for OEM Orders", angle: "loosening reel seat complaints in budget segments", buyerIntent: "buyers lowering failure-related returns", checklist: ["thread tolerance targets", "locking ring design", "adhesive reliability", "torque test routine"] },
+    { id: "pk-carbon-weave", title: "Carbon Weave Marketing vs Real Performance", angle: "customers confused by cosmetic weave claims", buyerIntent: "buyers writing accurate PDP claims", checklist: ["cosmetic vs structural layers", "modulus disclosure", "test method transparency", "claim wording compliance"] },
+    { id: "pk-ferrule-wear", title: "Ferrule Wear Prevention in Multi-Piece Rods", angle: "travel rod users reporting joint looseness", buyerIntent: "buyers protecting travel category reputation", checklist: ["fit tolerance control", "assembly best practices", "wax and cleaning routine", "service replacement policy"] },
+    { id: "pk-tip-breakage", title: "Tip Breakage Root Causes and Prevention", angle: "highest-frequency after-sales failure topic", buyerIntent: "buyers lowering breakage return costs", checklist: ["high-stick awareness", "transport protection", "lure overload limits", "warranty evidence checklist"] },
+    { id: "pk-balance-point", title: "Why Balance Point Matters More Than Weight Alone", angle: "angler comfort discussions during long sessions", buyerIntent: "buyers improving perceived premium feel", checklist: ["balance-point measurement", "reel pairing impact", "handle length tuning", "in-store demo method"] },
+    { id: "pk-blank-wall-thickness", title: "Blank Wall Thickness and Durability Tradeoffs", angle: "durability vs sensitivity tradeoff confusion", buyerIntent: "buyers choosing safer specs by market", checklist: ["thickness consistency checks", "impact tolerance", "weight penalty analysis", "application-based recommendations"] },
+    { id: "pk-handle-ergonomics", title: "Handle Ergonomics for Different Techniques", angle: "comfort-related customer feedback loops", buyerIntent: "retailers optimizing component selections", checklist: ["rear grip length mapping", "material grip in wet hands", "cold-weather comfort", "fatigue reduction goals"] },
+    { id: "pk-insert-hardness", title: "Guide Insert Hardness and Braid Compatibility", angle: "braid line groove complaints in budget rods", buyerIntent: "buyers selecting safer guide specs", checklist: ["hardness class overview", "abrasion test expectations", "line type matching", "cost-performance balance"] },
+    { id: "pk-coating-longevity", title: "Blank Coating Longevity in Salt and UV", angle: "coastal retailers tracking finish degradation", buyerIntent: "buyers improving long-term customer trust", checklist: ["UV resistance claims", "salt exposure tests", "scratch behavior", "care instructions for buyers"] },
+    { id: "pk-rod-rating-honesty", title: "How to Validate Lure and Line Rating Accuracy", angle: "mismatch complaints between label and use", buyerIntent: "buyers auditing supplier spec honesty", checklist: ["real casting test protocol", "line range stress test", "deflection consistency", "publish corrected guidance"] },
+    { id: "pk-component-tiering", title: "Component Tiering for Good-Better-Best SKUs", angle: "margin planning across price levels", buyerIntent: "buyers standardizing BOM ladder", checklist: ["entry-tier minimum standards", "mid-tier upgrade points", "premium differentiators", "clear merchandising story"] },
+    { id: "pk-warranty-language", title: "Warranty Language That Reduces Disputes", angle: "after-sales friction from ambiguous policies", buyerIntent: "buyers aligning policy with real usage", checklist: ["coverage scope clarity", "exclusion examples", "proof requirements", "response SLA setup"] },
+    { id: "pk-qc-aql", title: "AQL Sampling for Rod Quality Control", angle: "importers asking for practical QC frameworks", buyerIntent: "buyers implementing scalable inspections", checklist: ["AQL level selection", "critical vs minor defects", "inspection timing", "supplier corrective actions"] },
+    { id: "pk-packaging-drop-test", title: "Packaging Drop-Test Basics for Fewer Transit Breaks", angle: "shipping damage complaints in long parcels", buyerIntent: "buyers reducing logistics loss", checklist: ["tube and cap standards", "inner support points", "drop-test scenarios", "carrier handoff guidance"] },
+    { id: "pk-serial-traceability", title: "Serial Traceability for OEM Rod Batches", angle: "brands needing better defect traceback", buyerIntent: "buyers improving supplier accountability", checklist: ["batch coding format", "PDP trace field", "service workflow linkage", "recall readiness"] },
+    { id: "pk-repairability", title: "Designing for Repairability in Mid-Tier Rods", angle: "cost-conscious anglers preferring repair options", buyerIntent: "buyers extending product lifetime value", checklist: ["replaceable top guides", "available spare parts", "repair service partners", "repair vs replace criteria"] },
+    { id: "pk-return-analysis", title: "Return Data Analysis to Improve Next Purchase Cycle", angle: "retail operations optimizing reorder quality", buyerIntent: "buyers using data to prune weak SKUs", checklist: ["return reason coding", "failure pattern by SKU", "supplier scorecard", "next PO adjustment rules"] },
+    { id: "pk-compliance-basics", title: "Compliance Basics for Multi-Market Rod Sales", angle: "cross-border sellers managing documentation", buyerIntent: "buyers avoiding customs and compliance delays", checklist: ["labeling requirements", "materials disclosure", "market-specific docs", "audit-ready file structure"] },
+  ],
+  "community-favorites": [
+    { id: "cf-best-7ft-rod", title: "Why 7-Foot Rods Dominate Community Recommendations", angle: "high-frequency recommendation pattern across forums", buyerIntent: "buyers prioritizing fastest-moving length", checklist: ["versatility across techniques", "transport practicality", "skill-friendly casting", "inventory depth planning"] },
+    { id: "cf-budget-vs-premium", title: "Budget vs Premium: What Anglers Actually Notice", angle: "real-user perception gaps in value discussions", buyerIntent: "buyers building honest comparison content", checklist: ["sensitivity differences users feel", "durability expectations", "component upgrade impact", "upsell without overpromise"] },
+    { id: "cf-first-baitcaster", title: "Most Recommended First Baitcaster Rod Specs", angle: "new angler onboarding threads", buyerIntent: "retailers improving first-caster success rate", checklist: ["forgiving rod profile", "easy lure range", "spool control learning curve", "starter bundle structure"] },
+    { id: "cf-travel-rod-debate", title: "Travel Rod Debate: Convenience vs Performance", angle: "packability discussions by commuters and travelers", buyerIntent: "buyers balancing travel subcategory mix", checklist: ["pack length targets", "performance compromise messaging", "warranty risk notes", "seasonal demand windows"] },
+    { id: "cf-most-returned-mistakes", title: "Common Setup Mistakes Behind Community Complaints", angle: "repeat troubleshooting topics from user posts", buyerIntent: "stores reducing avoidable returns", checklist: ["line mismatch education", "drag setup basics", "rod usage boundaries", "post-purchase care cards"] },
+    { id: "cf-winter-rod-talk", title: "Winter Rod Topics Gaining Traction in Communities", angle: "off-season research behavior in forums", buyerIntent: "buyers creating winter content funnels", checklist: ["ice and finesse themes", "cold-weather component needs", "inventory timing", "SEO calendar alignment"] },
+    { id: "cf-summer-topics", title: "Summer Peak Topics: Topwater, Travel, and Surf", angle: "seasonal discussion surge patterns", buyerIntent: "buyers planning campaign-ready assortments", checklist: ["topwater rod messaging", "travel convenience angles", "surf demand windows", "promo bundles"] },
+    { id: "cf-rod-break-story", title: "What Breakage Stories Teach About Product Positioning", angle: "community postmortems on snapped rods", buyerIntent: "buyers improving expectation management", checklist: ["usage-limit communication", "transport best practices", "warranty framing", "technique-based recommendations"] },
+    { id: "cf-finesse-boom", title: "The Finesse Boom: Community Signals and SKU Planning", angle: "finesse-heavy trend in pressured fisheries", buyerIntent: "retailers reallocating shelf space toward finesse", checklist: ["ML/M rod share increase", "small lure accessory pairing", "leader-ready guides", "education-led merchandising"] },
+    { id: "cf-big-bait-culture", title: "Big-Bait Culture and Demand for Heavier Rods", angle: "social content driving swimbait interest", buyerIntent: "buyers testing premium heavy-power lanes", checklist: ["true lure-rating disclosure", "safe beginner entry options", "line and reel pairing", "margin and risk control"] },
+    { id: "cf-gear-minimalism", title: "Gear Minimalism: One-Rod and Two-Rod Systems", angle: "minimal-kit discussions from practical anglers", buyerIntent: "stores creating simple buying pathways", checklist: ["clear system presets", "multi-technique compatibility", "starter-to-upgrade path", "bundle design"] },
+    { id: "cf-kayak-community", title: "Kayak Community Picks: Compact and Practical Rods", angle: "kayak-first setups from active groups", buyerIntent: "buyers curating seated-fishing catalog pages", checklist: ["compact length focus", "storage constraints", "corrosion resistance", "safety-oriented setup advice"] },
+    { id: "cf-line-choice-war", title: "Braid vs Fluoro Forum Debates and What It Means", angle: "line choice debates attached to rod behavior", buyerIntent: "retailers linking rods with line education", checklist: ["sensitivity vs manageability", "leader recommendations", "guide compatibility", "scenario-specific advice"] },
+    { id: "cf-best-value-picks", title: "Community Best-Value Picks by Technique", angle: "high-engagement value recommendation threads", buyerIntent: "buyers selecting conversion-friendly SKUs", checklist: ["value pick by technique", "minimum component baseline", "review-backed evidence", "stock depth strategy"] },
+    { id: "cf-tournament-influence", title: "Tournament Influence on Everyday Rod Purchases", angle: "pro-setup imitation trends", buyerIntent: "buyers timing SKU updates with events", checklist: ["event-driven demand spikes", "technique spotlight mapping", "mid-tier alternatives", "campaign timeline"] },
+    { id: "cf-weather-adjustments", title: "Weather Adjustment Tips Shared by Community Veterans", angle: "practical adaptation posts by experienced anglers", buyerIntent: "stores adding tactical content to PDPs", checklist: ["wind setup tweaks", "cold front adjustments", "water clarity changes", "rod action adaptation"] },
+    { id: "cf-bank-vs-boat", title: "Bank vs Boat Rod Preferences in Real Discussions", angle: "access-based setup differences", buyerIntent: "buyers segmenting recommendations by scenario", checklist: ["length constraints by platform", "casting angle differences", "transport and storage", "best-selling overlap"] },
+    { id: "cf-rod-maintenance-habits", title: "Maintenance Habits Shared by Long-Term Users", angle: "long-term owners reducing failure with routines", buyerIntent: "retailers lowering service pressure", checklist: ["post-trip rinse protocol", "guide and tip checks", "storage positioning", "seasonal maintenance reminders"] },
+    { id: "cf-upgrade-triggers", title: "When Communities Decide to Upgrade Rods", angle: "decision triggers in user upgrade stories", buyerIntent: "buyers designing smarter upsell journeys", checklist: ["skill plateau signals", "technique specialization needs", "durability pain points", "trade-up campaign ideas"] },
+    { id: "cf-most-bookmarked-guides", title: "Most Bookmarked Rod Advice Themes Right Now", angle: "recurring save/share patterns in social channels", buyerIntent: "buyers producing high-utility content pages", checklist: ["action/power explainers", "species-specific shortcuts", "starter bundles", "quick decision frameworks"] },
+  ],
+  "sourcing-industry": [
+    { id: "si-moq-negotiation", title: "MOQ Negotiation Tactics for Small and Mid Buyers", angle: "common importer questions on initial orders", buyerIntent: "buyers lowering capital pressure for test runs", checklist: ["mixed carton negotiation", "seasonal trial orders", "reorder commitment framing", "sample-to-PO pathway"] },
+    { id: "si-supplier-scorecard", title: "Supplier Scorecards: Build a Practical Evaluation Model", angle: "procurement teams seeking repeatable vendor control", buyerIntent: "buyers standardizing supplier decisions", checklist: ["quality metrics", "on-time delivery KPIs", "defect trend tracking", "service responsiveness scoring"] },
+    { id: "si-oem-brief-template", title: "OEM Brief Template That Prevents Rework", angle: "OEM miscommunication causing delays", buyerIntent: "buyers improving first-pass sample accuracy", checklist: ["spec fields checklist", "branding asset requirements", "approval milestones", "change-request controls"] },
+    { id: "si-leadtime-buffer", title: "Lead-Time Buffer Planning for Volatile Shipping", angle: "freight variability concerns in import communities", buyerIntent: "buyers avoiding stockouts during peaks", checklist: ["production variance ranges", "port delay buffers", "critical SKU prioritization", "safety stock formulas"] },
+    { id: "si-quality-claim-flow", title: "Quality Claim Workflow for Faster Resolution", angle: "importers sharing dispute handling practices", buyerIntent: "buyers shortening claim cycles", checklist: ["evidence package standards", "response SLA", "replacement vs credit rules", "root-cause follow-up"] },
+    { id: "si-private-label-launch", title: "Private Label Launch Roadmap in 90 Days", angle: "DTC and wholesale brands entering rod category", buyerIntent: "buyers accelerating own-brand rollout", checklist: ["positioning and tier definition", "BOM and MOQ alignment", "packaging and compliance", "launch content plan"] },
+    { id: "si-pricing-ladder", title: "Wholesale Pricing Ladder Design by Channel", angle: "multi-channel margin planning threads", buyerIntent: "buyers preventing channel conflict", checklist: ["MAP-compatible tiers", "retailer margin floors", "promo guardrails", "volume discount logic"] },
+    { id: "si-mixed-container", title: "Mixed Container Strategy for Broader Catalog Tests", angle: "buyers diversifying SKUs without overcommitting", buyerIntent: "importers testing categories quickly", checklist: ["container allocation by risk", "core vs trial SKU ratio", "sell-through review cadence", "second-order decision gates"] },
+    { id: "si-incoterm-choice", title: "FOB vs CIF vs DDP: Choosing the Right Incoterm", angle: "new importers confused by trade terms", buyerIntent: "buyers controlling landed-cost variance", checklist: ["cost ownership by term", "risk transfer points", "customs readiness", "scenario comparison worksheet"] },
+    { id: "si-payment-risk", title: "Payment Risk Control With New Factories", angle: "trust-building concerns in first transactions", buyerIntent: "buyers balancing risk and speed", checklist: ["deposit milestones", "inspection-linked payments", "document verification", "escalation paths"] },
+    { id: "si-seasonal-buy-plan", title: "Seasonal Buy Plan for Rod Category Managers", angle: "retail planning cycles and event timing", buyerIntent: "buyers synchronizing PO calendar with demand", checklist: ["preseason order window", "campaign tie-ins", "reorder trigger thresholds", "clearance timing"] },
+    { id: "si-market-localization", title: "Localizing Rod Assortments by Region", angle: "cross-market sellers adjusting category mix", buyerIntent: "buyers improving regional sell-through", checklist: ["species and technique mapping", "length/power localization", "price-band adaptation", "regional content strategy"] },
+    { id: "si-sample-policy", title: "Sample Policy Design: Cost, Speed, and Commitment", angle: "sample abuse and slow conversion concerns", buyerIntent: "buyers improving sample ROI", checklist: ["sample fee structure", "credit-back rules", "evaluation timeline", "go/no-go criteria"] },
+    { id: "si-factory-audit-lite", title: "Factory Audit Lite for Remote Buyers", angle: "small teams needing lightweight due diligence", buyerIntent: "buyers improving confidence before PO", checklist: ["process walkthrough checklist", "QC evidence request", "capacity verification", "communication responsiveness"] },
+    { id: "si-defect-threshold", title: "Defect Threshold Rules Before Shipment Release", angle: "teams setting clear acceptance standards", buyerIntent: "buyers preventing weak shipments", checklist: ["critical/major/minor limits", "rework conditions", "hold-and-release flow", "documented sign-off"] },
+    { id: "si-forecast-method", title: "Simple Forecast Method for New Rod Categories", angle: "data-light teams needing practical forecasting", buyerIntent: "buyers improving first-year planning", checklist: ["base demand estimate", "seasonality factors", "promotion uplift assumptions", "weekly forecast updates"] },
+    { id: "si-returns-cost-model", title: "Returns Cost Model for Supplier Decisions", angle: "true margin loss often hidden in procurement", buyerIntent: "buyers comparing suppliers on total cost", checklist: ["return freight and labor", "replacement lead-time impact", "reputation cost proxy", "decision matrix integration"] },
+    { id: "si-content-seo-sourcing", title: "Using SEO Content to Support B2B Rod Sourcing Sales", angle: "content-led demand generation in industrial niches", buyerIntent: "buyers linking content with inquiry growth", checklist: ["topic cluster mapping", "commercial-intent internal links", "case-style landing pages", "lead capture placements"] },
+    { id: "si-longtail-keyword-plan", title: "Long-Tail Keyword Plan for Rod Wholesale Leads", angle: "niche B2B keyword strategy with lower CPC", buyerIntent: "buyers generating inbound leads efficiently", checklist: ["intent-based keyword groups", "page-template alignment", "monthly publish cadence", "conversion tracking setup"] },
+    { id: "si-reorder-automation", title: "Reorder Automation Rules for Stable Cash Flow", angle: "operations teams reducing manual reorder lag", buyerIntent: "buyers smoothing inventory turnover", checklist: ["reorder point formulas", "supplier lead-time sync", "exception handling", "quarterly threshold tuning"] },
+  ],
+};
+
+const ACTIVE_HOT_TOPIC_SEEDS: Record<string, HotTopicSeed[]> =
+  Object.values(GENERATED_HOT_TOPIC_SEEDS).some((items) => items.length > 0)
+    ? (GENERATED_HOT_TOPIC_SEEDS as Record<string, HotTopicSeed[]>)
+    : HOT_TOPIC_SEEDS;
+
+function toTitleCaseSlug(value: string): string {
+  return value
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function buildHotTopicBlock(seed: HotTopicSeed, sectionTitle: string): InsightBlock {
+  const normalized = toTitleCaseSlug(seed.id);
+  return {
+    id: seed.id,
+    title: seed.title,
+    datePublished: "2026-03-16",
+    dateModified: "2026-03-16",
+    content: [
+      `${seed.title} is a reworked insight based on recurring community demand signals. This article focuses on ${seed.angle} and turns it into an actionable framework for B2B rod buyers and category managers.`,
+      { type: "h2", text: "Market Signal and Why It Matters" },
+      `In the ${sectionTitle} cluster, this topic repeatedly appears when buyers evaluate assortments, product fit, and conversion potential. Instead of repeating broad advice, the goal is to map popular discussions into clear procurement and merchandising decisions.`,
+      { type: "h2", text: "Procurement and Merchandising Framework" },
+      `Start from commercial intent: ${seed.buyerIntent}. Then convert the topic into SKU standards, listing copy, and internal-link pathways that connect insights pages with category and product pages.`,
+      { type: "h3", text: "Action Checklist" },
+      { type: "ul", items: seed.checklist },
+      { type: "tip", title: "Execution Tip", text: `Use ${normalized} as a pillar article and connect it to at least 3 adjacent pages (category, product, and inquiry) so the topic drives both crawl depth and qualified lead intent.` },
+      { type: "mistake", title: "Common Mistake", text: "Publishing trend topics without converting them into concrete SKU decisions. High traffic without decision support usually creates low inquiry quality." },
+      { type: "summary", title: "Key Takeaways", items: [
+        `This topic is built from popular discussion intent around ${seed.angle}.`,
+        "The article should translate community language into buying criteria.",
+        "Use checklist-driven structure to improve readability and SEO snippet quality.",
+        "Link topic pages to category/product pages to improve commercial conversion.",
+      ]},
+    ],
+  };
+}
+
+for (const section of INSIGHT_SECTIONS) {
+  const seeds = ACTIVE_HOT_TOPIC_SEEDS[section.id];
+  if (!seeds || seeds.length === 0) continue;
+  const existingIds = new Set(section.blocks.map((block) => block.id));
+  const expandedBlocks = seeds
+    .filter((seed) => !existingIds.has(seed.id))
+    .map((seed) => buildHotTopicBlock(seed, section.title));
+  section.blocks.push(...expandedBlocks);
+}
 
 /** Flatten all blocks for JSON-LD, sitemap, and anchor links */
 export const INSIGHT_BLOCKS: InsightBlock[] = INSIGHT_SECTIONS.flatMap((s) => s.blocks);
