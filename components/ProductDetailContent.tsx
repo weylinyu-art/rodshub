@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
@@ -33,73 +33,6 @@ const SPEC_LABEL_KEYS: Record<string, string> = {
   "Detail Dimensions": "detailDimensions",
   "Package Dimensions": "packageDimensions",
 };
-
-/** 有子 SKU 时以伸展长（dimensions）为主切换项，先选长度再选类型 */
-function VariantSwitcher({
-  variants,
-  selectedVariant,
-  onSelect,
-  useLengthAsPrimary,
-}: {
-  variants: ProductVariant[];
-  selectedVariant: ProductVariant | null;
-  onSelect: (v: ProductVariant) => void;
-  useLengthAsPrimary: boolean;
-}) {
-  if (!useLengthAsPrimary) {
-    return (
-      <div className="flex flex-wrap gap-2">
-        {variants.map((v) => (
-          <button
-            key={v.sku}
-            type="button"
-            onClick={() => onSelect(v)}
-            className={`px-4 py-2 rounded-lg border text-sm font-medium transition ${
-              selectedVariant?.sku === v.sku ? "border-black bg-black text-white" : "border-gray-300 text-gray-700 hover:border-gray-400"
-            }`}
-          >
-            {v.sku} · {v.dimensions} · {v.price}
-          </button>
-        ))}
-      </div>
-    );
-  }
-  const byLength = new Map<string, ProductVariant[]>();
-  for (const v of variants) {
-    const list = byLength.get(v.dimensions) ?? [];
-    list.push(v);
-    byLength.set(v.dimensions, list);
-  }
-  const lengths = Array.from(byLength.keys()).sort((a, b) => parseFloat(a) - parseFloat(b));
-  return (
-    <div className="space-y-3">
-      {lengths.map((len) => {
-        const list = byLength.get(len)!;
-        const isSingle = list.length === 1;
-        const isSelected = list.some((v) => v.sku === selectedVariant?.sku);
-        return (
-          <div key={len} className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-medium text-gray-600 w-14 flex-shrink-0">{len}</span>
-            <div className="flex flex-wrap gap-2">
-              {list.map((v) => (
-                <button
-                  key={v.sku}
-                  type="button"
-                  onClick={() => onSelect(v)}
-                  className={`px-3 py-1.5 rounded-lg border text-sm font-medium transition ${
-                    selectedVariant?.sku === v.sku ? "border-black bg-black text-white" : "border-gray-300 text-gray-700 hover:border-gray-400"
-                  }`}
-                >
-                  {v.type}
-                </button>
-              ))}
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
 
 interface ProductDetailContentProps {
   product: Product & { id: string };
@@ -144,10 +77,11 @@ export default function ProductDetailContent({
   const displayNameShort = displayName.length > 52 ? displayName.slice(0, 49).trimEnd() + "…" : displayName;
 
   const variants = realProduct?.variants ?? [];
-  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(() => {
-    if (!initialVariantSku || !variants.length) return variants[0] ?? null;
-    return variants.find((v) => v.sku === initialVariantSku) ?? variants[0] ?? null;
-  });
+  const hasSubSkus = variants.some((v) => v.sku !== realProduct?.id);
+  const selectedVariant: ProductVariant | null =
+    !initialVariantSku || !variants.length
+      ? variants[0] ?? null
+      : variants.find((v) => v.sku === initialVariantSku) ?? variants[0] ?? null;
 
   const effectiveVariant = selectedVariant ?? variants[0];
   const effectiveDetail = effectiveVariant
@@ -204,52 +138,6 @@ export default function ProductDetailContent({
             </span>
           )}
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight line-clamp-2 whitespace-pre-line" title={displayName}>{detailTitle}</h1>
-
-          {variants.length > 1 && (
-            <div>
-              <p className="text-sm font-medium text-gray-700 mb-2">{t("selectModel", lang)}</p>
-              {(() => {
-                const hasSubSkus = variants.some((v) => v.sku !== realProduct?.id);
-                const btn = (v: ProductVariant, active: boolean) => (
-                  <button
-                    key={v.sku}
-                    type="button"
-                    onClick={() => setSelectedVariant(v)}
-                    className={`px-4 py-2 rounded-lg border text-sm font-medium transition ${
-                      active ? "border-black bg-black text-white" : "border-gray-300 text-gray-700 hover:border-gray-400"
-                    }`}
-                  >
-                    {hasSubSkus ? `${v.dimensions} · ${v.type}` : `${v.sku} · ${v.dimensions} · ${v.price}`}
-                  </button>
-                );
-                if (hasSubSkus) {
-                  const byLength = variants.reduce<Record<string, ProductVariant[]>>((acc, v) => {
-                    const d = v.dimensions;
-                    if (!acc[d]) acc[d] = [];
-                    acc[d].push(v);
-                    return acc;
-                  }, {});
-                  const lengths = Object.keys(byLength).sort((a, b) => parseFloat(a) - parseFloat(b));
-                  return (
-                    <div className="space-y-3">
-                      {lengths.map((len) => {
-                        const group = byLength[len];
-                        return (
-                          <div key={len}>
-                            <span className="text-xs text-gray-500 mr-2">{len} extended</span>
-                            <div className="flex flex-wrap gap-2 mt-1">
-                              {group.map((v) => btn(v, selectedVariant?.sku === v.sku))}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  );
-                }
-                return <div className="flex flex-wrap gap-2">{variants.map((v) => btn(v, selectedVariant?.sku === v.sku))}</div>;
-              })()}
-            </div>
-          )}
 
           <p className="text-xl font-bold text-gray-900">
             {getDisplayPrice(displayPrice, product.fishingStyle, product.id)}
@@ -339,32 +227,9 @@ export default function ProductDetailContent({
         <section className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
           <h2 className="text-lg font-bold text-gray-900 mb-4">{t("description", lang)}</h2>
           <p className="text-gray-600 leading-relaxed">{effectiveDetail.description}</p>
-          <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
-            {displaySpecs.material && (
-              <div className="flex gap-2">
-                <span className="text-gray-500">{t("material", lang)}:</span>
-                <span className="font-medium">{displaySpecs.material}</span>
-              </div>
-            )}
-            {displaySpecs.length && (
-              <div className="flex gap-2">
-                <span className="text-gray-500">{t("length", lang)}:</span>
-                <span className="font-medium">{displaySpecs.length}</span>
-              </div>
-            )}
-            {displaySpecs.power && (
-              <div className="flex gap-2">
-                <span className="text-gray-500">{t("power", lang)}:</span>
-                <span className="font-medium">{displaySpecs.power}</span>
-              </div>
-            )}
-            {displaySpecs.type && (
-              <div className="flex gap-2">
-                <span className="text-gray-500">{t("type", lang)}:</span>
-                <span className="font-medium">{displaySpecs.type}</span>
-              </div>
-            )}
-          </div>
+          {hasSubSkus && (
+            <p className="mt-3 text-sm text-gray-500">Multiple specs available (N options).</p>
+          )}
         </section>
 
         <section className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8">

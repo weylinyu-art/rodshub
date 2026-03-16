@@ -263,6 +263,9 @@ async function scrape1688(url, page) {
     title: rawTitle,
     shortTitle: shortTitle(rawTitle),
     displayPrice,
+    handleStyle: "",
+    handOrientation: "",
+    extendedLengthCm: 0,
     _imgUrls: data.imgUrls || [],
     _priceCny: parse1688Price(data.body),
     _attrs: {},
@@ -298,6 +301,9 @@ async function scrapeGeneric(url, page) {
     title: sanitizeTitle(data.title),
     shortTitle: shortTitle(data.title),
     displayPrice: "",
+    handleStyle: "",
+    handOrientation: "",
+    extendedLengthCm: 0,
   };
 }
 
@@ -312,6 +318,9 @@ function toCsvRow(row) {
     csvEscape(row.title),
     csvEscape(row.shortTitle),
     csvEscape(row.displayPrice),
+    csvEscape(row.handleStyle ?? ""),
+    csvEscape(row.handOrientation ?? ""),
+    row.extendedLengthCm ? String(row.extendedLengthCm) : "",
   ].join(",");
 }
 

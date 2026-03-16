@@ -14,6 +14,9 @@ export interface SkuRow {
   collapsedDimensions: string;
   weightG: number;
   title: string;
+  handleStyle?: string;
+  handOrientation?: string;
+  extendedLengthCm?: number;
 }
 
 /** 标题最大长度（详情页展示） */

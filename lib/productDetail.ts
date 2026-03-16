@@ -163,9 +163,17 @@ export function getProductDetailForVariant(
     { label: "Lure Weight", value: lureWeight },
     { label: "Sections", value: sections },
     { label: "Handle", value: handleType },
-    { label: "SKU", value: variant.sku },
     { label: "Weight", value: variant.weight },
   ];
+  if (variant.handleStyle) {
+    specifications.push({ label: "Handle Style", value: variant.handleStyle });
+  }
+  if (variant.handOrientation) {
+    specifications.push({ label: "Hand Orientation", value: variant.handOrientation });
+  }
+  if (variant.extendedLengthCm) {
+    specifications.push({ label: "Extended Length", value: `${variant.extendedLengthCm} cm` });
+  }
   if (variant.detailDimensions) {
     specifications.push({ label: "Detail Dimensions", value: variant.detailDimensions });
   }

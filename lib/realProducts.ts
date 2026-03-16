@@ -12,6 +12,12 @@ export interface ProductVariant {
   weight: string;
   /** 类型：Spinning / Casting / Telescopic */
   type: string;
+  /** 手柄样式：如 Straight / Trigger */
+  handleStyle?: string;
+  /** 左右手：Left / Right / Ambidextrous */
+  handOrientation?: string;
+  /** 伸展长度（cm） */
+  extendedLengthCm?: number;
   /** 详细尺寸 */
   detailDimensions?: string;
   /** 包装尺寸 */
@@ -226,6 +232,9 @@ export const REAL_PRODUCTS: RealProduct[] = buildProductsFromSkuRows().map(({ pa
     dimensions: `${r.lengthInch}"`,
     weight: `${r.weightG}g`,
     type: r.type,
+    handleStyle: r.handleStyle || undefined,
+    handOrientation: r.handOrientation || undefined,
+    extendedLengthCm: r.extendedLengthCm || undefined,
     detailDimensions: r.collapsedDimensions,
     price: "Inquiry",
     priceMin: 0,

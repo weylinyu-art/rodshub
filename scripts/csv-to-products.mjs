@@ -34,10 +34,24 @@ for (const r of records) {
   const collapsedDimensions = String(r.collapsedDimensions ?? "").trim();
   const weightG = parseInt(r.weightG ?? "0", 10) || 0;
   const title = String(r.title ?? "").trim();
+  const handleStyle = String(r.handleStyle ?? "").trim();
+  const handOrientation = String(r.handOrientation ?? "").trim();
+  const extendedLengthCm = parseFloat(r.extendedLengthCm ?? "0") || 0;
 
   if (!parentSku) continue;
 
-  rows.push({ parentSku, subSku: subSku || "无", type: type || "Spinning", lengthInch, collapsedDimensions, weightG, title });
+  rows.push({
+    parentSku,
+    subSku: subSku || "无",
+    type: type || "Spinning",
+    lengthInch,
+    collapsedDimensions,
+    weightG,
+    title,
+    handleStyle,
+    handOrientation,
+    extendedLengthCm,
+  });
   const shortTitle = String(r.shortTitle ?? "").trim();
   if (shortTitle && !shortTitles[parentSku]) shortTitles[parentSku] = shortTitle;
   const displayPrice = String(r.displayPrice ?? "").trim();

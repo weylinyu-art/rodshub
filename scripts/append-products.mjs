@@ -18,7 +18,7 @@ import { spawn } from "child_process";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const CSV_PATH = join(__dirname, "..", "data", "products.csv");
-const HEADER = "parentSku,subSku,type,lengthInch,collapsedDimensions,weightG,title,shortTitle,displayPrice";
+const HEADER = "parentSku,subSku,type,lengthInch,collapsedDimensions,weightG,title,shortTitle,displayPrice,handleStyle,handOrientation,extendedLengthCm";
 
 function readStdin() {
   return new Promise((resolve) => {

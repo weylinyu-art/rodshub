@@ -12,6 +12,10 @@ export interface CsvSkuRow {
   collapsedDimensions: string;
   weightG: number;
   title: string;
+  /** Optional extension fields for variant-level merchandising (backward compatible). */
+  handleStyle?: string;
+  handOrientation?: string;
+  extendedLengthCm?: number;
 }
 
 export interface CsvProductData {
