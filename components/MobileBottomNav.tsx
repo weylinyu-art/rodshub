@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
@@ -48,6 +49,44 @@ function InquiryIcon({ active }: { active?: boolean }) {
 export default function MobileBottomNav() {
   const pathname = usePathname();
   const { lang } = useLanguage();
+  const lastTapRef = useRef<{ href: string; ts: number } | null>(null);
+  const navStartRef = useRef<{ href: string; ts: number } | null>(null);
+
+  useEffect(() => {
+    const nav = navStartRef.current;
+    if (!nav) return;
+    gtagEvent("mobile_nav_navigate_complete", {
+      to: pathname,
+      duration_ms: Date.now() - nav.ts,
+    });
+    navStartRef.current = null;
+  }, [pathname]);
+
+  const handleNavClick = (href: string, label: string) => {
+    const now = Date.now();
+    const lastTap = lastTapRef.current;
+    const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+    if (lastTap && lastTap.href === href && now - lastTap.ts < 500) {
+      gtagEvent("mobile_nav_click_dropped", {
+        label,
+        reason: "duplicate_tap",
+      });
+      return false;
+    }
+
+    lastTapRef.current = { href, ts: now };
+
+    if (active) {
+      gtagEvent("mobile_nav_click_same_page", { label });
+      return false;
+    }
+
+    navStartRef.current = { href, ts: now };
+    gtagEvent("nav_click", { label, location: "mobile_bottom_nav" });
+    gtagEvent("mobile_nav_navigate_start", { from: pathname, to: href });
+    return true;
+  };
 
   return (
     <nav
@@ -61,9 +100,13 @@ export default function MobileBottomNav() {
             <Link
               key={href}
               href={href}
-              onClick={() => gtagEvent("nav_click", { label: label, location: "mobile_bottom_nav" })}
+              onClick={(e) => {
+                if (!handleNavClick(href, label)) e.preventDefault();
+              }}
               className="flex flex-col items-center justify-center min-w-[64px] min-h-[44px] px-4 py-2 text-xs font-medium transition-colors"
               style={{ color: active ? "#111" : "#6b7280" }}
+              aria-current={active ? "page" : undefined}
+              prefetch
             >
               <span className={active ? "text-black" : "text-gray-500"}>
                 <Icon active={active} />

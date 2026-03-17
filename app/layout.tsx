@@ -8,6 +8,7 @@ import { ClickCountsProvider } from "@/contexts/ClickCountsContext";
 import JsonLd from "@/components/JsonLd";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import ScrollDepthTracker from "@/components/ScrollDepthTracker";
+import ClientErrorReporter from "@/components/ClientErrorReporter";
 import {
   SITE_URL,
   defaultTitle,
@@ -72,6 +73,7 @@ export default function RootLayout({
       <body className="antialiased overflow-x-hidden">
         <GoogleAnalytics />
         <ScrollDepthTracker />
+        <ClientErrorReporter />
         <JsonLd data={[organizationSchema, websiteSchema]} />
         <LanguageProvider>
           <ClickCountsProvider>

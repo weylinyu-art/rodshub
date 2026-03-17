@@ -18,17 +18,35 @@ const COOKIE_NAME = "rodshub-lang";
 
 export function getStoredLang(): LangCode {
   if (typeof window === "undefined") return "en";
-  const stored = localStorage.getItem(STORAGE_KEY) as LangCode | null;
-  if (stored && LANGUAGES.some((l) => l.code === stored)) return stored;
-  const browser = navigator.language?.toLowerCase().slice(0, 2);
-  const match = LANGUAGES.find((l) => browser?.startsWith(l.code));
-  return match?.code ?? "en";
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY) as LangCode | null;
+    if (stored && LANGUAGES.some((l) => l.code === stored)) return stored;
+  } catch {
+    // localStorage may throw in private mode or strict browser privacy settings.
+  }
+
+  try {
+    const browser = navigator.language?.toLowerCase().slice(0, 2);
+    const match = LANGUAGES.find((l) => browser?.startsWith(l.code));
+    return match?.code ?? "en";
+  } catch {
+    return "en";
+  }
 }
 
 export function setStoredLang(code: LangCode): void {
   if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, code);
-  document.cookie = `${COOKIE_NAME}=${code}; path=/; max-age=31536000; SameSite=Lax`;
+  try {
+    localStorage.setItem(STORAGE_KEY, code);
+  } catch {
+    // ignore storage write failure, cookie fallback still works.
+  }
+
+  try {
+    document.cookie = `${COOKIE_NAME}=${code}; path=/; max-age=31536000; SameSite=Lax`;
+  } catch {
+    // ignore cookie write failure to avoid client crash.
+  }
 }
 
 export { COOKIE_NAME };
