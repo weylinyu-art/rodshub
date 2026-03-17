@@ -5,16 +5,10 @@ import ProductCard from "@/components/ProductCard";
 import type { Product } from "@/lib/products";
 import { applyListImageOverride } from "@/lib/realProducts";
 import { gtagEvent } from "@/lib/gtag";
-import {
-  sortProductsByCategory,
-  sortProductsByPriceAsc,
-  sortProductsByPriceDesc,
-} from "@/lib/categoryProducts";
+import { sortProductsByCategory } from "@/lib/categoryProducts";
 import { sortProductsByScenario } from "@/lib/scenarios";
 
 const PAGE_SIZE = 30;
-
-type SortOption = "default" | "price-asc" | "price-desc";
 
 export default function CategoryFilters({
   products,
@@ -25,7 +19,6 @@ export default function CategoryFilters({
   categoryName: string;
   sortMode?: "category" | "scenario";
 }) {
-  const [sort, setSort] = useState<SortOption>("default");
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -36,23 +29,12 @@ export default function CategoryFilters({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryName]);
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [sort]);
-
   const sortedProducts = useMemo(() => {
-    let list = [...products];
-    if (sort === "default") {
-      list = sortMode === "category"
-        ? sortProductsByCategory(list)
-        : sortProductsByScenario(list);
-    } else if (sort === "price-asc") {
-      list = sortProductsByPriceAsc(list);
-    } else {
-      list = sortProductsByPriceDesc(list);
-    }
-    return list;
-  }, [products, sort, sortMode]);
+    const list = [...products];
+    return sortMode === "category"
+      ? sortProductsByCategory(list)
+      : sortProductsByScenario(list);
+  }, [products, sortMode]);
 
   const totalPages = Math.ceil(sortedProducts.length / PAGE_SIZE) || 1;
   const paginatedProducts = sortedProducts.slice(
@@ -62,18 +44,6 @@ export default function CategoryFilters({
 
   return (
     <div className="flex-1 min-w-0">
-      <div className="flex items-center justify-end mb-4">
-        <select
-          value={sort}
-          onChange={(e) => setSort(e.target.value as SortOption)}
-          className="px-3 py-2 border border-gray-300 rounded text-sm"
-        >
-          <option value="default">New Arrivals</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-        </select>
-      </div>
-
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
         {paginatedProducts.map((p, i) => (
           <div key={p.id ?? i} className="min-w-0">
