@@ -97,6 +97,7 @@ export function getProductDetail(product: Product): ProductDetail {
   const handleType = name.includes("spinning") ? "Cork" : name.includes("casting") ? "EVA" : "Cork/EVA";
 
   const specifications = [
+    { label: "SKU", value: product.id ?? "—" },
     { label: "Length", value: length },
     { label: "Material", value: material },
     { label: "Power", value: power },
@@ -153,7 +154,14 @@ export function getProductDetailForVariant(
   const sections = name.includes("travel") || name.includes("piece") ? "4 or 5" : "1";
   const handleType = name.includes("spinning") ? "Cork" : name.includes("casting") ? "EVA" : "Cork/EVA";
 
+  const skuValue =
+    variant.sku ||
+    (product?.id && typeof product.id === "string" ? product.id : undefined) ||
+    realProduct?.id ||
+    "—";
+
   const specifications: { label: string; value: string }[] = [
+    { label: "SKU", value: skuValue },
     { label: "Length", value: variant.dimensions },
     { label: "Material", value: material },
     { label: "Power", value: power },
