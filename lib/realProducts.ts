@@ -52,27 +52,27 @@ function buildImageUrls(folder: string, files: string[]): string[] {
   return files.map((f) => `${R2_BASE}/products/${folder}/${f}`);
 }
 
-/** 列表页无价格时按 fishingStyle 使用 $5-12 区间（B2B 参考价） */
+/** 列表页无价格时按 fishingStyle 使用 $1-10 区间（B2B 参考价） */
 const DEFAULT_LIST_PRICE_BY_STYLE: Record<string, string> = {
-  Travel: "$5.00 - $12.00",
-  Surf: "$5.00 - $12.00",
-  Casting: "$5.00 - $12.00",
-  Spinning: "$5.00 - $12.00",
-  Telescopic: "$5.00 - $12.00",
-  Ice: "$5.00 - $12.00",
+  Travel: "$1.00 - $10.00",
+  Surf: "$1.00 - $10.00",
+  Casting: "$1.00 - $10.00",
+  Spinning: "$1.00 - $10.00",
+  Telescopic: "$1.00 - $10.00",
+  Ice: "$1.00 - $10.00",
 };
 
 /** 从价格区间解析最小数值用于筛选 */
 function parsePriceMinFromRange(s: string): number {
   const m = s.match(/\$?([\d.]+)/);
-  return m ? parseFloat(m[1]) : 5;
+  return m ? parseFloat(m[1]) : 1;
 }
 
 /** 全站统一价格源：产品 ID → 展示价。CSV 中 displayPrice 列会合并进来，支持批量上新 */
 const PRODUCT_DISPLAY_PRICES: Record<string, string> = (() => {
   const fallback: Record<string, string> = {
-    TSG01: "$11.50/pc", TSG02: "$11.20/pc", TSG03: "$11.80/pc", TSG04: "$11.00/pc",
-    TSG05: "$11.50/pc", TSG06: "$11.90/pc", TSG07: "$9.80/pc", TSG08: "$10.50/pc",
+    TSG01: "$9.50/pc", TSG02: "$9.20/pc", TSG03: "$9.80/pc", TSG04: "$9.00/pc",
+    TSG05: "$9.50/pc", TSG06: "$9.90/pc", TSG07: "$7.80/pc", TSG08: "$9.50/pc",
   };
   try {
     const { loadProductsCsv } = require("./loadProductsCsv");
@@ -91,7 +91,7 @@ export function getDisplayPrice(
 ): string {
   if (price && !/^(Inquiry|詢價|询价)$/i.test(String(price).trim())) return price;
   if (productId && PRODUCT_DISPLAY_PRICES[productId]) return PRODUCT_DISPLAY_PRICES[productId];
-  return DEFAULT_LIST_PRICE_BY_STYLE[fishingStyle ?? ""] ?? "$5.00 - $12.00";
+  return DEFAULT_LIST_PRICE_BY_STYLE[fishingStyle ?? ""] ?? "$1.00 - $10.00";
 }
 
 /** 将 RealProduct 转成列表展示用的 Product */
@@ -109,7 +109,7 @@ export function realProductToDisplayProduct(p: RealProduct): import("./products"
       : p.variants[0]?.price ?? `$${minPrice.toFixed(2)}`;
 
   if (!priceStr || /^(Inquiry|詢價|询价)$/i.test(String(priceStr).trim())) {
-    priceStr = PRODUCT_DISPLAY_PRICES[p.id] ?? DEFAULT_LIST_PRICE_BY_STYLE[p.fishingStyle] ?? "$5.00 - $12.00";
+    priceStr = PRODUCT_DISPLAY_PRICES[p.id] ?? DEFAULT_LIST_PRICE_BY_STYLE[p.fishingStyle] ?? "$1.00 - $10.00";
   }
 
   const priceMinForFilter = minPrice > 0 ? minPrice : parsePriceMinFromRange(priceStr);

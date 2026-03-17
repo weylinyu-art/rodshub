@@ -99,7 +99,7 @@ export default function AboutPage() {
           <h2 className="text-xl font-bold text-gray-900 mb-4">What We Offer</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
-              { title: "Wholesale Supply", desc: "2,000+ SKUs from $8–$18/pc. MOQ from 30 pieces. Bulk pricing available for larger orders." },
+              { title: "Wholesale Supply", desc: "2,000+ SKUs from $1–$10/pc. MOQ from 30 pieces. Bulk pricing available for larger orders." },
               { title: "OEM Customization", desc: "Private label, custom rod blanks, branding, and export-ready packaging. 7–14 day sample turnaround." },
               { title: "Rod Categories", desc: "Spinning, casting, telescopic, surf, ice fishing, and travel rods in carbon fiber, fiberglass, and composite materials." },
               { title: "Fast Response", desc: "24-hour reply to all inquiries. Dedicated sourcing team available Monday–Friday, 09:00–18:00 UTC+8." },
@@ -153,7 +153,7 @@ export default function AboutPage() {
               { dt: "Founded", dd: "2024" },
               { dt: "Catalog Size", dd: "2,000+ SKUs" },
               { dt: "MOQ", dd: "From 30 pieces" },
-              { dt: "Wholesale Price Range", dd: "$8–$18 per piece" },
+              { dt: "Wholesale Price Range", dd: "$1–$10 per piece" },
               { dt: "OEM Sample Time", dd: "7–14 business days" },
               { dt: "Response Time", dd: "Within 24 hours" },
               { dt: "Markets Served", dd: "Worldwide" },

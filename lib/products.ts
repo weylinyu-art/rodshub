@@ -63,32 +63,32 @@ function withIds<T extends Product>(items: T[], startId: number): (T & { id: str
 }
 
 export const trendingRods: (Product & { id: string })[] = withIds([
-  tr(0, "Hot", { name: "Carbon Fiber Spinning Rod", price: "$10.50 - $14.00", moq: "100 pcs", length: "2.1m", material: "Carbon", power: "Medium", fishingStyle: "Spinning" }),
-  tr(1, undefined, { name: "Heavy Duty Casting Rod", price: "$9.80 - $13.50", moq: "50 pcs", length: "2.4m", material: "Graphite", power: "Heavy", fishingStyle: "Casting" }),
-  tr(2, "Best Seller", { name: "Portable Telescopic Rod Set", price: "$8.50 - $12.00", moq: "200 pcs", length: "1.8-2.7m", material: "Fiberglass", power: "Light", fishingStyle: "Telescopic" }),
-  tr(3, undefined, { name: "Saltwater Surf Rod", price: "$11.00 - $15.00", moq: "30 pcs", length: "3.6m", material: "Carbon", power: "Heavy", fishingStyle: "Surf" }),
-  tr(4, undefined, { name: "Ultralight Freshwater Rod", price: "$9.20 - $12.50", moq: "100 pcs", length: "1.8m", material: "Carbon", power: "Ultralight", fishingStyle: "Spinning" }),
-  tr(5, undefined, { name: "Ice Fishing Combo Rod", price: "$8.90 - $11.50", moq: "80 pcs", length: "0.7m", material: "Graphite", power: "Light", fishingStyle: "Ice" }),
-  tr(6, undefined, { name: "Boat Fishing Graphite Rod", price: "$10.00 - $14.50", moq: "40 pcs", length: "2.1m", material: "Graphite", power: "Medium-Heavy", fishingStyle: "Casting" }),
-  tr(7, "New", { name: "Travel 4-Piece Spinning Rod", price: "$9.50 - $13.00", moq: "150 pcs", length: "2.1m", material: "Carbon", power: "Medium", fishingStyle: "Travel" }),
+  tr(0, "Hot", { name: "Carbon Fiber Spinning Rod", price: "$5.00 - $10.00", moq: "100 pcs", length: "2.1m", material: "Carbon", power: "Medium", fishingStyle: "Spinning" }),
+  tr(1, undefined, { name: "Heavy Duty Casting Rod", price: "$5.00 - $10.00", moq: "50 pcs", length: "2.4m", material: "Graphite", power: "Heavy", fishingStyle: "Casting" }),
+  tr(2, "Best Seller", { name: "Portable Telescopic Rod Set", price: "$4.00 - $10.00", moq: "200 pcs", length: "1.8-2.7m", material: "Fiberglass", power: "Light", fishingStyle: "Telescopic" }),
+  tr(3, undefined, { name: "Saltwater Surf Rod", price: "$5.00 - $10.00", moq: "30 pcs", length: "3.6m", material: "Carbon", power: "Heavy", fishingStyle: "Surf" }),
+  tr(4, undefined, { name: "Ultralight Freshwater Rod", price: "$4.00 - $10.00", moq: "100 pcs", length: "1.8m", material: "Carbon", power: "Ultralight", fishingStyle: "Spinning" }),
+  tr(5, undefined, { name: "Ice Fishing Combo Rod", price: "$4.00 - $10.00", moq: "80 pcs", length: "0.7m", material: "Graphite", power: "Light", fishingStyle: "Ice" }),
+  tr(6, undefined, { name: "Boat Fishing Graphite Rod", price: "$5.00 - $10.00", moq: "40 pcs", length: "2.1m", material: "Graphite", power: "Medium-Heavy", fishingStyle: "Casting" }),
+  tr(7, "New", { name: "Travel 4-Piece Spinning Rod", price: "$5.00 - $10.00", moq: "150 pcs", length: "2.1m", material: "Carbon", power: "Medium", fishingStyle: "Travel" }),
 ], 1);
 
 export const newArrivals: (Product & { id: string })[] = withIds([
-  product(8, { name: "Premium IM8 Carbon Rod", price: "$12.80", moq: "20 pcs", badge: "New" }),
-  product(9, { name: "Compact Travel 5-Piece Set", price: "$11.50", moq: "120 pcs", badge: "New" }),
-  product(10, { name: "Pro Surf Casting Rod 4.2m", price: "$14.00", moq: "25 pcs", badge: "New" }),
+  product(8, { name: "Premium IM8 Carbon Rod", price: "$9.80", moq: "20 pcs", badge: "New" }),
+  product(9, { name: "Compact Travel 5-Piece Set", price: "$9.50", moq: "120 pcs", badge: "New" }),
+  product(10, { name: "Pro Surf Casting Rod 4.2m", price: "$9.00", moq: "25 pcs", badge: "New" }),
   product(11, { name: "Budget Spinning Rod 2.1m", price: "$8.20", moq: "500 pcs", badge: "New" }),
-  product(12, { name: "Multi-Tip Casting Rod Combo", price: "$10.50", moq: "60 pcs", badge: "New" }),
+  product(12, { name: "Multi-Tip Casting Rod Combo", price: "$9.50", moq: "60 pcs", badge: "New" }),
   product(13, { name: "Ultra-Compact 6-Piece Travel", price: "$9.90", moq: "100 pcs", badge: "New" }),
-  product(14, { name: "Pro Ice Fishing Rod", price: "$11.00", moq: "80 pcs", badge: "New" }),
-  product(15, { name: "Telescopic Surf Rod 3.9m", price: "$13.50", moq: "40 pcs", badge: "New" }),
+  product(14, { name: "Pro Ice Fishing Rod", price: "$9.00", moq: "80 pcs", badge: "New" }),
+  product(15, { name: "Telescopic Surf Rod 3.9m", price: "$9.50", moq: "40 pcs", badge: "New" }),
 ], 9);
 
 export const wholesalePicks: (Product & { id: string })[] = withIds([
   product(16, { name: "Spinning Rod Bulk Pack", price: "$8.50/pc", moq: "50 pcs" }),
   product(17, { name: "Telescopic Rod Wholesale Set", price: "$8.00/pc", moq: "200 pcs" }),
-  product(18, { name: "Surf Rod Bulk Order", price: "$12.50/pc", moq: "30 pcs" }),
+  product(18, { name: "Surf Rod Bulk Order", price: "$9.50/pc", moq: "30 pcs" }),
   product(19, { name: "Casting Rod 100-Pack", price: "$10.00/pc", moq: "100 pcs" }),
   product(20, { name: "Travel Rod Bulk Deal", price: "$8.90/pc", moq: "300 pcs" }),
-  product(21, { name: "Ice Rod Wholesale Lot", price: "$11.50/pc", moq: "80 pcs" }),
+  product(21, { name: "Ice Rod Wholesale Lot", price: "$9.50/pc", moq: "80 pcs" }),
 ], 17);

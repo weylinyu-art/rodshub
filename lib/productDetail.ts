@@ -68,6 +68,19 @@ export interface ProductDetail {
   features: string[];
 }
 
+/** 统一格式化 SKU：纯数字 ID 显示为 RodA0 + 两位数字，例如 1 → RodA001（前端只用于展示） */
+function formatSku(value: string | undefined | null): string {
+  if (!value) return "—";
+  const v = String(value).trim();
+  if (!v) return "—";
+  if (/^\d+$/.test(v)) {
+    // 纯数字的自动生成 ID：前缀 RodA0 + 补足两位
+    const padded = v.padStart(2, "0");
+    return `RodA0${padded}`;
+  }
+  return v;
+}
+
 /** 全站统一的规格映射与默认值 */
 const POWER_ACTION_MAP: Record<string, string> = {
   Ultralight: "Ultra Light", Light: "Light / Moderate", Medium: "Medium",
@@ -97,7 +110,7 @@ export function getProductDetail(product: Product): ProductDetail {
   const handleType = name.includes("spinning") ? "Cork" : name.includes("casting") ? "EVA" : "Cork/EVA";
 
   const specifications = [
-    { label: "SKU", value: product.id ?? "—" },
+    { label: "SKU", value: formatSku(typeof product.id === "string" ? product.id : undefined) },
     { label: "Length", value: length },
     { label: "Material", value: material },
     { label: "Power", value: power },
@@ -158,10 +171,10 @@ export function getProductDetailForVariant(
     variant.sku ||
     (product?.id && typeof product.id === "string" ? product.id : undefined) ||
     realProduct?.id ||
-    "—";
+    undefined;
 
   const specifications: { label: string; value: string }[] = [
-    { label: "SKU", value: skuValue },
+    { label: "SKU", value: formatSku(skuValue) },
     { label: "Length", value: variant.dimensions },
     { label: "Material", value: material },
     { label: "Power", value: power },
