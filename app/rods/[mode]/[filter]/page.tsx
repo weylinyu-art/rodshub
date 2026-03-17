@@ -5,6 +5,7 @@ import { getProductsByScenario } from "@/lib/scenarios";
 import { categories } from "@/lib/categoryProducts";
 import { SCENARIOS } from "@/lib/scenarios";
 import CategoryFilters from "@/components/CategoryFilters";
+import RodsTabBar from "@/components/RodsTabBar";
 import type { Product } from "@/lib/products";
 
 type Mode = "category" | "scenario";
@@ -45,10 +46,16 @@ export default async function RodsFilterPage({ params }: PageProps) {
       ? "Browse our full catalog · Switch by rod type"
       : "Browse our full catalog · Switch by fishing scenario";
 
-  const filterName =
-    mode === "category"
-      ? categories.find((c) => c.slug === filter)?.name.replace(" Rods", "") ?? SCENARIOS.find((s) => s.slug === filter)?.name ?? "Rods"
-      : SCENARIOS.find((s) => s.slug === filter)?.name ?? categories.find((c) => c.slug === filter)?.name.replace(" Rods", "") ?? "Rods";
+  const categoryTabs = [
+    { slug: "all", name: "All" },
+    ...categories.map((c) => ({ slug: c.slug, name: c.name.replace(" Rods", "") })),
+  ];
+  const scenarioTabs = [
+    { slug: "all", name: "All" },
+    ...SCENARIOS.map((s) => ({ slug: s.slug, name: s.name })),
+  ];
+  const tabs = mode === "category" ? categoryTabs : scenarioTabs;
+  const filterName = tabs.find((t) => t.slug === filter)?.name ?? "Rods";
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -63,6 +70,8 @@ export default async function RodsFilterPage({ params }: PageProps) {
           </nav>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{title}</h1>
           <p className="mt-1 text-gray-600">{subTitle}</p>
+
+          <RodsTabBar tabs={tabs} mode={mode} activeSlug={filter} />
         </div>
       </div>
 

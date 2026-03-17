@@ -5,6 +5,7 @@ import { getAllProducts } from "@/lib/productRegistry";
 import { categories, sortProductsByCategory } from "@/lib/categoryProducts";
 import { SCENARIOS, sortProductsByScenario } from "@/lib/scenarios";
 import CategoryFilters from "@/components/CategoryFilters";
+import RodsTabBar from "@/components/RodsTabBar";
 import { absoluteUrl, buildOpenGraph, buildTwitter } from "@/lib/seo";
 
 type Mode = "category" | "scenario";
@@ -53,6 +54,16 @@ export default async function RodsModePage({ params }: PageProps) {
       ? "Browse our full catalog · Filter by rod type"
       : "Browse our full catalog · Filter by fishing scenario";
 
+  const categoryTabs = [
+    { slug: "all", name: "All" },
+    ...categories.map((c) => ({ slug: c.slug, name: c.name.replace(" Rods", "") })),
+  ];
+  const scenarioTabs = [
+    { slug: "all", name: "All" },
+    ...SCENARIOS.map((s) => ({ slug: s.slug, name: s.name })),
+  ];
+  const tabs = mode === "category" ? categoryTabs : scenarioTabs;
+
   return (
     <main className="min-h-screen bg-gray-50">
       <div className="bg-white border-b border-gray-200">
@@ -66,6 +77,8 @@ export default async function RodsModePage({ params }: PageProps) {
           </nav>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{title}</h1>
           <p className="mt-1 text-gray-600">{subTitle}</p>
+
+          <RodsTabBar tabs={tabs} mode={mode} activeSlug="all" />
         </div>
       </div>
 
