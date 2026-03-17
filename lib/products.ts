@@ -62,6 +62,8 @@ function withIds<T extends Product>(items: T[], startId: number): (T & { id: str
   return items.map((p, i) => ({ ...p, id: String(startId + i) }));
 }
 
+import { getRandomDisplayPriceForId } from "./priceDisplay";
+
 export const trendingRods: (Product & { id: string })[] = withIds([
   tr(0, "Hot", { name: "Carbon Fiber Spinning Rod", price: "$5.00 - $10.00", moq: "100 pcs", length: "2.1m", material: "Carbon", power: "Medium", fishingStyle: "Spinning" }),
   tr(1, undefined, { name: "Heavy Duty Casting Rod", price: "$5.00 - $10.00", moq: "50 pcs", length: "2.4m", material: "Graphite", power: "Heavy", fishingStyle: "Casting" }),
@@ -71,7 +73,10 @@ export const trendingRods: (Product & { id: string })[] = withIds([
   tr(5, undefined, { name: "Ice Fishing Combo Rod", price: "$4.00 - $10.00", moq: "80 pcs", length: "0.7m", material: "Graphite", power: "Light", fishingStyle: "Ice" }),
   tr(6, undefined, { name: "Boat Fishing Graphite Rod", price: "$5.00 - $10.00", moq: "40 pcs", length: "2.1m", material: "Graphite", power: "Medium-Heavy", fishingStyle: "Casting" }),
   tr(7, "New", { name: "Travel 4-Piece Spinning Rod", price: "$5.00 - $10.00", moq: "150 pcs", length: "2.1m", material: "Carbon", power: "Medium", fishingStyle: "Travel" }),
-], 1);
+], 1).map((p) => {
+  const { text, min } = getRandomDisplayPriceForId(p.id);
+  return { ...p, price: text, priceMin: min };
+});
 
 export const newArrivals: (Product & { id: string })[] = withIds([
   product(8, { name: "Premium IM8 Carbon Rod", price: "$9.80", moq: "20 pcs", badge: "New" }),
@@ -82,7 +87,10 @@ export const newArrivals: (Product & { id: string })[] = withIds([
   product(13, { name: "Ultra-Compact 6-Piece Travel", price: "$9.90", moq: "100 pcs", badge: "New" }),
   product(14, { name: "Pro Ice Fishing Rod", price: "$9.00", moq: "80 pcs", badge: "New" }),
   product(15, { name: "Telescopic Surf Rod 3.9m", price: "$9.50", moq: "40 pcs", badge: "New" }),
-], 9);
+], 9).map((p) => {
+  const { text, min } = getRandomDisplayPriceForId(p.id);
+  return { ...p, price: text, priceMin: min };
+});
 
 export const wholesalePicks: (Product & { id: string })[] = withIds([
   product(16, { name: "Spinning Rod Bulk Pack", price: "$8.50/pc", moq: "50 pcs" }),
@@ -91,4 +99,7 @@ export const wholesalePicks: (Product & { id: string })[] = withIds([
   product(19, { name: "Casting Rod 100-Pack", price: "$10.00/pc", moq: "100 pcs" }),
   product(20, { name: "Travel Rod Bulk Deal", price: "$8.90/pc", moq: "300 pcs" }),
   product(21, { name: "Ice Rod Wholesale Lot", price: "$9.50/pc", moq: "80 pcs" }),
-], 17);
+], 17).map((p) => {
+  const { text, min } = getRandomDisplayPriceForId(p.id);
+  return { ...p, price: text, priceMin: min };
+});

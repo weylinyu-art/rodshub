@@ -83,7 +83,7 @@ const PRODUCT_DISPLAY_PRICES: Record<string, string> = (() => {
   }
 })();
 
-/** 详情页/列表页展示用价格：有有效价格则用，否则按 productId→fishingStyle 顺序取统一价 */
+/** 详情页/列表页展示用价格：有有效价格则用，否则按 productId→fishingStyle 使用 1–10 美元随机区间 */
 export function getDisplayPrice(
   price: string | undefined,
   fishingStyle?: string,
@@ -91,7 +91,8 @@ export function getDisplayPrice(
 ): string {
   if (price && !/^(Inquiry|詢價|询价)$/i.test(String(price).trim())) return price;
   if (productId && PRODUCT_DISPLAY_PRICES[productId]) return PRODUCT_DISPLAY_PRICES[productId];
-  return DEFAULT_LIST_PRICE_BY_STYLE[fishingStyle ?? ""] ?? "$1.00 - $10.00";
+  const id = productId || fishingStyle || "default";
+  return getRandomDisplayPriceForId(id).text;
 }
 
 /** 将 RealProduct 转成列表展示用的 Product */
@@ -114,11 +115,17 @@ export function realProductToDisplayProduct(p: RealProduct): import("./products"
 
   const priceMinForFilter = minPrice > 0 ? minPrice : parsePriceMinFromRange(priceStr);
 
+  // 使用统一的 1–10 美元随机区间展示价格，对同一产品保持一致（显式指定价格优先）
+  const randomPrice = getRandomDisplayPriceForId(p.id);
+  const override = PRODUCT_DISPLAY_PRICES[p.id];
+  const finalPriceStr = override ?? randomPrice.text;
+  const finalPriceMin = override ? parsePriceMinFromRange(override) : randomPrice.min;
+
   return {
     id: p.id,
     name: p.name,
-    price: priceStr,
-    priceMin: priceMinForFilter,
+    price: finalPriceStr,
+    priceMin: finalPriceMin,
     moq: p.moq,
     image: imgs[0] ?? "",
     images: imgs,
@@ -176,6 +183,7 @@ function defaultImageFiles(sku: string, count = 6): string[] {
 }
 
 import { buildProductsFromSkuRows } from "./skuData";
+import { getRandomDisplayPriceForId } from "./priceDisplay";
 
 /** @deprecated 已合并入 PRODUCT_DISPLAY_PRICES，保留以兼容旧引用 */
 export const HOME_FEATURED_PRICES = PRODUCT_DISPLAY_PRICES;

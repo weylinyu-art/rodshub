@@ -1,6 +1,7 @@
 import type { Product } from "@/lib/products";
 import { getProductImages } from "@/lib/products";
 import { REAL_PRODUCTS, realProductToDisplayProduct } from "@/lib/realProducts";
+import { getRandomDisplayPriceForId } from "@/lib/priceDisplay";
 import { dailyRotateScore } from "@/lib/clickSortUtils";
 
 export const CATEGORIES = [
@@ -55,12 +56,13 @@ function generateProducts(
     const images = getProductImages(idx, 3);
     const base = bases[i % bases.length];
     const len = lengthPool[i % lengthPool.length];
-    const pr = PRICE_RANGES[i % PRICE_RANGES.length];
+    const id = String(idBase + i);
+    const prRand = getRandomDisplayPriceForId(id);
     products.push({
-      id: String(idBase + i),
+      id,
       name: `${base} ${prefix} ${len}`,
-      price: pr.price,
-      priceMin: pr.min,
+      price: prRand.text,
+      priceMin: prRand.min,
       moq: MOQS[i % MOQS.length],
       length: len,
       material: MATERIALS[i % MATERIALS.length],
