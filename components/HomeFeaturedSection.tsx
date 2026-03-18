@@ -5,16 +5,10 @@ import ProductCard from "@/components/ProductCard";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 import { trendingRods, wholesalePicks, dedupeProductsByImage } from "@/lib/products";
-import {
-  REAL_PRODUCTS,
-  realProductToDisplayProduct,
-  HOME_IMAGE_INDEX_OVERRIDE,
-} from "@/lib/realProducts";
+import { HOME_REAL_FEATURED, HOME_IMAGE_INDEX_OVERRIDE } from "@/lib/realProducts";
 
 /** 首页精选：真实产品排前，再补足 trending；wholesale 单独展示；价格与列表/详情页统一，不再单独覆盖 */
-const realDisplay = REAL_PRODUCTS.map(realProductToDisplayProduct);
-
-function prepareFeaturedForHome(rod: (typeof realDisplay)[0]) {
+function prepareFeaturedForHome(rod: (typeof HOME_REAL_FEATURED)[0]) {
   let image = rod.image;
   let images = rod.images;
   const imgIdx = HOME_IMAGE_INDEX_OVERRIDE[rod.id];
@@ -28,13 +22,11 @@ function prepareFeaturedForHome(rod: (typeof realDisplay)[0]) {
 
 export default function HomeFeaturedSection() {
   const { lang } = useLanguage();
-  // Featured 优先展示真实产品，其次使用程序生成的热门产品；同时避免与首页 New Arrivals 重复
-  const realIdsInNewArrivals = new Set(realDisplay.map((p) => p.id));
-  const realForFeatured = realDisplay.filter((p) => !realIdsInNewArrivals.has(p.id));
-  const combined = [...realForFeatured, ...trendingRods];
+  // Featured 优先展示真实产品（第 5–8 条），不足部分再用程序生成的热门产品补足，并按图片去重
+  const combined = [...HOME_REAL_FEATURED, ...trendingRods];
   const rawFeatured = dedupeProductsByImage(combined).slice(0, 4);
   const featured = rawFeatured.map((rod) =>
-    realDisplay.some((r) => r.id === rod.id) ? prepareFeaturedForHome(rod as (typeof realDisplay)[number]) : rod
+    HOME_REAL_FEATURED.some((r) => r.id === rod.id) ? prepareFeaturedForHome(rod as (typeof HOME_REAL_FEATURED)[number]) : rod
   );
   const wholesale = wholesalePicks.slice(0, 4);
   return (

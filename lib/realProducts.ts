@@ -261,6 +261,22 @@ export const REAL_PRODUCTS: RealProduct[] = buildProductsFromSkuRows().map(({ pa
 // 首页用的真实产品展示列表（已转成通用 Product 结构）
 const REAL_DISPLAY_FOR_HOME = REAL_PRODUCTS.map(realProductToDisplayProduct);
 
+// 简单调试日志：用于线上确认真实产品数量及首页分配情况（仅在 Node 环境下输出一次）
+if (typeof console !== "undefined") {
+  // eslint-disable-next-line no-console
+  console.log(
+    "[RodsHub realProducts] counts",
+    JSON.stringify(
+      {
+        REAL_PRODUCTS: REAL_PRODUCTS.length,
+        REAL_DISPLAY_FOR_HOME: REAL_DISPLAY_FOR_HOME.length,
+      },
+      null,
+      2
+    )
+  );
+}
+
 /** 首页 New Arrivals 优先使用真实产品：取前 4 条，不足时由调用方用模拟数据补足 */
 export const HOME_REAL_NEW_ARRIVALS = REAL_DISPLAY_FOR_HOME.slice(0, 4);
 
