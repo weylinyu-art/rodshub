@@ -292,53 +292,55 @@ export default function ProductImageGallery({
 
       {/* 缩略图条（跟随 activeIndex 高亮） */}
       {hasMultiple && (
-        <div className="mt-3 flex gap-2 overflow-x-auto pb-1 -mb-1 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-          {showFallbackThumbs ? (
-            <div className="relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded overflow-hidden bg-white border border-gray-200">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={fallbackImage}
-                alt={`${alt} - fallback`}
-                loading="lazy"
-                decoding="async"
-                className="absolute inset-0 size-full object-cover object-center pointer-events-none"
-              />
-            </div>
-          ) : (
-            visibleThumbs.map((src, i) => (
-              <button
-                key={src}
-                type="button"
-                onClick={() => {
-                  const idx = uniqueImages.indexOf(src);
-                  if (idx >= 0) setActiveIndex(idx);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    const idx = uniqueImages.indexOf(src);
-                    if (idx >= 0) setActiveIndex(idx);
-                  }
-                }}
-                style={{ touchAction: "manipulation" }}
-                className={`relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded overflow-hidden bg-white transition snap-center ring-0 focus:ring-0 focus:outline-none ${
-                  uniqueImages.indexOf(src) === activeIndex
-                    ? "ring-1 ring-gray-400 ring-inset"
-                    : "border border-transparent hover:border-gray-300"
-                }`}
-              >
+        <div className="mt-3 w-full max-w-[480px]">
+          <div className="flex flex-wrap gap-2">
+            {showFallbackThumbs ? (
+              <div className="relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded overflow-hidden bg-white border border-gray-200">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={src}
-                  alt={`${alt} - view ${i + 1}`}
+                  src={fallbackImage}
+                  alt={`${alt} - fallback`}
                   loading="lazy"
                   decoding="async"
-                  className="absolute inset-0 size-full min-w-full min-h-full object-cover object-center pointer-events-none"
-                  onError={() => setFailedUrls((prev) => new Set(prev).add(src))}
+                  className="absolute inset-0 size-full object-cover object-center pointer-events-none"
                 />
-              </button>
-            ))
-          )}
+              </div>
+            ) : (
+              visibleThumbs.map((src, i) => (
+                <button
+                  key={src}
+                  type="button"
+                  onClick={() => {
+                    const idx = uniqueImages.indexOf(src);
+                    if (idx >= 0) setActiveIndex(idx);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      const idx = uniqueImages.indexOf(src);
+                      if (idx >= 0) setActiveIndex(idx);
+                    }
+                  }}
+                  style={{ touchAction: "manipulation" }}
+                  className={`relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded overflow-hidden bg-white transition ring-0 focus:ring-0 focus:outline-none ${
+                    uniqueImages.indexOf(src) === activeIndex
+                      ? "ring-1 ring-gray-400 ring-inset"
+                      : "border border-transparent hover:border-gray-300"
+                  }`}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={src}
+                    alt={`${alt} - view ${i + 1}`}
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 size-full min-w-full min-h-full object-cover object-center pointer-events-none"
+                    onError={() => setFailedUrls((prev) => new Set(prev).add(src))}
+                  />
+                </button>
+              ))
+            )}
+          </div>
         </div>
       )}
     </div>
