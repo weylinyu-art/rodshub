@@ -22,15 +22,20 @@ function prepareFeaturedForHome(rod: (typeof HOME_REAL_FEATURED)[0]) {
 
 export default function HomeFeaturedSection() {
   const { lang } = useLanguage();
-  // Featured 优先展示真实产品（第 5–8 条），不足部分再用程序生成的热门产品补足，并按图片去重
-  const combined = [...HOME_REAL_FEATURED, ...trendingRods];
-  const rawFeatured = dedupeProductsByImage(combined).slice(0, 4);
-  const featured = rawFeatured.map((rod) =>
-    HOME_REAL_FEATURED.some((r) => r.id === rod.id) ? prepareFeaturedForHome(rod as (typeof HOME_REAL_FEATURED)[number]) : rod
-  );
-  // 模块下半部分也优先展示真实产品，不足再用程序生成的 wholesalePicks 补足
-  const wholesaleCombined = [...HOME_REAL_WHOLESALE, ...wholesalePicks];
-  const wholesale = dedupeProductsByImage(wholesaleCombined).slice(0, 4);
+  function buildRow(
+    real: (typeof HOME_REAL_FEATURED),
+    fallback: typeof trendingRods
+  ) {
+    const combined = [...real, ...fallback];
+    const picked = dedupeProductsByImage(combined).slice(0, 4);
+    return picked.map((rod) =>
+      real.some((r) => r.id === rod.id) ? prepareFeaturedForHome(rod as (typeof HOME_REAL_FEATURED)[number]) : rod
+    );
+  }
+
+  // 上下排使用同一套逻辑：真实产品排前，不足再用生成产品补足，并按图片去重
+  const featured = buildRow(HOME_REAL_FEATURED, trendingRods);
+  const wholesale = buildRow(HOME_REAL_WHOLESALE, wholesalePicks);
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
