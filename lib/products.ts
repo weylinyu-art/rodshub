@@ -105,12 +105,50 @@ export const newArrivals: (Product & { id: string })[] = withIds([
 });
 
 export const wholesalePicks: (Product & { id: string })[] = withIds([
-  product(16, { name: "Spinning Rod Bulk Pack", price: "$8.50/pc", moq: "50 pcs" }),
-  product(17, { name: "Telescopic Rod Wholesale Set", price: "$8.00/pc", moq: "200 pcs" }),
-  product(18, { name: "Surf Rod Bulk Order", price: "$9.50/pc", moq: "30 pcs" }),
-  product(19, { name: "Casting Rod 100-Pack", price: "$10.00/pc", moq: "100 pcs" }),
-  product(20, { name: "Travel Rod Bulk Deal", price: "$8.90/pc", moq: "300 pcs" }),
-  product(21, { name: "Ice Rod Wholesale Lot", price: "$9.50/pc", moq: "80 pcs" }),
+  // 这组用于首页/详情页“批发推荐”的程序生成产品：为避免 Unsplash/Pexels 在部分地区不可达，
+  // 这里改用站内静态分类图作为图片源（更稳定）。
+  {
+    name: "Spinning Rod Bulk Pack",
+    price: "$8.50/pc",
+    moq: "50 pcs",
+    image: "/categories/Spinning%20Rods.png",
+    images: ["/categories/Spinning%20Rods.png"],
+  },
+  {
+    name: "Telescopic Rod Wholesale Set",
+    price: "$8.00/pc",
+    moq: "200 pcs",
+    image: "/categories/Telescopic%20Rods.png",
+    images: ["/categories/Telescopic%20Rods.png"],
+  },
+  {
+    name: "Surf Rod Bulk Order",
+    price: "$9.50/pc",
+    moq: "30 pcs",
+    image: "/categories/Surf%20Rods.png",
+    images: ["/categories/Surf%20Rods.png"],
+  },
+  {
+    name: "Casting Rod 100-Pack",
+    price: "$10.00/pc",
+    moq: "100 pcs",
+    image: "/categories/Casting%20Rods.png",
+    images: ["/categories/Casting%20Rods.png"],
+  },
+  {
+    name: "Travel Rod Bulk Deal",
+    price: "$8.90/pc",
+    moq: "300 pcs",
+    image: "/categories/Travel%20Rods.png",
+    images: ["/categories/Travel%20Rods.png"],
+  },
+  {
+    name: "Ice Rod Wholesale Lot",
+    price: "$9.50/pc",
+    moq: "80 pcs",
+    image: "/categories/Ice%20Fishing%20Rods.png",
+    images: ["/categories/Ice%20Fishing%20Rods.png"],
+  },
 ], 17).map((p) => {
   const { text, min } = getRandomDisplayPriceForId(p.id);
   return { ...p, price: text, priceMin: min };
