@@ -11,13 +11,17 @@ import { useClickCounts } from "@/contexts/ClickCountsContext";
 import { REAL_PRODUCTS, realProductToDisplayProduct, applyListImageOverride } from "@/lib/realProducts";
 
 const realDisplay = REAL_PRODUCTS.map(realProductToDisplayProduct);
-const baseProducts = [...realDisplay, ...trendingRods];
 
 export default function TrendingPageContent() {
   const { lang } = useLanguage();
   const counts = useClickCounts();
   const trendingProducts = useMemo(
-    () => sortProductsByClicksThenPrice([...baseProducts], counts),
+    () => {
+      // 真实商品优先：先分别排序，再把生成商品拼到后面
+      const realSorted = sortProductsByClicksThenPrice([...realDisplay], counts);
+      const genSorted = sortProductsByClicksThenPrice([...trendingRods], counts);
+      return [...realSorted, ...genSorted];
+    },
     [counts]
   );
 

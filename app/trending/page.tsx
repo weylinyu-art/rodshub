@@ -17,7 +17,11 @@ export const metadata: Metadata = {
 
 export default function TrendingPage() {
   const realDisplay = REAL_PRODUCTS.map(realProductToDisplayProduct);
-  const trendingProducts = sortProductsByPriceAsc([...realDisplay, ...trendingRods]);
+  // 真实商品优先：先分别按价格排序，再把生成商品放后面
+  const trendingProducts = [
+    ...sortProductsByPriceAsc([...realDisplay]),
+    ...sortProductsByPriceAsc([...trendingRods]),
+  ];
 
   const listItems = trendingProducts.filter((p): p is typeof p & { id: string } => !!p.id);
   const itemListSchema = {

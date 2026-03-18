@@ -1,5 +1,5 @@
 import type { Product } from "@/lib/products";
-import { getAllProducts } from "@/lib/productRegistry";
+import { getAllProducts, getRealProduct } from "@/lib/productRegistry";
 
 export const SCENARIOS = [
   { name: "Freshwater", slug: "freshwater" },
@@ -51,7 +51,17 @@ const SCENARIO_FILTER: Record<ScenarioSlug, (p: Product) => boolean> = {
 export function getProductsByScenario(slug: string): (Product & { id: string })[] {
   const filter = SCENARIO_FILTER[slug as ScenarioSlug];
   if (!filter) return [];
-  return getAllProducts().filter((p) => p.id && filter(p)) as (Product & { id: string })[];
+  const filtered = getAllProducts().filter((p) => p.id && filter(p)) as (Product & { id: string })[];
+  // 真实商品优先，其它生成/模拟商品排后；并按 id 去重（registry 聚合时可能出现重复来源）
+  const real: (Product & { id: string })[] = [];
+  const generated: (Product & { id: string })[] = [];
+  const seen = new Set<string>();
+  for (const p of filtered) {
+    if (!p.id || seen.has(p.id)) continue;
+    seen.add(p.id);
+    (getRealProduct(p.id) ? real : generated).push(p);
+  }
+  return [...real, ...generated];
 }
 
 /** 获取产品所属主场景（首个匹配），用于排序 */
