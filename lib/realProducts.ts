@@ -207,6 +207,9 @@ function defaultImageFiles(sku: string, count = 6): string[] {
 
 import { buildProductsFromSkuRows } from "./skuData";
 import { getRandomDisplayPriceForId } from "./priceDisplay";
+import { loadR2Images } from "./loadR2Images";
+
+const { bySku: R2_IMAGE_FILES_BY_SKU } = loadR2Images();
 
 /** @deprecated 已合并入 PRODUCT_DISPLAY_PRICES，保留以兼容旧引用 */
 export const HOME_FEATURED_PRICES = PRODUCT_DISPLAY_PRICES;
@@ -258,6 +261,7 @@ export function filterDetailPageImages(productId: string, images: string[]): str
 /** 从 skuData 构建 RealProduct，标题替换为 CSV 标题，有子 SKU 时以伸展长作为 variant 维度 */
 export const REAL_PRODUCTS: RealProduct[] = buildProductsFromSkuRows().map(({ parentSku, title, rows }) => {
   const style = inferFishingStyle(parentSku);
+  const r2Files = R2_IMAGE_FILES_BY_SKU[parentSku];
   const variants: ProductVariant[] = rows.map((r) => ({
     sku: r.subSku === "无" ? parentSku : r.subSku,
     dimensions: `${r.lengthInch}"`,
@@ -275,7 +279,7 @@ export const REAL_PRODUCTS: RealProduct[] = buildProductsFromSkuRows().map(({ pa
     id: parentSku,
     name: title,
     imageFolder: parentSku,
-    imageFiles: defaultImageFiles(parentSku, 12),
+    imageFiles: (r2Files && r2Files.length > 0 ? r2Files : defaultImageFiles(parentSku, 12)),
     fishingStyle: style,
     variants,
   };

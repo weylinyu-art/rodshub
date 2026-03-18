@@ -34,3 +34,6 @@ out
 
 # 采集脚本下载的图片
 output
+
+# R2 构建期生成：真实图片清单（不要提交，避免环境差异与噪音）
+data/r2-images.generated.ts

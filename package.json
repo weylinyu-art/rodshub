@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node scripts/csv-to-products.mjs && next dev",
-    "prebuild": "node scripts/csv-to-products.mjs",
+    "dev": "node scripts/r2-sync-images.mjs && node scripts/csv-to-products.mjs && next dev",
+    "prebuild": "node scripts/r2-sync-images.mjs && node scripts/csv-to-products.mjs",
     "build": "npm run prebuild && next build",
     "start": "next start",
     "lint": "next lint",
@@ -14,6 +14,7 @@
     "append": "node scripts/append-products.mjs"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.600.0",
     "csv-parse": "^6.1.0",
     "next": "^15.0.0",
     "react": "^19.0.0",
