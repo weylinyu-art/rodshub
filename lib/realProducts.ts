@@ -205,6 +205,45 @@ function defaultImageFiles(sku: string, count = 6): string[] {
   return files.filter((f) => (seen.has(f) ? false : (seen.add(f), true)));
 }
 
+function normalizeImageFilesForSku(sku: string, files: string[]): string[] {
+  const extRank = (ext: string) => {
+    const e = (ext ?? "").toLowerCase();
+    if (e === "jpg" || e === "jpeg") return 0;
+    if (e === "png") return 1;
+    if (e === "webp") return 2;
+    if (e === "gif") return 3;
+    return 9;
+  };
+
+  const skuRe = new RegExp(`^${sku.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")}-([0-9]+)\\.([a-z0-9]+)$`, "i");
+  const numRe = /^([0-9]+)\.([a-z0-9]+)$/i;
+
+  const byIndex = new Map<string, { file: string; rank: number }>();
+  const passthrough: string[] = [];
+
+  for (const f of files ?? []) {
+    const file = String(f ?? "").trim();
+    if (!file) continue;
+    const m1 = file.match(skuRe);
+    const m2 = m1 ? null : file.match(numRe);
+    const idx = m1?.[1] ?? m2?.[1];
+    const ext = m1?.[2] ?? m2?.[2];
+    if (!idx || !ext) {
+      passthrough.push(file);
+      continue;
+    }
+    const key = `${m1 ? "sku" : "num"}:${idx}`;
+    const rank = extRank(ext);
+    const prev = byIndex.get(key);
+    if (!prev || rank < prev.rank) byIndex.set(key, { file, rank });
+  }
+
+  const picked = Array.from(byIndex.values()).map((x) => x.file);
+  const all = [...picked, ...passthrough];
+  const seen = new Set<string>();
+  return all.filter((x) => (seen.has(x) ? false : (seen.add(x), true)));
+}
+
 import { buildProductsFromSkuRows } from "./skuData";
 import { getRandomDisplayPriceForId } from "./priceDisplay";
 import { loadR2Images } from "./loadR2Images";
@@ -262,6 +301,8 @@ export function filterDetailPageImages(productId: string, images: string[]): str
 export const REAL_PRODUCTS: RealProduct[] = buildProductsFromSkuRows().map(({ parentSku, title, rows }) => {
   const style = inferFishingStyle(parentSku);
   const r2Files = R2_IMAGE_FILES_BY_SKU[parentSku];
+  const imageFilesRaw = (r2Files && r2Files.length > 0 ? r2Files : defaultImageFiles(parentSku, 12));
+  const imageFiles = normalizeImageFilesForSku(parentSku, imageFilesRaw);
   const variants: ProductVariant[] = rows.map((r) => ({
     sku: r.subSku === "无" ? parentSku : r.subSku,
     dimensions: `${r.lengthInch}"`,
@@ -279,7 +320,7 @@ export const REAL_PRODUCTS: RealProduct[] = buildProductsFromSkuRows().map(({ pa
     id: parentSku,
     name: title,
     imageFolder: parentSku,
-    imageFiles: (r2Files && r2Files.length > 0 ? r2Files : defaultImageFiles(parentSku, 12)),
+    imageFiles,
     fishingStyle: style,
     variants,
   };
