@@ -17,7 +17,8 @@ function prepareFeaturedForHome(rod: (typeof HOME_REAL_FEATURED)[0]) {
     image = preferred;
     images = [preferred, ...rod.images.filter((_, i) => i !== imgIdx)];
   }
-  return { ...rod, image, images };
+  // 首页 Featured Rods 仅展示一张“主体图”，不需要小圆点/轮播
+  return { ...rod, image, images: [image] };
 }
 
 export default function HomeFeaturedSection() {
@@ -48,7 +49,13 @@ export default function HomeFeaturedSection() {
             <ProductCard key={rod.id} {...rod} variant="default" priority />
           ))}
           {wholesale.map((rod) => (
-            <ProductCard key={rod.id} {...rod} variant="default" />
+            <ProductCard
+              key={rod.id}
+              {...rod}
+              variant="default"
+              // 对非真实产品也只展示单张图，去掉小圆点
+              images={rod.image ? [rod.image] : rod.images}
+            />
           ))}
         </div>
       </div>
