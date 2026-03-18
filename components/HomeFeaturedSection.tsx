@@ -5,7 +5,7 @@ import ProductCard from "@/components/ProductCard";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 import { trendingRods, wholesalePicks, dedupeProductsByImage } from "@/lib/products";
-import { HOME_REAL_FEATURED, HOME_IMAGE_INDEX_OVERRIDE } from "@/lib/realProducts";
+import { HOME_REAL_FEATURED, HOME_REAL_WHOLESALE, HOME_IMAGE_INDEX_OVERRIDE } from "@/lib/realProducts";
 
 /** 首页精选：真实产品排前，再补足 trending；wholesale 单独展示；价格与列表/详情页统一，不再单独覆盖 */
 function prepareFeaturedForHome(rod: (typeof HOME_REAL_FEATURED)[0]) {
@@ -28,7 +28,9 @@ export default function HomeFeaturedSection() {
   const featured = rawFeatured.map((rod) =>
     HOME_REAL_FEATURED.some((r) => r.id === rod.id) ? prepareFeaturedForHome(rod as (typeof HOME_REAL_FEATURED)[number]) : rod
   );
-  const wholesale = wholesalePicks.slice(0, 4);
+  // 模块下半部分也优先展示真实产品，不足再用程序生成的 wholesalePicks 补足
+  const wholesaleCombined = [...HOME_REAL_WHOLESALE, ...wholesalePicks];
+  const wholesale = dedupeProductsByImage(wholesaleCombined).slice(0, 4);
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

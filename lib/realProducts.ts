@@ -289,3 +289,6 @@ export const HOME_REAL_NEW_ARRIVALS = REAL_DISPLAY_FOR_HOME.slice(0, 4);
 
 /** 首页 Featured Rods 优先使用真实产品：使用第 5–8 条，不足时由调用方用生成产品补足 */
 export const HOME_REAL_FEATURED = REAL_DISPLAY_FOR_HOME.slice(4, 8);
+
+/** 首页 Featured Rods 模块下半部分（原 wholesale 区）优先使用更多真实产品：第 9–12 条 */
+export const HOME_REAL_WHOLESALE = REAL_DISPLAY_FOR_HOME.slice(8, 12);
