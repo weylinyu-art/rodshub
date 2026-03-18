@@ -74,6 +74,13 @@ function sortFilesForSku(sku, files) {
   });
 }
 
+function getIndexForSkuFile(sku, file) {
+  const re = new RegExp(`^${sku.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")}-([0-9]+)\\.[a-z0-9]+$`, "i");
+  const m = String(file ?? "").match(re);
+  const n = m ? parseInt(m[1], 10) : NaN;
+  return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY;
+}
+
 async function main() {
   const startedAt = new Date().toISOString();
 
@@ -100,9 +107,11 @@ async function main() {
   });
 
   const bySku = {};
+  const etagBySkuFile = {};
   let continuationToken = undefined;
   let keysScanned = 0;
   let imagesFound = 0;
+  let imagesDedupedByEtag = 0;
 
   while (true) {
     const res = await client.send(
@@ -123,6 +132,7 @@ async function main() {
       const file = fileNameFromKey(key);
       if (!file) continue;
       (bySku[sku] ??= []).push(file);
+      if (obj.ETag) (etagBySkuFile[sku] ??= {})[file] = String(obj.ETag).replace(/^\"|\"$/g, "");
       imagesFound++;
     }
     if (!res.IsTruncated) break;
@@ -130,10 +140,33 @@ async function main() {
     if (!continuationToken) break;
   }
 
-  // 去重 + 排序
+  // 去重（按 ETag 内容优先） + 排序
   for (const [sku, files] of Object.entries(bySku)) {
     const uniq = Array.from(new Set(files));
-    bySku[sku] = sortFilesForSku(sku, uniq);
+    const etagMap = etagBySkuFile[sku] ?? {};
+
+    // 同内容（ETag）只保留一张：优先保留序号更小的文件名
+    const chosenByEtag = new Map();
+    const noEtag = [];
+    for (const f of uniq) {
+      const etag = etagMap[f];
+      if (!etag) {
+        noEtag.push(f);
+        continue;
+      }
+      const prev = chosenByEtag.get(etag);
+      if (!prev) {
+        chosenByEtag.set(etag, f);
+        continue;
+      }
+      const prevIdx = getIndexForSkuFile(sku, prev);
+      const curIdx = getIndexForSkuFile(sku, f);
+      if (curIdx < prevIdx) chosenByEtag.set(etag, f);
+    }
+
+    const deduped = [...chosenByEtag.values(), ...noEtag];
+    imagesDedupedByEtag += Math.max(0, uniq.length - deduped.length);
+    bySku[sku] = sortFilesForSku(sku, deduped);
   }
 
   writeOutput({
@@ -147,6 +180,7 @@ async function main() {
       prefix,
       keysScanned,
       imagesFound,
+      imagesDedupedByEtag,
       skuCount: Object.keys(bySku).length,
     },
   });
