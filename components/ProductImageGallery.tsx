@@ -38,6 +38,7 @@ export default function ProductImageGallery({
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const thumbsRef = useRef<HTMLDivElement | null>(null);
 
   const findNextUsableIndex = useCallback(
     (from: number, failed: Set<string>) => {
@@ -293,7 +294,42 @@ export default function ProductImageGallery({
       {/* 缩略图条（跟随 activeIndex 高亮） */}
       {hasMultiple && (
         <div className="mt-3 w-full max-w-[480px]">
-          <div className="flex flex-wrap gap-2">
+          <div className="relative">
+            {/* 左右滚动按钮：仅滚动缩略图容器，不影响页面横向滚动 */}
+            <button
+              type="button"
+              onClick={() => {
+                const el = thumbsRef.current;
+                if (!el) return;
+                el.scrollBy({ left: -Math.max(240, el.clientWidth * 0.8), behavior: "smooth" });
+              }}
+              className="absolute -left-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 hover:bg-white shadow border border-gray-200 flex items-center justify-center"
+              aria-label="Scroll thumbnails left"
+            >
+              <svg className="w-4 h-4 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                const el = thumbsRef.current;
+                if (!el) return;
+                el.scrollBy({ left: Math.max(240, el.clientWidth * 0.8), behavior: "smooth" });
+              }}
+              className="absolute -right-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 hover:bg-white shadow border border-gray-200 flex items-center justify-center"
+              aria-label="Scroll thumbnails right"
+            >
+              <svg className="w-4 h-4 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            <div
+              ref={thumbsRef}
+              className="flex flex-nowrap gap-2 overflow-x-auto overflow-y-hidden pr-1 pb-1 -mb-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent"
+              style={{ WebkitOverflowScrolling: "touch" }}
+            >
             {showFallbackThumbs ? (
               <div className="relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded overflow-hidden bg-white border border-gray-200">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -340,6 +376,7 @@ export default function ProductImageGallery({
                 </button>
               ))
             )}
+            </div>
           </div>
         </div>
       )}
