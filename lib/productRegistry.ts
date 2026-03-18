@@ -7,8 +7,13 @@ type ProductWithId = Product & { id: string };
 
 const realDisplayProducts = REAL_PRODUCTS.map(realProductToDisplayProduct);
 
+function hasImage(p: ProductWithId): boolean {
+  return typeof p.image === "string" && p.image.trim().length > 0;
+}
+
 const allProducts: ProductWithId[] = [
-  ...realDisplayProducts,
+  // 没有图片的真实商品不应进入任何列表/搜索
+  ...realDisplayProducts.filter(hasImage),
   ...trendingRods,
   ...newArrivals,
   ...wholesalePicks,
@@ -30,6 +35,10 @@ export function getProductById(id: string): (Product & { id: string }) | undefin
   return registry.get(familyId);
 }
 
+export function getFamilyId(id: string): string {
+  return variantToFamily.get(id) ?? id;
+}
+
 export function getRealProduct(id: string): import("./realProducts").RealProduct | undefined {
   const familyId = variantToFamily.get(id) ?? id;
   return REAL_PRODUCTS.find((p) => p.id === familyId);
@@ -42,8 +51,8 @@ export function isVariantSku(id: string): boolean {
 /** 返回所有产品 ID（含父 SKU 与子 SKU），用于静态生成与 sitemap */
 export function getAllProductIds(): string[] {
   const familyIds = new Set(registry.keys());
-  const variantIds = new Set(variantToFamily.keys());
-  return Array.from(new Set([...familyIds, ...variantIds]));
+  // 仅返回主 SKU：变种 SKU（子 SKU）不单独生成页面
+  return Array.from(familyIds);
 }
 
 export function getAllProducts(): (Product & { id: string })[] {

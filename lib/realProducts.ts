@@ -205,50 +205,28 @@ function defaultImageFiles(sku: string, count = 6): string[] {
   return files.filter((f) => (seen.has(f) ? false : (seen.add(f), true)));
 }
 
-function normalizeImageFilesForSku(sku: string, files: string[]): string[] {
-  const extRank = (ext: string) => {
-    const e = (ext ?? "").toLowerCase();
-    if (e === "jpg" || e === "jpeg") return 0;
-    if (e === "png") return 1;
-    if (e === "webp") return 2;
-    if (e === "gif") return 3;
-    return 9;
-  };
-
-  const skuRe = new RegExp(`^${sku.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")}-([0-9]+)\\.([a-z0-9]+)$`, "i");
-  const numRe = /^([0-9]+)\.([a-z0-9]+)$/i;
-
-  const byIndex = new Map<string, { file: string; rank: number }>();
-  const passthrough: string[] = [];
-
+function normalizeImageFilesForSku(_sku: string, files: string[]): string[] {
+  // 去重标准要严格：只移除“完全相同的文件名”（大小写不敏感）；
+  // 内容重复的去重交给 r2-sync-images.mjs 基于 ETag 处理。
+  const seen = new Set<string>();
+  const out: string[] = [];
   for (const f of files ?? []) {
     const file = String(f ?? "").trim();
     if (!file) continue;
-    const m1 = file.match(skuRe);
-    const m2 = m1 ? null : file.match(numRe);
-    const idx = m1?.[1] ?? m2?.[1];
-    const ext = m1?.[2] ?? m2?.[2];
-    if (!idx || !ext) {
-      passthrough.push(file);
-      continue;
-    }
-    const key = `${m1 ? "sku" : "num"}:${idx}`;
-    const rank = extRank(ext);
-    const prev = byIndex.get(key);
-    if (!prev || rank < prev.rank) byIndex.set(key, { file, rank });
+    const key = file.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(file);
   }
-
-  const picked = Array.from(byIndex.values()).map((x) => x.file);
-  const all = [...picked, ...passthrough];
-  const seen = new Set<string>();
-  return all.filter((x) => (seen.has(x) ? false : (seen.add(x), true)));
+  return out;
 }
 
 import { buildProductsFromSkuRows } from "./skuData";
 import { getRandomDisplayPriceForId } from "./priceDisplay";
 import { loadR2Images } from "./loadR2Images";
 
-const { bySku: R2_IMAGE_FILES_BY_SKU } = loadR2Images();
+const { bySku: R2_IMAGE_FILES_BY_SKU, meta: R2_IMAGES_META } = loadR2Images();
+const R2_IMAGES_OK = (R2_IMAGES_META as { ok?: boolean } | undefined)?.ok === true;
 
 /** @deprecated 已合并入 PRODUCT_DISPLAY_PRICES，保留以兼容旧引用 */
 export const HOME_FEATURED_PRICES = PRODUCT_DISPLAY_PRICES;
@@ -301,7 +279,10 @@ export function filterDetailPageImages(productId: string, images: string[]): str
 export const REAL_PRODUCTS: RealProduct[] = buildProductsFromSkuRows().map(({ parentSku, title, rows }) => {
   const style = inferFishingStyle(parentSku);
   const r2Files = R2_IMAGE_FILES_BY_SKU[parentSku];
-  const imageFilesRaw = (r2Files && r2Files.length > 0 ? r2Files : defaultImageFiles(parentSku, 12));
+  // 当 R2 清单可用时：只使用真实清单（没有文件就视为“无图产品”）；否则 fallback 到猜测规则
+  const imageFilesRaw = R2_IMAGES_OK
+    ? (r2Files ?? [])
+    : (r2Files && r2Files.length > 0 ? r2Files : defaultImageFiles(parentSku, 12));
   const imageFiles = normalizeImageFilesForSku(parentSku, imageFilesRaw);
   const variants: ProductVariant[] = rows.map((r) => ({
     sku: r.subSku === "无" ? parentSku : r.subSku,
@@ -324,6 +305,10 @@ export const REAL_PRODUCTS: RealProduct[] = buildProductsFromSkuRows().map(({ pa
     fishingStyle: style,
     variants,
   };
+}).filter((p) => {
+  // 新规则：当 R2 清单正常时，没有任何图片文件的真实商品不展示
+  if (!R2_IMAGES_OK) return true;
+  return Array.isArray(p.imageFiles) && p.imageFiles.length > 0;
 });
 
 // 首页用的真实产品展示列表（已转成通用 Product 结构）

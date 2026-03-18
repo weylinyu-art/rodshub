@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { getProductById, getAllProductIds, getRelatedProducts, getRealProduct, isVariantSku } from "@/lib/productRegistry";
+import { notFound, redirect } from "next/navigation";
+import { getProductById, getAllProductIds, getRelatedProducts, getRealProduct, isVariantSku, getFamilyId } from "@/lib/productRegistry";
 import { filterDetailPageImages, applyListImageOverride } from "@/lib/realProducts";
 import { getProductDetail } from "@/lib/productDetail";
 import ProductDetailContent from "@/components/ProductDetailContent";
@@ -19,13 +19,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
+  const familyId = getFamilyId(id);
   const product = getProductById(id);
   if (!product) return { title: "Product Not Found" };
 
   const title = `${product.name} | B2B Wholesale`;
   const specs = [product.material, product.length, product.power, product.fishingStyle].filter(Boolean).join(" · ");
   const desc = `B2B wholesale: ${product.name} at ${product.price}. ${specs ? specs + ". " : ""}MOQ from 30 pcs. RodsHub.`;
-  const path = `/product/${id}`;
+  const path = `/product/${familyId}`;
   const rawImgs = (product.images && product.images.length > 0 ? product.images : [product.image]) as string[];
   const filtered = getRealProduct(id) ? filterDetailPageImages(product.id, rawImgs) : rawImgs;
   const image = (filtered[0] || product.image) as string;
@@ -42,6 +43,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ProductPage({ params }: PageProps) {
   const { id } = await params;
+  // 变种 SKU 不单独展示：统一重定向到主 SKU
+  const familyId = getFamilyId(id);
+  if (familyId !== id) redirect(`/product/${familyId}`);
   const product = getProductById(id);
   if (!product) notFound();
 
