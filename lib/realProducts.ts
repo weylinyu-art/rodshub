@@ -183,12 +183,26 @@ function inferFishingStyle(sku: string): string {
  * 2) products/{SKU}/{SKU}-1.jpg
  */
 function defaultImageFiles(sku: string, count = 6): string[] {
-  // 你上传的 R2 图片常见格式为 {SKU}/{SKU}-2.jpg（先 SKU- 前缀），因此优先尝试该模式
-  const order = [2, 1, 3, 4, 5, 6].slice(0, count);
-  const withSku = order.map((n) => `${sku}-${n}.jpg`);
-  // 兼容少量目录里确实是 1.jpg / 2.jpg 的情况（但不要无限猜测，避免大量 404）
-  const numeric = order.slice(0, Math.min(3, order.length)).map((n) => `${n}.jpg`);
-  return [...withSku, ...numeric];
+  // 真实产品图片命名在 R2 中常见为：
+  // - products/{SKU}/{SKU}-2.png / {SKU}-3.png / {SKU}-4.jpg ...（同一产品既可能有 png 也可能有 jpg）
+  // - 少量目录为 products/{SKU}/1.jpg 这种纯数字命名
+  //
+  // 因此：同一序号同时尝试 .jpg 与 .png，并把序号范围放宽（默认 12），最大化覆盖 R2 中已存在的图片。
+  const max = Math.max(1, Math.min(24, count));
+  const baseOrder = [2, 3, 4, 5, 6, 7, 1, 8, 9, 10, 11, 12].slice(0, max);
+  const exts = ["jpg", "png"] as const;
+
+  const files: string[] = [];
+  for (const n of baseOrder) {
+    for (const ext of exts) files.push(`${sku}-${n}.${ext}`);
+  }
+  // 兼容少量纯数字命名（同样尝试 jpg/png，但限制数量避免无限猜测）
+  for (const n of baseOrder.slice(0, Math.min(4, baseOrder.length))) {
+    for (const ext of exts) files.push(`${n}.${ext}`);
+  }
+  // 去重并保持顺序
+  const seen = new Set<string>();
+  return files.filter((f) => (seen.has(f) ? false : (seen.add(f), true)));
 }
 
 import { buildProductsFromSkuRows } from "./skuData";
@@ -261,7 +275,7 @@ export const REAL_PRODUCTS: RealProduct[] = buildProductsFromSkuRows().map(({ pa
     id: parentSku,
     name: title,
     imageFolder: parentSku,
-    imageFiles: defaultImageFiles(parentSku),
+    imageFiles: defaultImageFiles(parentSku, 12),
     fishingStyle: style,
     variants,
   };
