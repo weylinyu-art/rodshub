@@ -39,6 +39,19 @@ export default function ProductImageGallery({
   const touchEndX = useRef<number>(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  const findNextUsableIndex = useCallback(
+    (from: number, failed: Set<string>) => {
+      if (total <= 0) return 0;
+      for (let step = 1; step <= total; step++) {
+        const idx = (from + step) % total;
+        const src = uniqueImages[idx];
+        if (src && !failed.has(src)) return idx;
+      }
+      return from;
+    },
+    [total, uniqueImages]
+  );
+
   const getSrc = useCallback(
     (src: string) => (failedUrls.has(src) ? fallbackImage : src),
     [failedUrls, fallbackImage]
@@ -51,6 +64,7 @@ export default function ProductImageGallery({
   useEffect(() => {
     uniqueImages.slice(1).forEach((src) => {
       const img = new Image();
+      img.onerror = () => setFailedUrls((prev) => new Set(prev).add(src));
       img.src = src;
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,7 +92,13 @@ export default function ProductImageGallery({
     };
     img.onerror = () => {
       if (alive) {
-        setFailedUrls((prev) => new Set(prev).add(src));
+        setFailedUrls((prev) => {
+          const next = new Set(prev).add(src);
+          const nextIdx = findNextUsableIndex(activeIndex, next);
+          // 如果还有可用图，自动跳到下一张，避免大图/缩略图变成一排兜底图
+          if (nextIdx !== activeIndex) setActiveIndex(nextIdx);
+          return next;
+        });
         setDisplayedIndex(activeIndex);
       }
     };
@@ -140,6 +160,8 @@ export default function ProductImageGallery({
   }, [autoPlay, hasMultiple, isPaused, autoPlayInterval, goNext]);
 
   const displayedSrc = getSrc(uniqueImages[displayedIndex] ?? "");
+  const visibleThumbs = uniqueImages.filter((src) => !failedUrls.has(src));
+  const showFallbackThumbs = visibleThumbs.length === 0;
 
   return (
     <div className="w-full min-w-0 group/carousel">
@@ -159,7 +181,14 @@ export default function ProductImageGallery({
           fetchPriority="high"
           className="w-full h-full object-cover"
           onError={() =>
-            setFailedUrls((prev) => new Set(prev).add(uniqueImages[displayedIndex] ?? ""))
+            setFailedUrls((prev) => {
+              const src = uniqueImages[displayedIndex] ?? "";
+              const next = new Set(prev);
+              if (src) next.add(src);
+              const nextIdx = findNextUsableIndex(displayedIndex, next);
+              if (nextIdx !== displayedIndex) setActiveIndex(nextIdx);
+              return next;
+            })
           }
         />
 
@@ -239,35 +268,52 @@ export default function ProductImageGallery({
       {/* 缩略图条（跟随 activeIndex 高亮） */}
       {hasMultiple && (
         <div className="mt-3 flex gap-2 overflow-x-auto pb-1 -mb-1 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-          {uniqueImages.map((src, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setActiveIndex(i)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  setActiveIndex(i);
-                }
-              }}
-              style={{ touchAction: "manipulation" }}
-              className={`relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded overflow-hidden bg-white transition snap-center ring-0 focus:ring-0 focus:outline-none ${
-                i === activeIndex
-                  ? "ring-1 ring-gray-400 ring-inset"
-                  : "border border-transparent hover:border-gray-300"
-              }`}
-            >
+          {showFallbackThumbs ? (
+            <div className="relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded overflow-hidden bg-white border border-gray-200">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={getSrc(src)}
-                alt={`${alt} - view ${i + 1}`}
+                src={fallbackImage}
+                alt={`${alt} - fallback`}
                 loading="lazy"
                 decoding="async"
-                className="absolute inset-0 size-full min-w-full min-h-full object-cover object-center pointer-events-none"
-                onError={() => setFailedUrls((prev) => new Set(prev).add(src))}
+                className="absolute inset-0 size-full object-cover object-center pointer-events-none"
               />
-            </button>
-          ))}
+            </div>
+          ) : (
+            visibleThumbs.map((src, i) => (
+              <button
+                key={src}
+                type="button"
+                onClick={() => {
+                  const idx = uniqueImages.indexOf(src);
+                  if (idx >= 0) setActiveIndex(idx);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    const idx = uniqueImages.indexOf(src);
+                    if (idx >= 0) setActiveIndex(idx);
+                  }
+                }}
+                style={{ touchAction: "manipulation" }}
+                className={`relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded overflow-hidden bg-white transition snap-center ring-0 focus:ring-0 focus:outline-none ${
+                  uniqueImages.indexOf(src) === activeIndex
+                    ? "ring-1 ring-gray-400 ring-inset"
+                    : "border border-transparent hover:border-gray-300"
+                }`}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={src}
+                  alt={`${alt} - view ${i + 1}`}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 size-full min-w-full min-h-full object-cover object-center pointer-events-none"
+                  onError={() => setFailedUrls((prev) => new Set(prev).add(src))}
+                />
+              </button>
+            ))
+          )}
         </div>
       )}
     </div>
