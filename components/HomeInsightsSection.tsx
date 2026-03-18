@@ -21,20 +21,22 @@ export default function HomeInsightsSection() {
               ))}
             </div>
           </div>
-          <div>
-            <div className="flex justify-between items-baseline mb-4">
+          <div className="flex flex-col h-full">
+            <div className="mb-4">
               <h2 className="text-2xl font-bold text-gray-900">{t("fishingInsightsTitle", lang)}</h2>
-              <Link href="/insights" className="text-sm font-semibold text-gray-600 hover:text-black shrink-0 ml-2">
-                {t("viewAll", lang)}
-              </Link>
             </div>
             <p className="text-gray-600 mb-4">{t("industryKnowledge", lang)}</p>
-            <div className="space-y-2">
+            <div className="space-y-2 flex-1">
               {ARTICLES.slice(0, 4).map((a) => (
                 <Link key={a.slug} href={`/insights/${a.slug}`} className="block text-gray-700 hover:text-black">
                   {getArticleTitle(a.slug, lang)}
                 </Link>
               ))}
+            </div>
+            <div className="mt-4 flex justify-end">
+              <Link href="/insights" className="text-sm font-semibold text-gray-600 hover:text-black shrink-0">
+                {t("viewAll", lang)}
+              </Link>
             </div>
           </div>
         </div>
