@@ -20,6 +20,17 @@ const inquiryHref = "/#inquiry";
 
 const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=400&h=400&fit=crop";
 
+function firstUsableImageSrc(imgList: string[], failed: Set<string>, startIndex: number): { src: string; index: number } {
+  const n = imgList.length;
+  if (!n) return { src: FALLBACK_IMAGE, index: 0 };
+  for (let step = 0; step < n; step++) {
+    const idx = (startIndex + step) % n;
+    const src = imgList[idx];
+    if (!failed.has(src)) return { src, index: idx };
+  }
+  return { src: FALLBACK_IMAGE, index: startIndex % n };
+}
+
 export default function ProductCard({
   id,
   name,
@@ -44,6 +55,7 @@ export default function ProductCard({
   const hasMultipleImages = imgList.length > 1;
   const [activeIndex, setActiveIndex] = useState(0);
   const [failedUrls, setFailedUrls] = useState<Set<string>>(new Set());
+  const { src: activeSrc, index: safeActiveIndex } = firstUsableImageSrc(imgList, failedUrls, activeIndex);
   const href = id ? `/product/${id}` : inquiryHref;
   const handleProductClick = () => id && recordProductClick(id);
 
@@ -54,24 +66,23 @@ export default function ProductCard({
           className="relative aspect-square overflow-hidden bg-gray-100"
           onMouseEnter={() => hasMultipleImages && setActiveIndex((i) => (i + 1) % imgList.length)}
         >
-          {imgList.map((src, i) => {
-            const effectiveSrc = failedUrls.has(src) ? FALLBACK_IMAGE : src;
-            const isFirst = i === 0;
-            return (
-              <img
-                key={i}
-                src={effectiveSrc}
-                alt={`${fullName} - ${i + 1}`}
-                loading={priority && isFirst ? "eager" : "lazy"}
-                {...(priority && isFirst && { fetchPriority: "high" as const })}
-                decoding="async"
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:scale-105 ${
-                  i === activeIndex ? "opacity-100 z-0" : "opacity-0"
-                }`}
-                onError={() => setFailedUrls((prev) => new Set(prev).add(src))}
-              />
-            );
-          })}
+          <img
+            src={activeSrc}
+            alt={fullName}
+            loading={priority ? "eager" : "lazy"}
+            {...(priority && { fetchPriority: "high" as const })}
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:scale-105"
+            onError={() => {
+              // 当前图失败：标记失败并切换到下一张可用图（若都失败再显示兜底图）
+              setFailedUrls((prev) => {
+                const next = new Set(prev);
+                if (imgList[safeActiveIndex]) next.add(imgList[safeActiveIndex]);
+                return next;
+              });
+              if (hasMultipleImages) setActiveIndex((i) => (i + 1) % imgList.length);
+            }}
+          />
           {badge && (
             <span className="absolute top-2 left-2 px-2 py-0.5 bg-black text-white text-xs font-medium z-10">
               {badge}
@@ -82,7 +93,7 @@ export default function ProductCard({
               {imgList.map((_, i) => (
                 <span
                   key={i}
-                  className={`w-1.5 h-1.5 rounded-full ${i === activeIndex ? "bg-black" : "bg-white/80"}`}
+                  className={`w-1.5 h-1.5 rounded-full ${i === safeActiveIndex ? "bg-black" : "bg-white/80"}`}
                 />
               ))}
             </div>

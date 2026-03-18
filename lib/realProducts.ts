@@ -177,9 +177,15 @@ function inferFishingStyle(sku: string): string {
   return "Spinning";
 }
 
-/** 根据 SKU 生成默认图片列表，与 R2 路径一致：products/{SKU}/{SKU}-1.jpg */
+/** 根据 SKU 生成默认图片列表。
+ * 兼容两种常见命名：
+ * 1) products/{SKU}/1.jpg
+ * 2) products/{SKU}/{SKU}-1.jpg
+ */
 function defaultImageFiles(sku: string, count = 6): string[] {
-  return Array.from({ length: count }, (_, i) => `${sku}-${i + 1}.jpg`);
+  const numeric = Array.from({ length: count }, (_, i) => `${i + 1}.jpg`);
+  const withSku = Array.from({ length: count }, (_, i) => `${sku}-${i + 1}.jpg`);
+  return [...numeric, ...withSku];
 }
 
 import { buildProductsFromSkuRows } from "./skuData";
