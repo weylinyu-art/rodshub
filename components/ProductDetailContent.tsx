@@ -10,7 +10,7 @@ import ProductDetailRecommend from "@/components/ProductDetailRecommend";
 import ShareButtons from "@/components/ShareButtons";
 import { absoluteUrl } from "@/lib/seo";
 import { getProductDetailForVariant, getKeyFeaturesForProduct } from "@/lib/productDetail";
-import { getDisplayPrice, inferMaterialFromTitle, inferPowerFromTitle } from "@/lib/realProducts";
+import { inferMaterialFromTitle, inferPowerFromTitle } from "@/lib/realProducts";
 import { getOriginalProductTitle } from "@/lib/skuData";
 import { gtagEvent } from "@/lib/gtag";
 import type { Product } from "@/lib/products";
@@ -93,7 +93,6 @@ export default function ProductDetailContent({
     variant: effectiveVariant ?? undefined,
     detailFeatures: effectiveVariant ? [] : detail.features,
   });
-  const displayPrice = effectiveVariant?.price ?? product.price;
   const materialVal = product.material ?? (realProduct ? inferMaterialFromTitle(realProduct.name) : undefined) ?? "Carbon Fiber";
   const powerVal = product.power ?? (realProduct ? inferPowerFromTitle(realProduct.name) : undefined) ?? "Medium";
   const displaySpecs = effectiveVariant
@@ -138,10 +137,6 @@ export default function ProductDetailContent({
             </span>
           )}
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight line-clamp-2 whitespace-pre-line" title={displayName}>{detailTitle}</h1>
-
-          <p className="text-xl font-bold text-gray-900">
-            {getDisplayPrice(displayPrice, product.fishingStyle, product.id)}
-          </p>
 
           <dl className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
             {displaySpecs.length && (

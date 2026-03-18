@@ -6,7 +6,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 import { getProductName, getListDisplayName } from "@/lib/products-i18n";
 import { dedupeImagesByBase } from "@/lib/imageUtils";
-import { getDisplayPrice } from "@/lib/realProducts";
 import { recordProductClick } from "@/lib/clickTracking";
 import { gtagEvent } from "@/lib/gtag";
 import type { Product } from "@/lib/products";
@@ -47,9 +46,6 @@ export default function ProductCard({
   const [failedUrls, setFailedUrls] = useState<Set<string>>(new Set());
   const href = id ? `/product/${id}` : inquiryHref;
   const handleProductClick = () => id && recordProductClick(id);
-
-  /** 全站统一价格：使用 getDisplayPrice 保证与详情页、列表页一致 */
-  const displayPrice = getDisplayPrice(price, fishingStyle, id);
 
   return (
     <div className="group flex flex-col min-w-0 bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-gray-400 hover:shadow-lg transition-all duration-200">
@@ -99,7 +95,6 @@ export default function ProductCard({
             {listDisplayName}
           </h3>
         </Link>
-        <p className="mt-1 font-bold text-gray-900 text-sm">{displayPrice}</p>
         <Link
           href="/inquiry"
           onClick={() => gtagEvent("inquiry_click", { source: "product_card" })}
