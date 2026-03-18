@@ -11,7 +11,7 @@ import { gtagEvent } from "@/lib/gtag";
 import type { Product } from "@/lib/products";
 
 interface ProductCardProps extends Product {
-  variant?: "default" | "trending" | "wholesale";
+  variant?: "default" | "trending" | "wholesale" | "static";
   /** 首屏可见时设为 true，优先加载图片（loading=eager, fetchPriority=high） */
   priority?: boolean;
 }
@@ -58,6 +58,7 @@ export default function ProductCard({
   const rawList = (images && images.length > 0 ? images : [image]) as string[];
   const imgList = dedupeImagesByBase(rawList);
   const hasMultipleImages = imgList.length > 1;
+  const enableCarouselUi = hasMultipleImages && variant !== "static";
   const [activeIndex, setActiveIndex] = useState(0);
   const [failedUrls, setFailedUrls] = useState<Set<string>>(new Set());
   const { src: activeSrc, index: safeActiveIndex } = firstUsableImageSrc(imgList, failedUrls, activeIndex, FALLBACK_IMAGE);
@@ -69,7 +70,7 @@ export default function ProductCard({
       <Link href={href} className="block flex-shrink-0" onClick={handleProductClick}>
         <div
           className="relative aspect-square overflow-hidden bg-gray-100"
-          onMouseEnter={() => hasMultipleImages && setActiveIndex((i) => (i + 1) % imgList.length)}
+          onMouseEnter={() => enableCarouselUi && setActiveIndex((i) => (i + 1) % imgList.length)}
         >
           <img
             src={activeSrc}
@@ -93,7 +94,7 @@ export default function ProductCard({
               {badge}
             </span>
           )}
-          {hasMultipleImages && (
+          {enableCarouselUi && (
             <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1 z-10">
               {imgList.map((_, i) => (
                 <span

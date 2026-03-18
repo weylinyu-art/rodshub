@@ -17,8 +17,8 @@ function prepareFeaturedForHome(rod: (typeof HOME_REAL_FEATURED)[0]) {
     image = preferred;
     images = [preferred, ...rod.images.filter((_, i) => i !== imgIdx)];
   }
-  // 首页 Featured Rods 仅展示一张“主体图”，不需要小圆点/轮播
-  return { ...rod, image, images: [image] };
+  // 首页 Featured Rods：仍保留多张候选图用于加载失败时自动兜底切换（但 UI 不显示圆点/轮播）
+  return { ...rod, image, images };
 }
 
 export default function HomeFeaturedSection() {
@@ -46,15 +46,13 @@ export default function HomeFeaturedSection() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {featured.map((rod) => (
-            <ProductCard key={rod.id} {...rod} variant="default" priority />
+            <ProductCard key={rod.id} {...rod} variant="static" priority />
           ))}
           {wholesale.map((rod) => (
             <ProductCard
               key={rod.id}
               {...rod}
-              variant="default"
-              // 对非真实产品也只展示单张图，去掉小圆点
-              images={rod.image ? [rod.image] : rod.images}
+              variant="static"
             />
           ))}
         </div>
