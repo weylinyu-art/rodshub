@@ -258,5 +258,11 @@ export const REAL_PRODUCTS: RealProduct[] = buildProductsFromSkuRows().map(({ pa
   };
 });
 
-/** 首页 New Arrivals 优先使用真实产品；如无真实产品则回退到模拟产品数据 */
-export const HOME_REAL_NEW_ARRIVALS = REAL_PRODUCTS.map(realProductToDisplayProduct);
+// 首页用的真实产品展示列表（已转成通用 Product 结构）
+const REAL_DISPLAY_FOR_HOME = REAL_PRODUCTS.map(realProductToDisplayProduct);
+
+/** 首页 New Arrivals 优先使用真实产品：取前 4 条，不足时由调用方用模拟数据补足 */
+export const HOME_REAL_NEW_ARRIVALS = REAL_DISPLAY_FOR_HOME.slice(0, 4);
+
+/** 首页 Featured Rods 优先使用真实产品：使用第 5–8 条，不足时由调用方用生成产品补足 */
+export const HOME_REAL_FEATURED = REAL_DISPLAY_FOR_HOME.slice(4, 8);

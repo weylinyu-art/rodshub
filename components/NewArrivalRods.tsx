@@ -1,10 +1,23 @@
 import ProductCard from "./ProductCard";
 import { newArrivals, dedupeProductsByImage } from "@/lib/products";
-import { HOME_REAL_NEW_ARRIVALS } from "@/lib/realProducts";
+import { HOME_REAL_NEW_ARRIVALS, applyListImageOverride, filterDetailPageImages } from "@/lib/realProducts";
 
 export default function NewArrivalRods() {
   const baseArrivals = HOME_REAL_NEW_ARRIVALS.length ? HOME_REAL_NEW_ARRIVALS : newArrivals;
-  const arrivals = dedupeProductsByImage(baseArrivals);
+  const deduped = dedupeProductsByImage(baseArrivals);
+  const arrivals = deduped.map((rod) => {
+    // 对真实产品先应用列表图片覆盖规则，再过滤掉含大量尺寸信息的图片，仅保留首选主图
+    const isReal = HOME_REAL_NEW_ARRIVALS.some((p) => p.id === rod.id);
+    const base = isReal ? applyListImageOverride(rod) : rod;
+    const imgs = base.images && base.images.length > 0 ? base.images : base.image ? [base.image] : [];
+    const filtered = isReal && imgs.length > 0 ? filterDetailPageImages(base.id, imgs as string[]) : imgs;
+    const primary = filtered[0] ?? imgs[0] ?? base.image;
+    return {
+      ...base,
+      image: primary,
+      images: primary ? [primary] : [],
+    };
+  });
   return (
     <section className="py-16 sm:py-24 bg-gradient-to-b from-amber-50/40 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

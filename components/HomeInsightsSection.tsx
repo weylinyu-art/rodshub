@@ -6,12 +6,26 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 import { getArticleTitle, ARTICLES } from "@/lib/insights-i18n";
 import { newArrivals, dedupeProductsByImage } from "@/lib/products";
-import { HOME_REAL_NEW_ARRIVALS } from "@/lib/realProducts";
+import { HOME_REAL_NEW_ARRIVALS, applyListImageOverride, filterDetailPageImages } from "@/lib/realProducts";
 
 export default function HomeInsightsSection() {
   const { lang } = useLanguage();
   const baseArrivals = HOME_REAL_NEW_ARRIVALS.length ? HOME_REAL_NEW_ARRIVALS : newArrivals;
-  const arrivals = dedupeProductsByImage(baseArrivals).slice(0, 4);
+  const deduped = dedupeProductsByImage(baseArrivals);
+  const arrivals = deduped
+    .map((rod) => {
+      const isReal = HOME_REAL_NEW_ARRIVALS.some((p) => p.id === rod.id);
+      const base = isReal ? applyListImageOverride(rod) : rod;
+      const imgs = base.images && base.images.length > 0 ? base.images : base.image ? [base.image] : [];
+      const filtered = isReal && imgs.length > 0 ? filterDetailPageImages(base.id, imgs as string[]) : imgs;
+      const primary = filtered[0] ?? imgs[0] ?? base.image;
+      return {
+        ...base,
+        image: primary,
+        images: primary ? [primary] : [],
+      };
+    })
+    .slice(0, 4);
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
