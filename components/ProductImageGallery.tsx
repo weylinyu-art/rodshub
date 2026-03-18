@@ -3,7 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { dedupeImagesByBase } from "@/lib/imageUtils";
 
-const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=500&h=500&fit=crop";
+const FALLBACK_IMAGE = "/product-placeholder.svg";
 
 /**
  * 商品详情页左侧多图轮播

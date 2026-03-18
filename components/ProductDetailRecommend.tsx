@@ -5,11 +5,10 @@ import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t, type LangCode } from "@/lib/i18n";
 import { getProductName, getListDisplayName } from "@/lib/products-i18n";
-import { getDisplayPrice } from "@/lib/realProducts";
 import { gtagEvent } from "@/lib/gtag";
 import type { Product } from "@/lib/products";
 
-const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=500&h=500&fit=crop";
+const FALLBACK_IMAGE = "/product-placeholder.svg";
 const DISPLAY_COUNT = 8;
 
 interface Props {
@@ -32,7 +31,6 @@ function RecommendCard({
   const listDisplayName = getListDisplayName(p, lang);
   const imgSrc = p.images?.[0] ?? p.image ?? "";
   const effectiveSrc = imgFailed || !imgSrc ? FALLBACK_IMAGE : imgSrc;
-  const displayPrice = getDisplayPrice(p.price, p.fishingStyle, p.id);
 
   const handleError = () => {
     setImgFailed(true);
@@ -58,7 +56,6 @@ function RecommendCard({
         <Link href={`/product/${p.id}`} className="shrink-0">
           <h3 className="font-medium text-gray-900 text-sm line-clamp-2 min-h-[2.5rem] group-hover:text-black">{listDisplayName}</h3>
         </Link>
-        <p className="mt-1 font-bold text-gray-900 text-sm">{displayPrice}</p>
         <Link
           href="/inquiry"
           onClick={() => gtagEvent("inquiry_click", { source: "product_recommend" })}

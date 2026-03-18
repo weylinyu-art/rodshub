@@ -4,12 +4,10 @@ import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 import { getProductName, getListDisplayName } from "@/lib/products-i18n";
-import { getDisplayPrice } from "@/lib/realProducts";
 import type { Product } from "@/lib/products";
 import { gtagEvent } from "@/lib/gtag";
 
-const FALLBACK_IMAGE =
-  "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=400&h=400&fit=crop";
+const FALLBACK_IMAGE = "/product-placeholder.svg";
 
 interface ArticleProductRecommendationProps {
   products: (Product & { id: string })[];
@@ -22,7 +20,6 @@ function ArticleProductCard({ product }: { product: Product & { id: string } }) 
   const fullName = getProductName({ id: product.id, name: product.name }, lang);
   const img = (product.images?.[0] ?? product.image) || FALLBACK_IMAGE;
   const href = product.id ? `/product/${product.id}` : "/#inquiry";
-  const displayPrice = getDisplayPrice(product.price, product.fishingStyle, product.id);
 
   return (
     <div className="group flex flex-col bg-white rounded-lg border border-gray-200 overflow-hidden hover:border-gray-400 hover:shadow-md transition-all">
@@ -42,7 +39,6 @@ function ArticleProductCard({ product }: { product: Product & { id: string } }) 
         <Link href={href} className="shrink-0">
           <h4 className="font-medium text-gray-900 text-sm line-clamp-2 min-h-[2.5rem] group-hover:text-black">{displayName}</h4>
         </Link>
-        <p className="mt-1 font-bold text-gray-900 text-sm">{displayPrice}</p>
         <Link
           href="/inquiry"
           onClick={() => gtagEvent("inquiry_click", { source: "article_product" })}

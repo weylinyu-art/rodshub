@@ -18,17 +18,22 @@ interface ProductCardProps extends Product {
 
 const inquiryHref = "/#inquiry";
 
-const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1529230117010-b6c436154f25?w=400&h=400&fit=crop";
+const FALLBACK_IMAGE = "/product-placeholder.svg";
 
-function firstUsableImageSrc(imgList: string[], failed: Set<string>, startIndex: number): { src: string; index: number } {
+function firstUsableImageSrc(
+  imgList: string[],
+  failed: Set<string>,
+  startIndex: number,
+  fallback: string
+): { src: string; index: number } {
   const n = imgList.length;
-  if (!n) return { src: FALLBACK_IMAGE, index: 0 };
+  if (!n) return { src: fallback, index: 0 };
   for (let step = 0; step < n; step++) {
     const idx = (startIndex + step) % n;
     const src = imgList[idx];
     if (!failed.has(src)) return { src, index: idx };
   }
-  return { src: FALLBACK_IMAGE, index: startIndex % n };
+  return { src: fallback, index: startIndex % n };
 }
 
 export default function ProductCard({
@@ -55,7 +60,7 @@ export default function ProductCard({
   const hasMultipleImages = imgList.length > 1;
   const [activeIndex, setActiveIndex] = useState(0);
   const [failedUrls, setFailedUrls] = useState<Set<string>>(new Set());
-  const { src: activeSrc, index: safeActiveIndex } = firstUsableImageSrc(imgList, failedUrls, activeIndex);
+  const { src: activeSrc, index: safeActiveIndex } = firstUsableImageSrc(imgList, failedUrls, activeIndex, FALLBACK_IMAGE);
   const href = id ? `/product/${id}` : inquiryHref;
   const handleProductClick = () => id && recordProductClick(id);
 

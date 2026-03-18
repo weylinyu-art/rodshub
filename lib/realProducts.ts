@@ -183,9 +183,10 @@ function inferFishingStyle(sku: string): string {
  * 2) products/{SKU}/{SKU}-1.jpg
  */
 function defaultImageFiles(sku: string, count = 6): string[] {
-  const numeric = Array.from({ length: count }, (_, i) => `${i + 1}.jpg`);
+  // 你上传的 R2 图片常见格式为 {SKU}/{SKU}-2.jpg（先 SKU- 前缀），因此优先尝试该模式
   const withSku = Array.from({ length: count }, (_, i) => `${sku}-${i + 1}.jpg`);
-  return [...numeric, ...withSku];
+  const numeric = Array.from({ length: Math.min(3, count) }, (_, i) => `${i + 1}.jpg`);
+  return [...withSku, ...numeric];
 }
 
 import { buildProductsFromSkuRows } from "./skuData";
