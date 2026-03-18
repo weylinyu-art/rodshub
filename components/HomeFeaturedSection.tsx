@@ -4,7 +4,7 @@ import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
-import { trendingRods, wholesalePicks } from "@/lib/products";
+import { trendingRods, wholesalePicks, dedupeProductsByImage } from "@/lib/products";
 import {
   REAL_PRODUCTS,
   realProductToDisplayProduct,
@@ -28,9 +28,13 @@ function prepareFeaturedForHome(rod: (typeof realDisplay)[0]) {
 
 export default function HomeFeaturedSection() {
   const { lang } = useLanguage();
-  const rawFeatured = [...realDisplay, ...trendingRods].slice(0, 4);
+  // Featured 优先展示真实产品，其次使用程序生成的热门产品；同时避免与首页 New Arrivals 重复
+  const realIdsInNewArrivals = new Set(realDisplay.map((p) => p.id));
+  const realForFeatured = realDisplay.filter((p) => !realIdsInNewArrivals.has(p.id));
+  const combined = [...realForFeatured, ...trendingRods];
+  const rawFeatured = dedupeProductsByImage(combined).slice(0, 4);
   const featured = rawFeatured.map((rod) =>
-    realDisplay.some((r) => r.id === rod.id) ? prepareFeaturedForHome(rod) : rod
+    realDisplay.some((r) => r.id === rod.id) ? prepareFeaturedForHome(rod as (typeof realDisplay)[number]) : rod
   );
   const wholesale = wholesalePicks.slice(0, 4);
   return (

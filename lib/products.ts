@@ -17,6 +17,18 @@ export interface Product {
   priceMin?: number;
 }
 
+/** 根据主图去重产品：同一张主图仅保留第一条，用于过滤程序生成的重复卡片；忽略尺寸参数等 query */
+export function dedupeProductsByImage<T extends { image: string }>(items: T[]): T[] {
+  const seen = new Set<string>();
+  return items.filter((item) => {
+    if (!item.image) return true;
+    const base = item.image.split("?")[0];
+    if (seen.has(base)) return false;
+    seen.add(base);
+    return true;
+  });
+}
+
 /** 已验证的渔竿/渔具图片池（Unsplash + Pexels）- 均为真实渔竿内容 */
 const FISHING_ROD_IMAGES = [
   "https://images.unsplash.com/photo-1529230117010-b6c436154f25", // person holding black fishing rod

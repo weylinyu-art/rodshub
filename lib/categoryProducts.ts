@@ -1,5 +1,5 @@
 import type { Product } from "@/lib/products";
-import { getProductImages } from "@/lib/products";
+import { getProductImages, dedupeProductsByImage } from "@/lib/products";
 import { REAL_PRODUCTS, realProductToDisplayProduct } from "@/lib/realProducts";
 import { getRandomDisplayPriceForId } from "@/lib/priceDisplay";
 import { dailyRotateScore } from "@/lib/clickSortUtils";
@@ -143,10 +143,18 @@ export { extractPriceMin };
 
 /** 获取分类下的产品：真实产品排在前面，按 fishingStyle 归拢 */
 export function getProductsByCategory(slug: string): (Product & { id: string })[] {
+  const generatedRaw = (PRODUCTS_BY_CATEGORY as Record<string, Product[]>)[slug] ?? [];
+  const generated = dedupeProductsByImage(generatedRaw);
+
   const style = SLUG_TO_STYLE[slug];
-  const generated = (PRODUCTS_BY_CATEGORY as Record<string, Product[]>)[slug] ?? [];
-  const realForCategory = REAL_PRODUCTS.filter(
-    (p) => p.fishingStyle.toLowerCase() === (style?.toLowerCase() ?? "")
-  ).map(realProductToDisplayProduct);
+  const styleLower = style?.toLowerCase() ?? "";
+
+  // 允许同一个真实产品出现在多个分类中：根据 fishingStyle 以及 variants.type 归类
+  const realForCategory = REAL_PRODUCTS.filter((p) => {
+    const primaryMatch = p.fishingStyle.toLowerCase() === styleLower;
+    const variantMatch = p.variants.some((v) => v.type.toLowerCase() === styleLower);
+    return primaryMatch || variantMatch;
+  }).map(realProductToDisplayProduct);
+
   return [...realForCategory, ...generated] as (Product & { id: string })[];
 }

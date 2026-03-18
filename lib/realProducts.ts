@@ -257,3 +257,6 @@ export const REAL_PRODUCTS: RealProduct[] = buildProductsFromSkuRows().map(({ pa
     variants,
   };
 });
+
+/** 首页 New Arrivals 优先使用真实产品；如无真实产品则回退到模拟产品数据 */
+export const HOME_REAL_NEW_ARRIVALS = REAL_PRODUCTS.map(realProductToDisplayProduct);
