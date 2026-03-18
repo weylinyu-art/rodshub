@@ -52,6 +52,19 @@ export default function ProductImageGallery({
     [total, uniqueImages]
   );
 
+  const findPrevUsableIndex = useCallback(
+    (from: number, failed: Set<string>) => {
+      if (total <= 0) return 0;
+      for (let step = 1; step <= total; step++) {
+        const idx = (from - step + total) % total;
+        const src = uniqueImages[idx];
+        if (src && !failed.has(src)) return idx;
+      }
+      return from;
+    },
+    [total, uniqueImages]
+  );
+
   const getSrc = useCallback(
     (src: string) => (failedUrls.has(src) ? fallbackImage : src),
     [failedUrls, fallbackImage]
@@ -69,6 +82,15 @@ export default function ProductImageGallery({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // 当当前展示图已被标记失败时，自动跳转到可用图集合中的第一张
+  useEffect(() => {
+    const src = uniqueImages[displayedIndex];
+    if (!src || !failedUrls.has(src)) return;
+    const firstUsable = uniqueImages.findIndex((s) => s && !failedUrls.has(s));
+    if (firstUsable >= 0 && firstUsable !== activeIndex) setActiveIndex(firstUsable);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [failedUrls]);
 
   /**
    * 每次 activeIndex 变化时，通过 Image 对象加载目标图片。
@@ -116,16 +138,16 @@ export default function ProductImageGallery({
   );
 
   const goPrev = useCallback(() => {
-    goTo(activeIndex - 1);
+    setActiveIndex((cur) => findPrevUsableIndex(cur, failedUrls));
     setIsPaused(true);
     setTimeout(() => setIsPaused(false), autoPlayInterval);
-  }, [activeIndex, goTo, autoPlayInterval]);
+  }, [autoPlayInterval, failedUrls, findPrevUsableIndex]);
 
   const goNext = useCallback(() => {
-    goTo(activeIndex + 1);
+    setActiveIndex((cur) => findNextUsableIndex(cur, failedUrls));
     setIsPaused(true);
     setTimeout(() => setIsPaused(false), autoPlayInterval);
-  }, [activeIndex, goTo, autoPlayInterval]);
+  }, [autoPlayInterval, failedUrls, findNextUsableIndex]);
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -161,6 +183,9 @@ export default function ProductImageGallery({
 
   const displayedSrc = getSrc(uniqueImages[displayedIndex] ?? "");
   const visibleThumbs = uniqueImages.filter((src) => !failedUrls.has(src));
+  const visibleDotIndices = uniqueImages
+    .map((src, i) => ({ src, i }))
+    .filter(({ src }) => !!src && !failedUrls.has(src));
   const showFallbackThumbs = visibleThumbs.length === 0;
 
   return (
@@ -240,9 +265,9 @@ export default function ProductImageGallery({
         )}
 
         {/* 指示点（跟随 activeIndex，立即反映用户选择） */}
-        {hasMultiple && total <= 12 && (
+        {hasMultiple && visibleDotIndices.length > 1 && visibleDotIndices.length <= 12 && (
           <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-20">
-            {uniqueImages.map((_, i) => (
+            {visibleDotIndices.map(({ i }) => (
               <button
                 key={i}
                 type="button"

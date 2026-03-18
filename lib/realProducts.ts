@@ -184,8 +184,10 @@ function inferFishingStyle(sku: string): string {
  */
 function defaultImageFiles(sku: string, count = 6): string[] {
   // 你上传的 R2 图片常见格式为 {SKU}/{SKU}-2.jpg（先 SKU- 前缀），因此优先尝试该模式
-  const withSku = Array.from({ length: count }, (_, i) => `${sku}-${i + 1}.jpg`);
-  const numeric = Array.from({ length: Math.min(3, count) }, (_, i) => `${i + 1}.jpg`);
+  const order = [2, 1, 3, 4, 5, 6].slice(0, count);
+  const withSku = order.map((n) => `${sku}-${n}.jpg`);
+  // 兼容少量目录里确实是 1.jpg / 2.jpg 的情况（但不要无限猜测，避免大量 404）
+  const numeric = order.slice(0, Math.min(3, order.length)).map((n) => `${n}.jpg`);
   return [...withSku, ...numeric];
 }
 
