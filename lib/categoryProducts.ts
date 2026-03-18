@@ -141,6 +141,16 @@ export function sortProductsByClicksThenPrice<T extends Product>(
 
 export { extractPriceMin };
 
+function splitTypeToCategories(type: string | undefined): string[] {
+  const raw = String(type ?? "").trim();
+  if (!raw) return [];
+  // 支持：Spinning/Casting、Spinning,Travel、Spinning|Travel、以及混合大小写
+  return raw
+    .split(/[\/,|]+/g)
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+}
+
 /** 获取分类下的产品：真实产品排在前面，按 fishingStyle 归拢 */
 export function getProductsByCategory(slug: string): (Product & { id: string })[] {
   const generatedRaw = (PRODUCTS_BY_CATEGORY as Record<string, Product[]>)[slug] ?? [];
@@ -152,7 +162,7 @@ export function getProductsByCategory(slug: string): (Product & { id: string })[
   // 允许同一个真实产品出现在多个分类中：根据 fishingStyle 以及 variants.type 归类
   const realForCategory = REAL_PRODUCTS.filter((p) => {
     const primaryMatch = p.fishingStyle.toLowerCase() === styleLower;
-    const variantMatch = p.variants.some((v) => v.type.toLowerCase() === styleLower);
+    const variantMatch = p.variants.some((v) => splitTypeToCategories(v.type).includes(styleLower));
     return primaryMatch || variantMatch;
   }).map(realProductToDisplayProduct);
 
