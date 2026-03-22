@@ -39,9 +39,6 @@ export default function ProductImageGallery({
   const touchEndX = useRef<number>(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const thumbsRef = useRef<HTMLDivElement | null>(null);
-  const [thumbOverflow, setThumbOverflow] = useState(false);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
 
   const findNextUsableIndex = useCallback(
     (from: number, failed: Set<string>) => {
@@ -192,28 +189,6 @@ export default function ProductImageGallery({
     .filter(({ src }) => !!src && !failedUrls.has(src));
   const showFallbackThumbs = visibleThumbs.length === 0;
 
-  const updateThumbScrollState = useCallback(() => {
-    const el = thumbsRef.current;
-    if (!el) return;
-    const overflow = el.scrollWidth > el.clientWidth + 2;
-    setThumbOverflow(overflow);
-    setCanScrollLeft(overflow && el.scrollLeft > 2);
-    setCanScrollRight(overflow && el.scrollLeft + el.clientWidth < el.scrollWidth - 2);
-  }, []);
-
-  useEffect(() => {
-    updateThumbScrollState();
-    const el = thumbsRef.current;
-    if (!el) return;
-    const onScroll = () => updateThumbScrollState();
-    el.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", updateThumbScrollState);
-    return () => {
-      el.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", updateThumbScrollState);
-    };
-  }, [updateThumbScrollState]);
-
   // activeIndex 变化时，把对应缩略图滚到可视区域（居中），不需要额外翻页操作
   useEffect(() => {
     const el = thumbsRef.current;
@@ -329,47 +304,9 @@ export default function ProductImageGallery({
       {hasMultiple && (
         <div className="mt-3 w-full max-w-[480px]">
           <div className="relative">
-            {/* 左右滚动按钮：仅滚动缩略图容器，不影响页面横向滚动 */}
-            {thumbOverflow && (
-              <>
-                <button
-                  type="button"
-                  onClick={() => {
-                    const el = thumbsRef.current;
-                    if (!el) return;
-                    el.scrollBy({ left: -Math.max(240, el.clientWidth * 0.8), behavior: "smooth" });
-                  }}
-                  className={`absolute -left-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 hover:bg-white shadow border border-gray-200 flex items-center justify-center transition-opacity ${
-                    canScrollLeft ? "opacity-100" : "opacity-0 pointer-events-none"
-                  }`}
-                  aria-label="Scroll thumbnails left"
-                >
-                  <svg className="w-4 h-4 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    const el = thumbsRef.current;
-                    if (!el) return;
-                    el.scrollBy({ left: Math.max(240, el.clientWidth * 0.8), behavior: "smooth" });
-                  }}
-                  className={`absolute -right-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 hover:bg-white shadow border border-gray-200 flex items-center justify-center transition-opacity ${
-                    canScrollRight ? "opacity-100" : "opacity-0 pointer-events-none"
-                  }`}
-                  aria-label="Scroll thumbnails right"
-                >
-                  <svg className="w-4 h-4 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </>
-            )}
-
             <div
               ref={thumbsRef}
-              className="flex flex-nowrap gap-2 overflow-x-auto overflow-y-hidden pr-1 pb-1 -mb-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent"
+              className="flex flex-nowrap gap-2 overflow-x-auto overflow-y-hidden pr-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
               style={{ WebkitOverflowScrolling: "touch" }}
             >
             {showFallbackThumbs ? (
